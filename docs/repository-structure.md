@@ -21,7 +21,7 @@
     ...
   ...
 /shared-resources/           # Reusable images, code snippets, assets
-/mini-projects/              # Cross-module or capstone projects
+/projects/              # Cross-module or capstone projects
 ```
 
 ## Folder/Document Purpose
@@ -30,7 +30,7 @@
 - **theory.md (per chapter)**: Core explanations, concepts, and references.
 - **examples/**: Hands-on code, demos, and sample solutions.
 - **/shared-resources/**: Images, diagrams, or code used in multiple places.
-- **/mini-projects/**: Larger projects that span multiple modules or chapters.
+- **/projects/**: Larger projects that span multiple modules or chapters.
 
 ## Example README.md (Module)
 ```markdown
