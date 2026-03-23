@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessible Links and Images</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 2rem;
+        max-width: 760px;
+      }
+
+      figure {
+        margin: 1.5rem 0;
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+        height: auto;
+      }
+
+      .link-list a {
+        display: inline-block;
+        margin-bottom: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Accessible Links and Images</h1>
+
+    <section class="link-list" aria-labelledby="link-heading">
+      <h2 id="link-heading">Descriptive links</h2>
+      <p><a href="https://webaim.org/techniques/hypertext/">Read WebAIM guidance for accessible links</a></p>
+      <p><a href="https://webaim.org/techniques/alttext/">Study how to write effective alternative text</a></p>
+    </section>
+
+    <figure>
+      <img src="network-diagram.svg" alt="Simple network diagram with one router connected to three workstations" width="720" height="420">
+      <figcaption>Figure 1: Example of an informative image with a visible caption.</figcaption>
+    </figure>
+
+    <p>
+      Decorative images should use an empty <code>alt</code> value, while informative images should describe the meaning users need.
+    </p>
+  </body>
+</html>

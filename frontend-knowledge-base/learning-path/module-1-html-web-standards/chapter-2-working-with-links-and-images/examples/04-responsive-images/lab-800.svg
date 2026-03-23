@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#f9e6d3"/>
+  <rect x="60" y="50" width="680" height="350" rx="28" fill="#f4b183"/>
+  <text x="400" y="220" text-anchor="middle" font-family="Arial, sans-serif" font-size="64" fill="#5f3417">800w</text>
+  <text x="400" y="280" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#5f3417">Medium source</text>
+</svg>

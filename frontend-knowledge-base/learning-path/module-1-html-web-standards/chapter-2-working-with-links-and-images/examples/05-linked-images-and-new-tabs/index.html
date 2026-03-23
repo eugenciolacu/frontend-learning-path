@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linked Images and New Tabs</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 2rem;
+        max-width: 760px;
+      }
+
+      .card {
+        border: 1px solid #d0d7de;
+        border-radius: 1rem;
+        overflow: hidden;
+      }
+
+      .card img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .card-content {
+        padding: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Linked Images and New Tabs</h1>
+
+    <article class="card">
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank" rel="noopener noreferrer">
+        <img src="html-reference-card.svg" alt="Open the MDN image element reference in a new tab" width="720" height="360">
+      </a>
+
+      <div class="card-content">
+        <h2>MDN Image Reference</h2>
+        <p>This image works as a link and opens the external resource in a new tab.</p>
+        <p>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img" target="_blank" rel="noopener noreferrer">
+            Read the MDN reference (opens in a new tab)
+          </a>
+        </p>
+      </div>
+    </article>
+  </body>
+</html>

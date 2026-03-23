@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal and External Links</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 2rem;
+        max-width: 760px;
+      }
+
+      nav {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+      }
+
+      section {
+        margin-top: 2rem;
+        padding: 1rem;
+        border: 1px solid #d0d7de;
+        border-radius: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Internal and External Links</h1>
+
+    <nav>
+      <a href="#overview">Overview</a>
+      <a href="#resources">Resources</a>
+      <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a">MDN Anchor Element</a>
+    </nav>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>
+        This section demonstrates internal navigation using fragment links. Clicking the first two links in the navigation jumps to a section on the same page.
+      </p>
+    </section>
+
+    <section id="resources">
+      <h2>Resources</h2>
+      <p>
+        The third link in the navigation is an external link because it takes the user to a different website.
+      </p>
+      <p>
+        <a href="https://www.w3.org/TR/html52/links.html">Read more about links in the HTML specification</a>
+      </p>
+    </section>
+  </body>
+</html>

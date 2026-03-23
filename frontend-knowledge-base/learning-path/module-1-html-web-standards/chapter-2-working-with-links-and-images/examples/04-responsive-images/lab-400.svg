@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225">
+  <rect width="400" height="225" fill="#d7f0ea"/>
+  <rect x="28" y="28" width="344" height="169" rx="18" fill="#7dcfb6"/>
+  <text x="200" y="112" text-anchor="middle" font-family="Arial, sans-serif" font-size="34" fill="#16302b">400w</text>
+  <text x="200" y="150" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" fill="#16302b">Small source</text>
+</svg>

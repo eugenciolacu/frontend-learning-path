@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Images</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 2rem;
+      }
+
+      .wrapper {
+        max-width: 760px;
+      }
+
+      img {
+        display: block;
+        width: 100%;
+        height: auto;
+        border-radius: 0.75rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="wrapper">
+      <h1>Responsive Images</h1>
+      <p>Resize the browser window and inspect which image source the browser selects.</p>
+
+      <figure style="margin:2rem 0;">
+        <img
+          id="responsive-img"
+          src="lab-800.svg"
+          srcset="lab-400.svg 400w, lab-800.svg 800w, lab-1200.svg 1200w"
+          sizes="(max-width: 500px) 100vw, (max-width: 900px) 50vw, 800px"
+          alt="Students collaborating on frontend exercises"
+          width="800"
+          height="450"
+          style="border:2px solid #3f72af; background:#f4f7fb; max-width:100%; display:block; margin:auto;"
+        >
+        <figcaption style="text-align:center; margin-top:0.5rem; color:#3f72af;">
+          <span id="img-info">Current image: </span>
+          <br>
+          <small>Try resizing your browser window to see the image source change.<br>
+          <b>Tip:</b> Open DevTools &rarr; Network &rarr; Img to see which file is loaded.</small>
+        </figcaption>
+      </figure>
+      <script>
+        const img = document.getElementById('responsive-img');
+        const info = document.getElementById('img-info');
+        function updateInfo() {
+          info.textContent = `Current image: ${img.currentSrc.split('/').pop()} (${img.naturalWidth}px)`;
+        }
+        img.addEventListener('load', updateInfo);
+        window.addEventListener('resize', updateInfo);
+        updateInfo();
+      </script>
+    </main>
+  </body>
+</html>
