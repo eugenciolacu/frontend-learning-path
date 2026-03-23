@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Colspan and Rowspan Class Schedule</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>Class Schedule with Merged Cells</h1>
+
+	<table>
+		<caption>Week 1 Frontend Training Schedule</caption>
+		<thead>
+			<tr>
+				<th scope="col">Track</th>
+				<th scope="col">Day</th>
+				<th scope="col">Topic</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row" rowspan="2">HTML Basics</th>
+				<td>Monday</td>
+				<td>Document structure</td>
+			</tr>
+			<tr>
+				<td>Tuesday</td>
+				<td>Lists and tables</td>
+			</tr>
+			<tr>
+				<th scope="row">Workshop</th>
+				<td colspan="2">Wednesday afternoon practical lab</td>
+			</tr>
+		</tbody>
+	</table>
+</body>
+</html>

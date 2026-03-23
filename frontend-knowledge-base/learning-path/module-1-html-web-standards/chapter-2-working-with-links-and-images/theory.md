@@ -7,7 +7,7 @@ Links and images are two of the most important building blocks of the web.
 - Images add visual meaning, explain ideas, and improve communication.
 - Together, they help users navigate, understand content, and complete tasks.
 
-For an IT student, this chapter is important because poor links and poor image usage create common real-world issues: confusing navigation, accessibility barriers, broken layouts, slow pages, and weak SEO.
+This chapter is important because poor links and poor image usage create common real-world issues: confusing navigation, accessibility barriers, broken layouts, slow pages, and weak SEO.
 
 ## 2. The Anchor Tag and the `href` Attribute
 The HTML anchor element, `<a>`, creates a hyperlink.

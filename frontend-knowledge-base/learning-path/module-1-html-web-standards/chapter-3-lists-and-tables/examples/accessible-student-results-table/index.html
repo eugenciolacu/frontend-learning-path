@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessible Student Results Table</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>Accessible Student Results Table</h1>
+
+	<table>
+		<caption>Frontend Fundamentals Assessment Results</caption>
+		<thead>
+			<tr>
+				<th scope="col">Student</th>
+				<th scope="col">Module</th>
+				<th scope="col">Score</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">Ana</th>
+				<td>HTML</td>
+				<td>96</td>
+			</tr>
+			<tr>
+				<th scope="row">Victor</th>
+				<td>CSS</td>
+				<td>91</td>
+			</tr>
+			<tr>
+				<th scope="row">Mara</th>
+				<td>JavaScript</td>
+				<td>94</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<th scope="row" colspan="2">Average Score</th>
+				<td>93.67</td>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>

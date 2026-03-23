@@ -1,0 +1,5 @@
+body { font-family: system-ui, Arial, sans-serif; margin: 2em; background: #f9f9f9; }
+dl { background: #fff; padding: 1em 2em; border-radius: 8px; box-shadow: 0 1px 4px #0001; }
+dt { font-weight: bold; color: #2a4d7a; margin-top: 1em; }
+dd { margin-left: 1.5em; margin-bottom: 0.5em; }
+h1 { color: #2a4d7a; }
