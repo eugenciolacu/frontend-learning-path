@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Focus Management and Keyboard Navigation</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header>
+		<h1>Focus Management and Keyboard Navigation</h1>
+		<nav aria-label="Primary">
+			<a href="#main-content">Lesson</a>
+			<a href="#resources">Resources</a>
+		</nav>
+	</header>
+
+	<main id="main-content">
+		<section>
+			<h2>Keyboard Support Checklist</h2>
+			<ul>
+				<li>Use Tab and Shift+Tab to move through the interface.</li>
+				<li>The skip link becomes visible when focused.</li>
+				<li>Opening the dialog moves focus into it.</li>
+				<li>Closing the dialog returns focus to the trigger.</li>
+			</ul>
+
+			<button id="open-dialog" type="button">Open keyboard help dialog</button>
+		</section>
+
+		<section id="resources">
+			<h2>Resources</h2>
+			<a href="https://www.w3.org/WAI/ARIA/apg/">WAI-ARIA Authoring Practices</a>
+		</section>
+	</main>
+
+	<dialog id="keyboard-dialog" aria-labelledby="dialog-title">
+		<h2 id="dialog-title">Keyboard Help</h2>
+		<p>Tab moves forward, Shift+Tab moves backward, Enter activates links and buttons, and Escape closes this dialog.</p>
+		<button id="close-dialog" type="button">Close dialog</button>
+	</dialog>
+
+	<script src="script.js"></script>
+</body>
+</html>

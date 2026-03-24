@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Semantic Document Outline</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="site-header">
+		<p class="eyebrow">Frontend Learning Path</p>
+		<h1>Semantic Document Outline</h1>
+		<p>This example shows how landmarks, headings, and sectioning elements work together.</p>
+
+		<nav aria-label="Primary">
+			<a href="#lesson-overview">Lesson Overview</a>
+			<a href="#outline-demo">Outline Demo</a>
+			<a href="#study-note">Study Note</a>
+		</nav>
+	</header>
+
+	<main id="main-content">
+		<article>
+			<header>
+				<h2 id="lesson-overview">HTML Architecture and Semantics</h2>
+				<p>The article contains its own header because it is a self-contained learning unit.</p>
+			</header>
+
+			<section id="outline-demo">
+				<h3>Document Outline Strategy</h3>
+				<p>Use headings to describe the hierarchy of information. Assistive technologies rely on explicit heading elements.</p>
+
+				<section>
+					<h4>Landmarks</h4>
+					<p>Header, navigation, main, aside, and footer regions create fast navigation points for screen reader users.</p>
+				</section>
+
+				<section>
+					<h4>Meaningful Grouping</h4>
+					<p>Use <code>section</code> when content has a clear theme and heading. Use <code>div</code> only as a neutral wrapper.</p>
+				</section>
+			</section>
+
+			<footer>
+				<p>Article footer: Published for Module 1, Chapter 7.</p>
+			</footer>
+		</article>
+	</main>
+
+	<aside id="study-note" aria-labelledby="study-note-heading">
+		<h2 id="study-note-heading">Study Note</h2>
+		<p>If a section has no meaningful heading or theme, it is usually not a real <code>section</code>.</p>
+	</aside>
+
+	<footer class="site-footer">
+		<p>&copy; 2026 Frontend Learning Path</p>
+	</footer>
+</body>
+</html>

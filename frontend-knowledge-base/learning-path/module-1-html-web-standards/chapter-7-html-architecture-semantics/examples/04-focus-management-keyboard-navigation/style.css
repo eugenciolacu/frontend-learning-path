@@ -1,0 +1,78 @@
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 1rem;
+	background: #f0fdf4;
+	color: #14532d;
+	line-height: 1.6;
+}
+
+.skip-link {
+	position: absolute;
+	left: 1rem;
+	top: -3rem;
+	padding: 0.75rem 1rem;
+	background: #14532d;
+	color: #ffffff;
+	text-decoration: none;
+	border-radius: 0.5rem;
+}
+
+.skip-link:focus {
+	top: 1rem;
+}
+
+header,
+main {
+	max-width: 900px;
+	margin: 0 auto 1rem;
+	background: #ffffff;
+	padding: 1.25rem;
+	border-radius: 1rem;
+	border: 1px solid #bbf7d0;
+	box-shadow: 0 8px 24px rgba(20, 83, 45, 0.06);
+}
+
+nav {
+	display: flex;
+	gap: 1rem;
+	flex-wrap: wrap;
+	margin-top: 0.75rem;
+}
+
+button,
+a {
+	font: inherit;
+}
+
+button {
+	padding: 0.75rem 1rem;
+	border: 0;
+	border-radius: 0.75rem;
+	background: #15803d;
+	color: #ffffff;
+	cursor: pointer;
+}
+
+dialog {
+	border: 0;
+	border-radius: 1rem;
+	padding: 1.25rem;
+	max-width: 32rem;
+	box-shadow: 0 24px 64px rgba(20, 83, 45, 0.2);
+}
+
+dialog::backdrop {
+	background: rgba(20, 83, 45, 0.35);
+}
+
+:focus-visible {
+	outline: 3px solid #2563eb;
+	outline-offset: 3px;
+}
+
+@media (max-width: 640px) {
+	body {
+		padding: 0.75rem;
+	}
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ARIA Roles, States, and Properties</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main>
+		<h1>ARIA Roles, States, and Properties</h1>
+		<p>This example uses a native button to control a disclosure panel. ARIA communicates the relationship and current state.</p>
+
+		<section class="demo-card" aria-labelledby="faq-heading">
+			<h2 id="faq-heading">FAQ Disclosure</h2>
+			<button
+				id="faq-toggle"
+				type="button"
+				class="toggle-button"
+				aria-expanded="false"
+				aria-controls="faq-panel"
+			>
+				What is the first rule of ARIA?
+			</button>
+
+			<div id="faq-panel" class="panel" hidden>
+				<p>Use native HTML elements and attributes whenever they already provide the meaning and behavior you need.</p>
+			</div>
+		</section>
+
+		<section class="demo-card" aria-labelledby="status-heading">
+			<h2 id="status-heading">Live Status Region</h2>
+			<p>The button updates a polite live region so screen readers can announce the change.</p>
+			<button id="save-button" type="button">Simulate Save</button>
+			<p id="save-status" aria-live="polite" class="status-message"></p>
+		</section>
+	</main>
+
+	<script src="script.js"></script>
+</body>
+</html>
