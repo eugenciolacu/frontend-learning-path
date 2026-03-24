@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Semantic vs Non-Semantic Structure</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<h1>Semantic vs Non-Semantic Structure</h1>
+	<p>Compare the meaning communicated by generic containers and semantic elements.</p>
+
+	<div class="comparison-grid">
+		<section>
+			<h2>Non-Semantic Version</h2>
+			<pre><code>&lt;div class="page-header"&gt;
+	&lt;div class="menu"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="content"&gt;...&lt;/div&gt;
+&lt;div class="sidebar"&gt;...&lt;/div&gt;</code></pre>
+			<p>This version can be styled, but the element names do not explain the page regions.</p>
+		</section>
+
+		<section>
+			<h2>Semantic Version</h2>
+			<pre><code>&lt;header&gt;
+	&lt;nav&gt;...&lt;/nav&gt;
+&lt;/header&gt;
+&lt;main&gt;...&lt;/main&gt;
+&lt;aside&gt;...&lt;/aside&gt;</code></pre>
+			<p>This version clearly explains the role of each region before any CSS is added.</p>
+		</section>
+	</div>
+
+	<section class="notes">
+		<h2>Key Takeaway</h2>
+		<p>Use div and span when you truly need generic containers, but prefer semantic elements when HTML already provides the correct meaning.</p>
+	</section>
+</body>
+</html>

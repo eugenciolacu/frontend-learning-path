@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Accessibility, Landmarks, and Tab Order</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header>
+		<h1>Accessibility, Landmarks, and Tab Order</h1>
+		<nav aria-label="Primary">
+			<a href="#lesson">Lesson</a>
+			<a href="#resources">Resources</a>
+			<a href="#support">Support</a>
+		</nav>
+	</header>
+
+	<main id="main-content">
+		<section id="lesson">
+			<h2>Lesson Card</h2>
+			<img src="https://via.placeholder.com/640x220.png?text=Semantic+HTML" alt="Banner introducing semantic HTML lesson content">
+			<p>Keyboard users should reach this content in a logical order after the skip link and navigation.</p>
+			<button type="button">Start Lesson</button>
+		</section>
+
+		<section id="resources">
+			<h2>Resource Links</h2>
+			<ul>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML">MDN HTML Reference</a></li>
+				<li><a href="https://webaim.org/">WebAIM Accessibility Articles</a></li>
+			</ul>
+		</section>
+	</main>
+
+	<aside id="support">
+		<h2>Important Note</h2>
+		<p>Avoid using positive tabindex values. Keep the HTML source order logical instead.</p>
+	</aside>
+</body>
+</html>

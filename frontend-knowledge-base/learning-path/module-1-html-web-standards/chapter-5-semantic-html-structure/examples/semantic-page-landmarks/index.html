@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Semantic Page Landmarks</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="site-header">
+		<h1>Semantic Page Landmarks</h1>
+		<p>A basic page using header, nav, main, aside, and footer correctly.</p>
+		<nav aria-label="Primary">
+			<ul>
+				<li><a href="#overview">Overview</a></li>
+				<li><a href="#articles">Articles</a></li>
+				<li><a href="#resources">Resources</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<div class="layout">
+		<main id="main-content">
+			<section id="overview">
+				<h2>Overview</h2>
+				<p>Semantic landmarks help browsers and assistive technologies understand the structure of a page.</p>
+			</section>
+
+			<section id="articles">
+				<h2>Latest Articles</h2>
+
+				<article>
+					<h3>Why Use the Main Element</h3>
+					<p>The main element identifies the unique content of the page.</p>
+				</article>
+
+				<article>
+					<h3>When Navigation Needs a Label</h3>
+					<p>Use aria-label when the page contains multiple navigation regions.</p>
+				</article>
+			</section>
+		</main>
+
+		<aside>
+			<h2>Study Tip</h2>
+			<p>Open browser accessibility tools and inspect the landmarks on this page.</p>
+		</aside>
+	</div>
+
+	<footer class="site-footer">
+		<p>&copy; 2026 Frontend Learning Portal</p>
+	</footer>
+</body>
+</html>
