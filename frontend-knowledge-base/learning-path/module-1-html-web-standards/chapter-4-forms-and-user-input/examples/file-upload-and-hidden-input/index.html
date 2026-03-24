@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>File Upload and Hidden Input</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="wrap">
+		<h1>File Upload and Hidden Input</h1>
+		<p>This example shows file input, hidden metadata, readonly fields, and disabled fields.</p>
+
+		<form action="/upload-assignment" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="moduleId" value="module-1-html-web-standards">
+
+			<label for="student-id">Student ID</label>
+			<input id="student-id" name="studentId" type="text" value="ST-2048" readonly>
+
+			<label for="campus">Campus</label>
+			<input id="campus" name="campus" type="text" value="Cluj" disabled>
+
+			<label for="assignment-file">Assignment file</label>
+			<input id="assignment-file" name="assignmentFile" type="file" accept=".pdf,.zip,.docx" required>
+
+			<button type="submit">Upload assignment</button>
+		</form>
+	</main>
+</body>
+</html>

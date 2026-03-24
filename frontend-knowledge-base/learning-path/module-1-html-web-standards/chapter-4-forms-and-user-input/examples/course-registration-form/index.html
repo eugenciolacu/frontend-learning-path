@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Course Registration Form</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="layout">
+		<h1>Course Registration Form</h1>
+		<p>This example combines text, date, radio, checkbox, select, textarea, and hidden fields.</p>
+
+		<form action="/courses/register" method="post">
+			<input type="hidden" name="courseCode" value="HTML-CH4">
+
+			<label for="full-name">Full name</label>
+			<input id="full-name" name="fullName" type="text" required>
+
+			<label for="student-email">Email</label>
+			<input id="student-email" name="email" type="email" required>
+
+			<label for="start-date">Preferred start date</label>
+			<input id="start-date" name="startDate" type="date">
+
+			<fieldset>
+				<legend>Study mode</legend>
+
+				<label>
+					<input name="studyMode" type="radio" value="online" required>
+					Online
+				</label>
+
+				<label>
+					<input name="studyMode" type="radio" value="onsite">
+					On-site
+				</label>
+			</fieldset>
+
+			<fieldset>
+				<legend>Topics of interest</legend>
+
+				<label><input name="topics" type="checkbox" value="forms"> Forms</label>
+				<label><input name="topics" type="checkbox" value="semantics"> Semantics</label>
+				<label><input name="topics" type="checkbox" value="accessibility"> Accessibility</label>
+			</fieldset>
+
+			<label for="group">Group</label>
+			<select id="group" name="group" required>
+				<option value="">Select group</option>
+				<option value="morning">Morning</option>
+				<option value="evening">Evening</option>
+			</select>
+
+			<label for="motivation">Motivation</label>
+			<textarea id="motivation" name="motivation" rows="5" placeholder="Tell us why you want to join this course"></textarea>
+
+			<button type="submit">Submit registration</button>
+		</form>
+	</main>
+</body>
+</html>

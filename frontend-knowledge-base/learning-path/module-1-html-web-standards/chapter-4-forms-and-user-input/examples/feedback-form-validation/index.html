@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Feedback Form Validation</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="shell">
+		<h1>Feedback Form Validation</h1>
+		<p>This example uses HTML validation attributes and a custom password matching check.</p>
+
+		<form id="feedback-form" action="/feedback" method="post">
+			<label for="student-code">Student code</label>
+			<input
+				id="student-code"
+				name="studentCode"
+				type="text"
+				pattern="[A-Z]{2}-[0-9]{4}"
+				placeholder="AB-2048"
+				required
+			>
+
+			<label for="rating">Rating from 1 to 10</label>
+			<input id="rating" name="rating" type="number" min="1" max="10" required>
+
+			<label for="password">Create review PIN</label>
+			<input id="password" name="password" type="password" minlength="6" required>
+
+			<label for="confirm-password">Confirm review PIN</label>
+			<input id="confirm-password" name="confirmPassword" type="password" required>
+
+			<button type="submit">Send feedback</button>
+		</form>
+	</main>
+
+	<script>
+		const form = document.getElementById("feedback-form");
+		const password = document.getElementById("password");
+		const confirmPassword = document.getElementById("confirm-password");
+
+		confirmPassword.addEventListener("input", function () {
+			confirmPassword.setCustomValidity("");
+		});
+
+		form.addEventListener("submit", function (event) {
+			if (password.value !== confirmPassword.value) {
+				event.preventDefault();
+				confirmPassword.setCustomValidity("The two PIN values must match.");
+				confirmPassword.reportValidity();
+			}
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Login Form with POST</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="panel">
+		<h1>Login Form with POST</h1>
+		<p>This form demonstrates labels, email and password inputs, and a submit button.</p>
+
+		<form action="/login" method="post" autocomplete="on">
+			<label for="email">Email address</label>
+			<input id="email" name="email" type="email" autocomplete="email" required>
+
+			<label for="password">Password</label>
+			<input id="password" name="password" type="password" autocomplete="current-password" required>
+
+			<label class="checkbox-row">
+				<input name="remember" type="checkbox" value="yes">
+				Remember me
+			</label>
+
+			<div class="button-row">
+				<button type="submit">Log in</button>
+				<button type="reset">Reset</button>
+			</div>
+		</form>
+	</main>
+</body>
+</html>
