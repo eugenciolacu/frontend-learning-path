@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>SVG Embedding Techniques</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="page">
+		<h1>SVG Embedding Techniques</h1>
+		<p>
+			This page compares three common ways to use SVG in HTML: as an image, as inline markup,
+			and through the <code>object</code> element.
+		</p>
+
+		<section class="grid">
+			<article class="card">
+				<h2>1. SVG as an Image</h2>
+				<img src="campus-network.svg" alt="Diagram showing a browser, server, and database connected together">
+			</article>
+
+			<article class="card">
+				<h2>2. Inline SVG</h2>
+				<svg viewBox="0 0 320 180" aria-labelledby="inline-title inline-desc">
+					<title id="inline-title">Inline SVG network diagram</title>
+					<desc id="inline-desc">A small diagram with three connected components.</desc>
+					<rect x="20" y="60" width="80" height="50" rx="10" class="browser"></rect>
+					<rect x="120" y="25" width="80" height="50" rx="10" class="server"></rect>
+					<rect x="220" y="95" width="80" height="50" rx="10" class="database"></rect>
+					<line x1="100" y1="85" x2="120" y2="50" class="link"></line>
+					<line x1="200" y1="50" x2="220" y2="120" class="link"></line>
+					<text x="60" y="90" text-anchor="middle">Browser</text>
+					<text x="160" y="55" text-anchor="middle">Server</text>
+					<text x="260" y="125" text-anchor="middle">DB</text>
+				</svg>
+			</article>
+
+			<article class="card">
+				<h2>3. SVG with Object</h2>
+				<object data="campus-network.svg" type="image/svg+xml" width="100%" height="220">
+					<p>SVG preview is not available. <a href="campus-network.svg">Open the SVG file</a>.</p>
+				</object>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

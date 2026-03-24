@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" role="img" aria-labelledby="title desc">
+	<title id="title">Video poster placeholder</title>
+	<desc id="desc">A decorative poster for the sample video player.</desc>
+	<defs>
+		<linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+			<stop offset="0%" stop-color="#0f172a"/>
+			<stop offset="100%" stop-color="#1d4ed8"/>
+		</linearGradient>
+	</defs>
+	<rect width="800" height="450" fill="url(#bg)" rx="28"/>
+	<circle cx="400" cy="225" r="72" fill="#ffffff" fill-opacity="0.18"/>
+	<polygon points="380,185 380,265 445,225" fill="#ffffff"/>
+	<text x="60" y="92" fill="#ffffff" font-family="Arial, sans-serif" font-size="34" font-weight="700">HTML Video Demo</text>
+	<text x="60" y="132" fill="#dbeafe" font-family="Arial, sans-serif" font-size="22">Poster image shown before playback begins</text>
+</svg>

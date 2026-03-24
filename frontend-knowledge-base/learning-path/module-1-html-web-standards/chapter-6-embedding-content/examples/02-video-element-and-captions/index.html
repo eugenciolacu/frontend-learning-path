@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Video Element and Captions</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="page">
+		<h1>Video Element and Captions</h1>
+		<p>
+			This example demonstrates multiple video sources, a poster image, and a caption track.
+			If the network is unavailable, the fallback text inside the player still explains what the markup does.
+		</p>
+
+		<section class="card">
+			<h2>HTML Video Player</h2>
+			<video controls preload="metadata" poster="poster.svg" width="720">
+				<source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm">
+				<source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+				<track kind="captions" src="captions-en.vtt" srclang="en" label="English" default>
+				Your browser does not support HTML video.
+			</video>
+			<p class="note">Open the captions menu in the player to enable the English caption track.</p>
+		</section>
+
+		<section class="card">
+			<h2>Key Markup</h2>
+			<pre><code>&lt;video controls preload="metadata" poster="poster.svg"&gt;
+	&lt;source src="lesson.webm" type="video/webm"&gt;
+	&lt;source src="lesson.mp4" type="video/mp4"&gt;
+	&lt;track kind="captions" src="captions-en.vtt" srclang="en" label="English" default&gt;
+	Your browser does not support HTML video.
+&lt;/video&gt;</code></pre>
+		</section>
+	</main>
+</body>
+</html>

@@ -1,0 +1,68 @@
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.6;
+	margin: 0;
+	background: #f8fafc;
+	color: #1f2937;
+}
+
+.page {
+	max-width: 1080px;
+	margin: 0 auto;
+	padding: 2rem 1rem 3rem;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.card {
+	background: #ffffff;
+	border: 1px solid #dbe2ea;
+	border-radius: 14px;
+	padding: 1.25rem;
+	box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+img,
+object,
+svg {
+	width: 100%;
+	height: auto;
+	display: block;
+	border-radius: 12px;
+	background: #f1f5f9;
+}
+
+svg {
+	min-height: 220px;
+	padding: 0.75rem;
+	box-sizing: border-box;
+}
+
+.browser {
+	fill: #2563eb;
+}
+
+.server {
+	fill: #0f766e;
+}
+
+.database {
+	fill: #7c3aed;
+}
+
+.link {
+	stroke: #334155;
+	stroke-width: 4;
+}
+
+text {
+	fill: #ffffff;
+	font-size: 16px;
+	font-family: Arial, sans-serif;
+	font-weight: 700;
+}

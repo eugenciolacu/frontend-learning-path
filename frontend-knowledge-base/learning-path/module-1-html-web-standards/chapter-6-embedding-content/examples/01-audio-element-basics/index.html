@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Audio Element Basics</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="page">
+		<h1>Audio Element Basics</h1>
+		<p>
+			This example shows a browser audio player with multiple sources, fallback text,
+			and a transcript block. The example uses public sample files so the markup works
+			without storing binary media in the repository.
+		</p>
+
+		<section class="card" aria-labelledby="player-title">
+			<h2 id="player-title">Lesson Introduction Audio</h2>
+			<p>Use the controls to play the audio clip. The browser will pick the first supported source.</p>
+
+			<audio controls preload="metadata">
+				<source src="https://www.w3schools.com/html/horse.ogg" type="audio/ogg">
+				<source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+				Your browser does not support HTML audio. You can
+				<a href="https://www.w3schools.com/html/horse.mp3">download the MP3 file</a>.
+			</audio>
+		</section>
+
+		<section class="card" aria-labelledby="code-title">
+			<h2 id="code-title">Key Markup</h2>
+			<pre><code>&lt;audio controls preload="metadata"&gt;
+	&lt;source src="lesson.ogg" type="audio/ogg"&gt;
+	&lt;source src="lesson.mp3" type="audio/mpeg"&gt;
+	Your browser does not support HTML audio.
+&lt;/audio&gt;</code></pre>
+		</section>
+
+		<section class="card" aria-labelledby="transcript-title">
+			<h2 id="transcript-title">Transcript</h2>
+			<p>
+				"Welcome to the embedding content lesson. In HTML, audio can be embedded with the
+				<code>audio</code> element and one or more <code>source</code> elements for compatibility."
+			</p>
+		</section>
+	</main>
+</body>
+</html>

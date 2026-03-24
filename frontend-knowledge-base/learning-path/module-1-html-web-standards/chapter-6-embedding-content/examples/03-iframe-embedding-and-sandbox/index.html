@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Iframe Embedding and Sandbox</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="page">
+		<h1>Iframe Embedding and Sandbox</h1>
+		<p>
+			This example embeds a local HTML document inside an iframe. The iframe uses a
+			restricted <code>sandbox</code> attribute and lazy loading to demonstrate safer embedding.
+		</p>
+
+		<section class="card">
+			<h2>Sandboxed Local Embed</h2>
+			<div class="frame-shell">
+				<iframe
+					src="embedded-content.html"
+					title="Embedded lesson widget"
+					loading="lazy"
+					sandbox="allow-scripts"
+				></iframe>
+			</div>
+		</section>
+
+		<section class="card">
+			<h2>Example Markup for External Embeds</h2>
+			<pre><code>&lt;iframe
+	src="https://www.youtube.com/embed/example-id"
+	title="YouTube video player"
+	loading="lazy"
+	allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+	allowfullscreen
+&gt;&lt;/iframe&gt;</code></pre>
+		</section>
+	</main>
+</body>
+</html>

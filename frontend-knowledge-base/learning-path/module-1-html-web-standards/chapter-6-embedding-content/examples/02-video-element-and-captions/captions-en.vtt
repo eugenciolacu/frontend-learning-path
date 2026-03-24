@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:03.000
+This sample video demonstrates the HTML video element.
+
+00:00:03.000 --> 00:00:06.500
+The player includes multiple sources and a caption track.
+
+00:00:06.500 --> 00:00:10.000
+Captions improve accessibility for users who cannot hear the audio.
