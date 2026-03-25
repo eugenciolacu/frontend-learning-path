@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta
+		name="description"
+		content="A semantic personal homepage mini-project with links, lists, a schedule table, and a contact form with validation."
+	>
+	<meta name="author" content="Frontend Learning Path">
+	<title>Personal Homepage | Contact Form with Validation</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a href="#main-content">Skip to main content</a>
+
+	<header id="top">
+		<p>Mini-Project: Personal Homepage</p>
+		<h1>Mara Ionescu</h1>
+		<p>
+			I am learning how to build clear, accessible webpages with semantic HTML,
+			useful links, informative images, structured content, and validated forms.
+		</p>
+
+		<nav aria-label="Primary">
+			<ul>
+				<li><a href="#about">About</a></li>
+				<li><a href="#goals">Goals</a></li>
+				<li><a href="#schedule">Schedule</a></li>
+				<li><a href="#resources">Resources</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="main-content">
+		<article aria-labelledby="homepage-title">
+			<header>
+				<h2 id="homepage-title">Frontend Student Homepage</h2>
+				<p>
+					This page combines document structure, navigation, rich content, and a
+					contact form that uses both HTML validation attributes and the browser
+					Constraint Validation API.
+				</p>
+			</header>
+
+			<section id="about" aria-labelledby="about-heading">
+				<h3 id="about-heading">About Me</h3>
+				<figure>
+					<img
+						src="images/profile-illustration.svg"
+						alt="Illustration of Mara working at a desk with a laptop and notebook"
+						width="420"
+						height="260"
+					>
+					<figcaption>
+						A local SVG image with descriptive alternative text and reserved layout dimensions.
+					</figcaption>
+				</figure>
+
+				<p>
+					I enjoy turning information into clean page structures with headings,
+					paragraphs, lists, tables, figures, and meaningful landmarks.
+				</p>
+				<p>
+					My current focus is learning how browsers understand HTML semantics and
+					how good markup improves accessibility and usability.
+				</p>
+
+				<blockquote>
+					<p>
+						"Good HTML makes content easier to read for both people and software."
+					</p>
+				</blockquote>
+			</section>
+
+			<hr>
+
+			<section id="goals" aria-labelledby="goals-heading">
+				<h3 id="goals-heading">Learning Goals</h3>
+				<section aria-labelledby="goal-list-heading">
+					<h4 id="goal-list-heading">What I am practicing now</h4>
+					<ol>
+						<li>Write complete HTML documents with useful metadata.</li>
+						<li>Use semantic landmarks such as <code>header</code>, <code>nav</code>, <code>main</code>, and <code>footer</code>.</li>
+						<li>Build accessible forms with labels, help text, and validation.</li>
+					</ol>
+				</section>
+
+				<section aria-labelledby="topic-list-heading">
+					<h4 id="topic-list-heading">Topics on my roadmap</h4>
+					<ul>
+						<li>Semantic HTML and document outline</li>
+						<li>Accessible links and image alternatives</li>
+						<li>Tables for structured information</li>
+						<li>Constraint Validation API basics</li>
+					</ul>
+				</section>
+
+				<section aria-labelledby="glossary-heading">
+					<h4 id="glossary-heading">Quick glossary</h4>
+					<dl>
+						<dt>Semantic HTML</dt>
+						<dd>Markup that describes the meaning and role of content.</dd>
+						<dt>Constraint validation</dt>
+						<dd>The browser system that checks input rules such as required values or patterns.</dd>
+						<dt>Landmark</dt>
+						<dd>A major page region that helps assistive technologies navigate content.</dd>
+					</dl>
+				</section>
+			</section>
+
+			<section id="schedule" aria-labelledby="schedule-heading">
+				<h3 id="schedule-heading">Weekly Practice Schedule</h3>
+				<table>
+					<caption>Study plan for Module 1 HTML practice</caption>
+					<thead>
+						<tr>
+							<th scope="col">Day</th>
+							<th scope="col">Focus</th>
+							<th scope="col">Duration</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">Monday</th>
+							<td>HTML foundations and document structure</td>
+							<td>45 minutes</td>
+						</tr>
+						<tr>
+							<th scope="row">Wednesday</th>
+							<td>Links, images, and semantic sections</td>
+							<td>30 minutes</td>
+						</tr>
+						<tr>
+							<th scope="row">Friday</th>
+							<td>Forms, validation, and accessibility review</td>
+							<td>50 minutes</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section id="resources" aria-labelledby="resources-heading">
+				<h3 id="resources-heading">Useful Resources</h3>
+				<ul>
+					<li><a href="#contact">Jump to the contact form</a></li>
+					<li><a href="mailto:mara.ionescu@example.com?subject=Study%20Group%20Request">Send an email introduction</a></li>
+					<li><a href="tel:+40123456789">Call for a study session</a></li>
+					<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">MDN HTML reference</a></li>
+				</ul>
+			</section>
+
+			<aside aria-labelledby="tip-heading">
+				<h3 id="tip-heading">Study Tip</h3>
+				<p>
+					Use native HTML elements first. Add custom validation logic only when a
+					real requirement cannot be expressed with attributes alone.
+				</p>
+			</aside>
+
+			<section id="contact" aria-labelledby="contact-heading">
+				<h3 id="contact-heading">Contact Form with Validation</h3>
+				<p>
+					Use the form below to send a message. The browser checks required fields,
+					and the page adds one custom rule: if you prefer phone contact, a valid
+					phone number becomes required.
+				</p>
+
+				<form id="contact-form" action="/messages" method="post" novalidate>
+					<input type="hidden" name="formId" value="personal-homepage-contact">
+
+					<p>
+						<label for="full-name">Full name</label><br>
+						<input
+							id="full-name"
+							name="fullName"
+							type="text"
+							required
+							minlength="2"
+							aria-describedby="full-name-help"
+						>
+						<br>
+						<small id="full-name-help">Enter your first and last name.</small>
+					</p>
+
+					<p>
+						<label for="email">Email address</label><br>
+						<input
+							id="email"
+							name="email"
+							type="email"
+							required
+							autocomplete="email"
+							aria-describedby="email-help"
+						>
+						<br>
+						<small id="email-help">Use a valid address such as name@example.com.</small>
+					</p>
+
+					<p>
+						<label for="topic">Topic</label><br>
+						<select id="topic" name="topic" required>
+							<option value="">Choose a topic</option>
+							<option value="study-buddy">Study buddy request</option>
+							<option value="project-feedback">Project feedback</option>
+							<option value="resource-share">Resource sharing</option>
+						</select>
+					</p>
+
+					<fieldset>
+						<legend>Preferred contact method</legend>
+						<p>
+							<label>
+								<input type="radio" name="contactMethod" value="email" required checked>
+								Email
+							</label>
+						</p>
+						<p>
+							<label>
+								<input type="radio" name="contactMethod" value="phone">
+								Phone
+							</label>
+						</p>
+					</fieldset>
+
+					<p>
+						<label for="phone">Phone number</label><br>
+						<input
+							id="phone"
+							name="phone"
+							type="tel"
+							pattern="[+]?[0-9 ()-]{7,}"
+							autocomplete="tel"
+							aria-describedby="phone-help phone-error"
+						>
+						<br>
+						<small id="phone-help">Required only when phone is selected. Example: +40 123 456 789</small><br>
+						<small id="phone-error" role="alert"></small>
+					</p>
+
+					<p>
+						<label for="message">Message</label><br>
+						<textarea
+							id="message"
+							name="message"
+							rows="6"
+							required
+							minlength="20"
+							aria-describedby="message-help message-error"
+						></textarea>
+						<br>
+						<small id="message-help">Write at least 20 non-space characters.</small><br>
+						<small id="message-error" role="alert"></small>
+					</p>
+
+					<p>
+						<label>
+							<input type="checkbox" name="terms" required>
+							I confirm that this message is for learning and collaboration purposes.
+						</label>
+					</p>
+
+					<p>
+						<button type="submit">Send message</button>
+					</p>
+				</form>
+
+				<section aria-labelledby="preview-heading" aria-live="polite">
+					<h4 id="preview-heading">Submission Preview</h4>
+					<pre id="submission-preview">No submission yet.</pre>
+				</section>
+			</section>
+		</article>
+	</main>
+
+	<footer>
+		<p>Built only with Module 1 knowledge: HTML structure, semantics, content elements, and browser form validation.</p>
+		<p><a href="#top">Back to top</a></p>
+	</footer>
+
+	<script src="app.js"></script>
+</body>
+</html>
