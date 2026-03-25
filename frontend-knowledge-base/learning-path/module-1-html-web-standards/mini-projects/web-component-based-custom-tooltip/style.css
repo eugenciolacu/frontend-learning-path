@@ -1,0 +1,151 @@
+body {
+	margin: 0;
+	padding: 0 1rem 2rem;
+	font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+	line-height: 1.6;
+	color: #1f2933;
+	background:
+		radial-gradient(circle at top right, rgba(136, 224, 199, 0.4), transparent 30%),
+		linear-gradient(180deg, #f7fbfa 0%, #eef4f2 100%);
+}
+
+.skip-link {
+	position: absolute;
+	left: 1rem;
+	top: -3rem;
+	padding: 0.75rem 1rem;
+	border-radius: 0.75rem;
+	background-color: #0f3d3e;
+	color: #ffffff;
+	text-decoration: none;
+	z-index: 10;
+}
+
+.skip-link:focus {
+	top: 1rem;
+}
+
+.page-header,
+main,
+footer {
+	max-width: 960px;
+	margin: 0 auto;
+}
+
+.page-header,
+.article-header,
+#glossary,
+#examples,
+#checklist,
+#notes,
+footer {
+	margin-top: 1.25rem;
+	padding: 1.25rem;
+	border: 1px solid #c6d9d1;
+	border-radius: 1rem;
+	background-color: rgba(255, 255, 255, 0.88);
+	box-shadow: 0 18px 35px rgba(15, 61, 62, 0.08);
+	backdrop-filter: blur(4px);
+}
+
+.eyebrow {
+	margin: 0;
+	font-size: 0.85rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: #0f766e;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	color: #12343b;
+	line-height: 1.2;
+}
+
+h1 {
+	margin-bottom: 0.5rem;
+	font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.intro {
+	max-width: 60ch;
+	font-size: 1.05rem;
+}
+
+nav ul {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	padding: 0;
+	margin: 1rem 0 0;
+	list-style: none;
+}
+
+a {
+	color: #0f5c5e;
+	text-underline-offset: 0.2em;
+}
+
+a:focus,
+button:focus,
+kbd:focus {
+	outline: 3px solid #2aa198;
+	outline-offset: 3px;
+}
+
+code,
+kbd {
+	padding: 0.1rem 0.35rem;
+	border-radius: 0.35rem;
+	background-color: #e3f0ec;
+	font-family: Consolas, "Courier New", monospace;
+}
+
+.concept-list {
+	padding-left: 1.25rem;
+	margin: 1rem 0 0;
+	display: grid;
+	gap: 1rem;
+}
+
+.example-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+	gap: 1rem;
+	margin-top: 1rem;
+}
+
+.example-card {
+	padding: 1rem;
+	border: 1px solid #d8e6e0;
+	border-radius: 0.85rem;
+	background: linear-gradient(180deg, #ffffff 0%, #f5faf8 100%);
+}
+
+ol {
+	padding-left: 1.25rem;
+}
+
+footer p {
+	margin: 0.35rem 0;
+}
+
+@media (max-width: 640px) {
+	body {
+		padding-left: 0.75rem;
+		padding-right: 0.75rem;
+	}
+
+	.page-header,
+	.article-header,
+	#glossary,
+	#examples,
+	#checklist,
+	#notes,
+	footer {
+		padding: 1rem;
+	}
+}

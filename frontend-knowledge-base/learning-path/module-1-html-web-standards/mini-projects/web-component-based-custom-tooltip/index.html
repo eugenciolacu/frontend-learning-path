@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta
+		name="description"
+		content="A Module 1 mini-project that builds an accessible custom tooltip with a Web Component, Shadow DOM, and semantic HTML."
+	>
+	<meta name="author" content="Frontend Learning Path">
+	<title>Web Component-based Custom Tooltip</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="page-header" id="top">
+		<p class="eyebrow">Mini-Project: Web Component-based Custom Tooltip</p>
+		<h1>Frontend Learning Glossary</h1>
+		<p class="intro">
+			This project uses semantic HTML, accessibility-focused structure, and a reusable
+			custom element to explain key concepts from Module 1.
+		</p>
+
+		<nav aria-label="Project sections">
+			<ul>
+				<li><a href="#glossary">Glossary</a></li>
+				<li><a href="#examples">Examples</a></li>
+				<li><a href="#checklist">Checklist</a></li>
+				<li><a href="#notes">Notes</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="main-content">
+		<article aria-labelledby="project-title">
+			<header class="article-header">
+				<h2 id="project-title">Accessible Tooltip Web Component</h2>
+				<p>
+					The highlighted terms below are rendered with a custom HTML element named
+					<code>learning-tooltip</code>. Each instance uses a shared HTML template and
+					renders its own encapsulated structure inside Shadow DOM.
+				</p>
+			</header>
+
+			<section id="glossary" aria-labelledby="glossary-heading">
+				<h3 id="glossary-heading">Glossary Terms</h3>
+				<p>
+					Move with the keyboard using <kbd>Tab</kbd> or hover with a pointer to reveal
+					each explanation.
+				</p>
+
+				<ul class="concept-list">
+					<li>
+						<learning-tooltip
+							tooltip-title="Semantic HTML"
+							tooltip-text="Semantic elements describe the role of content. Examples include header, nav, main, article, section, aside, and footer."
+							position="top"
+						>
+							Semantic HTML
+						</learning-tooltip>
+						helps browsers and assistive technologies understand page meaning.
+					</li>
+					<li>
+						<learning-tooltip
+							tooltip-title="Shadow DOM"
+							tooltip-text="Shadow DOM creates an encapsulated subtree so a component can manage its own internal markup and styles with reduced interference from the page."
+							position="right"
+						>
+							Shadow DOM
+						</learning-tooltip>
+						keeps the tooltip internals isolated from the surrounding document.
+					</li>
+					<li>
+						<learning-tooltip
+							tooltip-title="Custom Element"
+							tooltip-text="A custom element is a browser-native HTML tag defined with customElements.define(). Its name must include a hyphen."
+							position="top"
+						>
+							Custom Element
+						</learning-tooltip>
+						turns repeated UI into a reusable browser primitive.
+					</li>
+					<li>
+						<learning-tooltip
+							tooltip-title="Focus Management"
+							tooltip-text="Focus management keeps keyboard navigation predictable. Interactive controls need visible focus and clear behavior when opened or dismissed."
+							position="left"
+						>
+							Focus Management
+						</learning-tooltip>
+						makes the component usable without a mouse.
+					</li>
+				</ul>
+			</section>
+
+			<section id="examples" aria-labelledby="examples-heading">
+				<h3 id="examples-heading">Tooltip Examples in Context</h3>
+				<p>
+					This mini-project uses native HTML first. The page structure is built with
+					semantic landmarks, while the reusable interaction is isolated in a Web Component.
+				</p>
+
+				<div class="example-grid">
+					<section class="example-card" aria-labelledby="example-1-heading">
+						<h4 id="example-1-heading">Document Structure</h4>
+						<p>
+							A clear heading hierarchy and page landmarks make the content easier to scan.
+							Use
+							<learning-tooltip
+								tooltip-title="Landmark"
+								tooltip-text="A landmark is a major page region such as main, nav, header, or footer that helps assistive technology users jump through a page."
+								position="bottom"
+							>
+								landmarks
+							</learning-tooltip>
+							to communicate page regions.
+						</p>
+					</section>
+
+					<section class="example-card" aria-labelledby="example-2-heading">
+						<h4 id="example-2-heading">Component API</h4>
+						<p>
+							Each tooltip exposes content through attributes such as
+							<code>tooltip-title</code>, <code>tooltip-text</code>, and <code>position</code>.
+							That makes the component easy to reuse in plain HTML.
+						</p>
+					</section>
+
+					<section class="example-card" aria-labelledby="example-3-heading">
+						<h4 id="example-3-heading">Keyboard Support</h4>
+						<p>
+							When the trigger receives focus, the tooltip opens. Press
+							<kbd>Escape</kbd> to close it and keep navigating.
+						</p>
+					</section>
+				</div>
+			</section>
+
+			<section id="checklist" aria-labelledby="checklist-heading">
+				<h3 id="checklist-heading">Accessibility Checklist</h3>
+				<ol>
+					<li>Each tooltip trigger is a real <code>button</code>, not a generic <code>div</code>.</li>
+					<li>The component provides visible focus states for keyboard users.</li>
+					<li>The tooltip panel uses <code>role="tooltip"</code> and connects to the trigger with <code>aria-describedby</code>.</li>
+					<li>The page includes a skip link and semantic landmarks.</li>
+				</ol>
+			</section>
+
+			<aside id="notes" aria-labelledby="notes-heading">
+				<h3 id="notes-heading">Study Notes</h3>
+				<p>
+					This project stays within Module 1 knowledge: document structure from HTML
+					foundations, semantic page architecture, accessibility guidance, and Web Components.
+				</p>
+				<p>
+					No framework, build tool, or external library is required. Open
+					<code>index.html</code> in a browser to inspect the result.
+				</p>
+			</aside>
+		</article>
+	</main>
+
+	<footer>
+		<p>
+			Frontend Learning Path Module 1 mini-project focused on custom elements, Shadow DOM,
+			semantic HTML, and keyboard accessibility.
+		</p>
+		<p><a href="#top">Back to top</a></p>
+	</footer>
+
+	<template id="tooltip-template">
+		<span class="tooltip-shell">
+			<button class="trigger" type="button">
+				<span class="trigger-label"><slot>Tooltip trigger</slot></span>
+			</button>
+			<span class="panel" role="tooltip" hidden>
+				<strong class="panel-title"></strong>
+				<span class="panel-text"></span>
+			</span>
+		</span>
+	</template>
+
+	<script src="app.js"></script>
+</body>
+</html>
