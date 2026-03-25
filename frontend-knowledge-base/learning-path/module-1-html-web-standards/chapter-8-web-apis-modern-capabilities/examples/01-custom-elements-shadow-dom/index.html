@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Custom Elements and Shadow DOM</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="page-shell">
+		<header class="hero">
+			<p class="eyebrow">Chapter 8 Example 01</p>
+			<h1>Custom Elements, Templates, and Shadow DOM</h1>
+			<p>
+				This example defines a reusable custom element that reads attributes,
+				clones a template, and renders encapsulated styles inside a shadow root.
+			</p>
+		</header>
+
+		<section class="demo-grid">
+			<student-profile-card
+				name="Eugen Ciolacu"
+				track="Frontend Engineering"
+				level="Advanced"
+			>
+				<span slot="badge">Lab Mentor</span>
+			</student-profile-card>
+
+			<student-profile-card
+				name="Mara Popescu"
+				track="Web Accessibility"
+				level="Intermediate"
+			>
+				<span slot="badge">Accessibility Club</span>
+			</student-profile-card>
+		</section>
+
+		<template id="profile-card-template">
+			<article class="card">
+				<div class="badge">
+					<slot name="badge">Student</slot>
+				</div>
+				<h2 class="name"></h2>
+				<p class="track"></p>
+				<p class="level"></p>
+			</article>
+		</template>
+	</main>
+
+	<script src="app.js"></script>
+</body>
+</html>

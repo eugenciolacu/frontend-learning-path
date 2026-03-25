@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Canvas, SVG, and WebGL Basics</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="layout">
+		<header>
+			<p class="eyebrow">Chapter 8 Example 02</p>
+			<h1>Canvas, SVG, and WebGL Basics</h1>
+			<p>
+				The page uses Canvas 2D for a small chart, SVG DOM manipulation for an interactive graphic,
+				and WebGL feature detection for GPU rendering support.
+			</p>
+		</header>
+
+		<section class="panel-grid">
+			<section class="panel">
+				<h2>Canvas 2D Chart</h2>
+				<canvas id="skill-chart" width="360" height="220"></canvas>
+			</section>
+
+			<section class="panel">
+				<h2>SVG Progress Ring</h2>
+				<svg id="ring-demo" viewBox="0 0 240 140" role="img" aria-labelledby="ring-title ring-desc">
+					<title id="ring-title">Course progress ring</title>
+					<desc id="ring-desc">A circle whose visible stroke changes when the button is pressed.</desc>
+					<circle cx="70" cy="70" r="48" class="track"></circle>
+					<circle cx="70" cy="70" r="48" class="progress" id="progress-ring"></circle>
+					<text x="140" y="58" id="progress-label">68%</text>
+					<text x="140" y="86">Course complete</text>
+				</svg>
+				<button id="update-progress" type="button">Increase Progress</button>
+			</section>
+
+			<section class="panel">
+				<h2>WebGL Support Check</h2>
+				<canvas id="gl-canvas" width="360" height="220"></canvas>
+				<p id="gl-status"></p>
+			</section>
+		</section>
+	</main>
+
+	<script src="app.js"></script>
+</body>
+</html>

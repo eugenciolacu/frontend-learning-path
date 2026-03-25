@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Constraint Validation API</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="shell">
+		<section class="intro">
+			<p class="eyebrow">Chapter 8 Example 03</p>
+			<h1>Constraint Validation API</h1>
+			<p>
+				This demo combines native browser validation with custom rules and inline error feedback.
+			</p>
+		</section>
+
+		<form id="enrollment-form" novalidate>
+			<div class="field">
+				<label for="student-email">Student email</label>
+				<input id="student-email" name="email" type="email" required aria-describedby="email-error">
+				<p id="email-error" class="error" role="alert"></p>
+			</div>
+
+			<div class="field">
+				<label for="username">Username</label>
+				<input
+					id="username"
+					name="username"
+					type="text"
+					required
+					minlength="4"
+					pattern="[A-Za-z0-9]{4,12}"
+					aria-describedby="username-help username-error"
+				>
+				<p id="username-help" class="help">Use 4 to 12 letters or numbers. No spaces.</p>
+				<p id="username-error" class="error" role="alert"></p>
+			</div>
+
+			<div class="field">
+				<label for="study-hours">Weekly study hours</label>
+				<input id="study-hours" name="studyHours" type="number" min="1" max="20" required aria-describedby="hours-error">
+				<p id="hours-error" class="error" role="alert"></p>
+			</div>
+
+			<label class="checkbox-row">
+				<input id="portfolio-toggle" type="checkbox">
+				<span>I want to submit a portfolio URL</span>
+			</label>
+
+			<div class="field">
+				<label for="portfolio-url">Portfolio URL</label>
+				<input id="portfolio-url" name="portfolioUrl" type="url" aria-describedby="portfolio-error">
+				<p id="portfolio-error" class="error" role="alert"></p>
+			</div>
+
+			<button type="submit">Validate and Submit</button>
+		</form>
+
+		<section class="result-panel" aria-live="polite">
+			<h2>Submission Preview</h2>
+			<pre id="result-output">No submission yet.</pre>
+		</section>
+	</main>
+
+	<script src="app.js"></script>
+</body>
+</html>

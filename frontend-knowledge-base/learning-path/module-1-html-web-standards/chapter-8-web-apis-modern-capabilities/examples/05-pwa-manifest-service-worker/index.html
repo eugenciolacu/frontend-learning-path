@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="theme-color" content="#0f172a">
+	<link rel="manifest" href="manifest.json">
+	<title>PWA Manifest and Service Worker</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="shell">
+		<header>
+			<p class="eyebrow">Chapter 8 Example 05</p>
+			<h1>PWA Manifest and Service Worker</h1>
+			<p>
+				This example registers a Service Worker, precaches core files, and exposes online or offline state.
+			</p>
+		</header>
+
+		<section class="card-grid">
+			<article class="card">
+				<h2>Runtime Status</h2>
+				<p id="connection-status">Checking network status...</p>
+				<p id="worker-status">Checking Service Worker support...</p>
+			</article>
+
+			<article class="card">
+				<h2>Study Notes</h2>
+				<ul>
+					<li>The manifest describes installation metadata.</li>
+					<li>The Service Worker controls caching and offline fallback behavior.</li>
+					<li>Run this example over localhost or HTTPS for Service Worker support.</li>
+				</ul>
+			</article>
+		</section>
+
+		<nav class="actions">
+			<a href="offline.html">Open offline fallback page</a>
+		</nav>
+	</main>
+
+	<script src="app.js"></script>
+</body>
+</html>

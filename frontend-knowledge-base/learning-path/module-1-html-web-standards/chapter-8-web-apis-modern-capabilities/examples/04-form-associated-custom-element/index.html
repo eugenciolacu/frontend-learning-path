@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Form-Associated Custom Element</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<main class="shell">
+		<header>
+			<p class="eyebrow">Chapter 8 Example 04</p>
+			<h1>Form-Associated Custom Element</h1>
+			<p>
+				This example shows how a custom element can participate in form submission using
+				<code>ElementInternals</code> and <code>setFormValue()</code>.
+			</p>
+		</header>
+
+		<form id="feedback-form">
+			<label for="student-name">Student name</label>
+			<input id="student-name" name="studentName" type="text" required>
+
+			<p class="label-text">Rate your confidence with Web APIs</p>
+			<skill-rating name="webApiConfidence" value="3"></skill-rating>
+
+			<button type="submit">Submit Form</button>
+		</form>
+
+		<section class="panel">
+			<h2>Captured FormData</h2>
+			<pre id="output">No data submitted yet.</pre>
+			<p id="support-note" class="support-note"></p>
+		</section>
+	</main>
+
+	<script src="app.js"></script>
+</body>
+</html>
