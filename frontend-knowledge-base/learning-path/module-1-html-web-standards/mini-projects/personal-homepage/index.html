@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="A simple personal homepage built with semantic HTML and basic CSS.">
+	<title>Personal Homepage</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<header class="site-header" id="top">
+		<p class="eyebrow">Mini-Project: Personal Homepage</p>
+		<h1>Alex Parker</h1>
+		<p class="intro">Frontend learner building clean, accessible pages with HTML fundamentals and a small amount of CSS.</p>
+
+		<nav aria-label="Primary">
+			<ul class="nav-list">
+				<li><a href="#about">About</a></li>
+				<li><a href="#goals">Goals</a></li>
+				<li><a href="#schedule">Schedule</a></li>
+				<li><a href="#resources">Resources</a></li>
+				<li><a href="#contact">Contact</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<main id="main-content">
+		<section id="about" aria-labelledby="about-heading">
+			<h2 id="about-heading">About Me</h2>
+			<figure>
+				<img src="images/profile-illustration.svg" alt="Illustration of a person working at a desk with a laptop" width="360" height="240">
+				<figcaption>A simple local SVG image used with meaningful alternative text.</figcaption>
+			</figure>
+
+			<p>I enjoy turning ideas into clear page structures with headings, paragraphs, links, images, and semantic sections.</p>
+			<p>Right now I am focusing on writing valid HTML, improving accessibility, and understanding how browsers read document structure.</p>
+
+			<blockquote>
+				<p>"A good webpage is easy to read, easy to navigate, and easy to understand."</p>
+			</blockquote>
+		</section>
+
+		<hr>
+
+		<section id="goals" aria-labelledby="goals-heading">
+			<h2 id="goals-heading">Learning Goals</h2>
+			<article>
+				<h3>This Month</h3>
+				<ol>
+					<li>Build semantic page layouts with <code>header</code>, <code>main</code>, <code>section</code>, and <code>footer</code>.</li>
+					<li>Use accessible links and images with clear link text and useful <code>alt</code> descriptions.</li>
+					<li>Create lists and tables that present information in a clean, readable way.</li>
+				</ol>
+			</article>
+
+			<article>
+				<h3>Topics I Am Practicing</h3>
+				<dl>
+					<dt>Semantic HTML</dt>
+					<dd>Using meaningful elements so both people and assistive technologies understand the page.</dd>
+					<dt>Accessible Navigation</dt>
+					<dd>Creating internal links and page landmarks that help users move through content quickly.</dd>
+					<dt>Content Structure</dt>
+					<dd>Choosing between paragraphs, lists, tables, and figures based on the type of information.</dd>
+				</dl>
+			</article>
+		</section>
+
+		<section id="schedule" aria-labelledby="schedule-heading">
+			<h2 id="schedule-heading">Weekly Study Schedule</h2>
+			<table>
+				<caption>Current study plan for practicing HTML and web standards</caption>
+				<thead>
+					<tr>
+						<th scope="col">Day</th>
+						<th scope="col">Focus</th>
+						<th scope="col">Time</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">Monday</th>
+						<td>Document structure and semantic landmarks</td>
+						<td>45 min</td>
+					</tr>
+					<tr>
+						<th scope="row">Wednesday</th>
+						<td>Links, images, and descriptive alternative text</td>
+						<td>30 min</td>
+					</tr>
+					<tr>
+						<th scope="row">Friday</th>
+						<td>Lists, tables, and content organization</td>
+						<td>40 min</td>
+					</tr>
+				</tbody>
+			</table>
+		</section>
+
+		<section id="resources" aria-labelledby="resources-heading">
+			<h2 id="resources-heading">Favorite Resources</h2>
+			<ul>
+				<li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML" target="_blank" rel="noopener noreferrer">MDN HTML reference</a></li>
+				<li><a href="https://webaim.org/" target="_blank" rel="noopener noreferrer">WebAIM accessibility articles</a></li>
+				<li><a href="https://html.spec.whatwg.org/" target="_blank" rel="noopener noreferrer">HTML Living Standard</a></li>
+			</ul>
+		</section>
+
+		<aside id="contact" aria-labelledby="contact-heading">
+			<h2 id="contact-heading">Contact</h2>
+			<p>If you want to study together or share resources, reach out through one of these links:</p>
+			<ul>
+				<li><a href="mailto:alex.parker@example.com">alex.parker@example.com</a></li>
+				<li><a href="tel:+40123456789">+40 123 456 789</a></li>
+				<li><a href="#top">Back to top</a></li>
+			</ul>
+		</aside>
+	</main>
+
+	<footer class="site-footer">
+		<p>Built with HTML and simple CSS as a Module 1 mini-project.</p>
+	</footer>
+</body>
+</html>

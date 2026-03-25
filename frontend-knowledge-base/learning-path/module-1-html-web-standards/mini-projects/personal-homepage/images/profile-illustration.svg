@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 240" role="img" aria-labelledby="title desc">
+	<title id="title">Profile illustration</title>
+	<desc id="desc">A person sitting at a desk using a laptop with a small plant nearby.</desc>
+	<rect width="360" height="240" fill="#e9f2ff" rx="24" />
+	<rect x="60" y="150" width="240" height="18" fill="#9fb3c8" rx="9" />
+	<rect x="90" y="92" width="124" height="64" fill="#bcccdc" rx="10" />
+	<rect x="101" y="102" width="102" height="42" fill="#ffffff" rx="6" />
+	<circle cx="250" cy="78" r="28" fill="#486581" />
+	<rect x="228" y="108" width="44" height="60" fill="#486581" rx="12" />
+	<rect x="214" y="116" width="20" height="12" fill="#486581" rx="6" />
+	<rect x="266" y="116" width="20" height="12" fill="#486581" rx="6" />
+	<rect x="134" y="164" width="14" height="34" fill="#829ab1" rx="6" />
+	<rect x="214" y="164" width="14" height="34" fill="#829ab1" rx="6" />
+	<rect x="292" y="108" width="10" height="42" fill="#7b8794" rx="5" />
+	<circle cx="297" cy="100" r="18" fill="#3ebd93" />
+	<rect x="171" y="118" width="56" height="8" fill="#7b8794" rx="4" />
+</svg>
