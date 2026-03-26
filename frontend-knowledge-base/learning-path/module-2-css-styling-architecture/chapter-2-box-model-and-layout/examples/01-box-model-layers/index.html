@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Box Model Layers</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1>Box Model Layers</h1>
+      <p class="intro">
+        The two cards use the same declared width, padding, and border. The only difference is the
+        <code>box-sizing</code> value.
+      </p>
+
+      <section class="comparison">
+        <article class="demo-card content-box-card">
+          <h2>content-box</h2>
+          <p>The declared width applies only to the content area.</p>
+        </article>
+
+        <article class="demo-card border-box-card">
+          <h2>border-box</h2>
+          <p>The declared width includes content, padding, and border.</p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

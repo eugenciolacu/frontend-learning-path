@@ -1,0 +1,50 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  margin: 0;
+}
+
+.page {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+.intro {
+  max-width: 60ch;
+}
+
+.comparison {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.demo-card {
+  background-color: #ffffff;
+  border: 8px solid #2563eb;
+  margin: 1rem;
+  padding: 1.5rem;
+  width: 260px;
+}
+
+.content-box-card {
+  box-sizing: content-box;
+}
+
+.border-box-card {
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: Georgia, serif;
+}
+
+code {
+  background-color: #e2e8f0;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.35rem;
+}

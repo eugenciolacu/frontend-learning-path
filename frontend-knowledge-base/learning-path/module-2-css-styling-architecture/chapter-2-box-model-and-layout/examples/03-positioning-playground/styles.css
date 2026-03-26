@@ -1,0 +1,96 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8fafc;
+  color: #0f172a;
+  margin: 0;
+}
+
+.page {
+  margin: 0 auto;
+  max-width: 960px;
+  padding: 2rem;
+}
+
+.demo-section {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+.box {
+  background-color: #dbeafe;
+  border: 2px solid #2563eb;
+  height: 120px;
+  padding: 1rem;
+  width: 160px;
+}
+
+.relative-box {
+  left: 18px;
+  position: relative;
+  top: 12px;
+}
+
+.card {
+  background-color: #ecfeff;
+  border: 2px solid #0891b2;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  position: relative;
+}
+
+.badge {
+  background-color: #0f766e;
+  border-radius: 999px;
+  color: #ffffff;
+  padding: 0.35rem 0.75rem;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+}
+
+.sticky-section {
+  max-height: 320px;
+  overflow: auto;
+}
+
+.sticky-note {
+  background-color: #fef3c7;
+  border: 1px solid #f59e0b;
+  padding: 0.75rem;
+  position: sticky;
+  top: 0;
+}
+
+.scroll-copy p {
+  margin: 1rem 0;
+}
+
+.help-button {
+  background-color: #1d4ed8;
+  border-radius: 999px;
+  bottom: 1rem;
+  color: #ffffff;
+  padding: 0.75rem 1rem;
+  position: fixed;
+  right: 1rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: Georgia, serif;
+}
+
+code {
+  background-color: #e2e8f0;
+  border-radius: 0.25rem;
+  padding: 0.1rem 0.3rem;
+}

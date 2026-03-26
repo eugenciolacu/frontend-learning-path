@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Overflow and Z-Index</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1>Overflow and Z-Index</h1>
+
+      <section class="demo-grid">
+        <article class="panel">
+          <h2>Overflow Auto</h2>
+          <div class="scroll-panel">
+            <p>Overflow lets a box stay within a defined size while preserving access to content.</p>
+            <p>This is useful for logs, code samples, chat panels, or any area that can grow.</p>
+            <p>When content becomes taller than the panel, the browser adds scrolling.</p>
+            <p>Using <code>overflow: auto</code> keeps the layout stable.</p>
+            <p>Without it, content may spill outside the box and overlap neighboring UI.</p>
+            <p>That behavior is sometimes useful, but often it is a bug.</p>
+          </div>
+        </article>
+
+        <article class="panel">
+          <h2>Overflow Hidden</h2>
+          <div class="media-frame">
+            <div class="media-blob"></div>
+          </div>
+        </article>
+
+        <article class="panel overlap-panel">
+          <h2>Overlapping Layers</h2>
+          <div class="stack-area">
+            <div class="layer layer-back">Layer 1</div>
+            <div class="layer layer-middle">Layer 2</div>
+            <div class="layer layer-front">Layer 3</div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

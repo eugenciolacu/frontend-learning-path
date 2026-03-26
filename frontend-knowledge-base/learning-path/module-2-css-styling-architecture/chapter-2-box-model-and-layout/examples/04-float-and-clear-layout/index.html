@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Float and Clear Layout</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="page">
+      <h1>Float and Clear</h1>
+
+      <article class="article-card">
+        <div class="float-visual">Floated box</div>
+        <p>
+          Floats were originally designed so content such as text could wrap around media. In this
+          example, the colored box is floated to the left side of the article.
+        </p>
+        <p>
+          The paragraphs flow around the floated element instead of starting below it. This was a
+          very common technique in older web layouts before Flexbox and Grid became the preferred
+          tools for major page structure.
+        </p>
+        <p>
+          Modern developers still need to understand floats because they appear in legacy code and
+          can still be useful for article-like content.
+        </p>
+        <div class="footer-note">This footer uses <code>clear: both</code> and starts below the float.</div>
+      </article>
+    </main>
+  </body>
+</html>

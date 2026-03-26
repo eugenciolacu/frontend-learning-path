@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Positioning Playground</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <aside class="help-button">Help</aside>
+
+    <main class="page">
+      <h1>Positioning Playground</h1>
+
+      <section class="demo-section">
+        <h2>Static and Relative</h2>
+        <div class="row">
+          <div class="box static-box">Static</div>
+          <div class="box relative-box">Relative</div>
+        </div>
+      </section>
+
+      <section class="demo-section card-area">
+        <h2>Absolute Inside a Relative Parent</h2>
+        <article class="card">
+          <h3>Project Card</h3>
+          <p>This badge is absolutely positioned against the card.</p>
+          <span class="badge">New</span>
+        </article>
+      </section>
+
+      <section class="demo-section sticky-section">
+        <h2>Sticky</h2>
+        <div class="sticky-note">I stick to the top of this scrolling area.</div>
+        <div class="scroll-copy">
+          <p>Sticky positioning is useful for local navigation, labels, and headings.</p>
+          <p>Scroll this section to watch the note pin itself when it reaches the top.</p>
+          <p>Because the section is tall, there is enough space for the sticky behavior to be visible.</p>
+          <p>Browsers keep the element in normal flow until the threshold is reached.</p>
+          <p>After that, the element behaves like it is attached to the scroll container edge.</p>
+          <p>Sticky elements still need an offset such as <code>top: 0</code>.</p>
+          <p>This makes them easier to reason about than fixed elements in many layouts.</p>
+          <p>They are often used for table headers and side navigation.</p>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
