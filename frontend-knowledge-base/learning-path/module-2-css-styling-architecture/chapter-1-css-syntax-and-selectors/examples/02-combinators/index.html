@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS Combinators</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <section>
+        <h1>Descendant and Child Selectors</h1>
+        <article class="article-demo">
+          <p>This paragraph is a descendant of the article.</p>
+          <div>
+            <p>This nested paragraph is also a descendant of the article.</p>
+          </div>
+        </article>
+
+        <nav class="nav-demo">
+          <a href="#">Direct child link</a>
+          <div>
+            <a href="#">Nested link that is not a direct child</a>
+          </div>
+        </nav>
+      </section>
+
+      <section>
+        <h2>Sibling Selectors</h2>
+        <p>Paragraph before the heading.</p>
+        <h3>Section heading</h3>
+        <p>This paragraph matches h3 + p.</p>
+        <div>Intermediate element</div>
+        <p>This paragraph matches h3 ~ p.</p>
+      </section>
+    </main>
+  </body>
+</html>

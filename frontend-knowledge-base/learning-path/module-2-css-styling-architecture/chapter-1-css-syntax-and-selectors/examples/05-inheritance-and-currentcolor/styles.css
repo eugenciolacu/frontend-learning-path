@@ -1,0 +1,27 @@
+body {
+  background-color: #eef2ff;
+  margin: 0;
+  padding: 2rem;
+}
+
+.article-card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  color: #4338ca;
+  font-family: Georgia, serif;
+  line-height: 1.7;
+  margin: 0 auto;
+  max-width: 42rem;
+  padding: 1.5rem;
+}
+
+.article-card a {
+  color: inherit;
+}
+
+.badge {
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+}

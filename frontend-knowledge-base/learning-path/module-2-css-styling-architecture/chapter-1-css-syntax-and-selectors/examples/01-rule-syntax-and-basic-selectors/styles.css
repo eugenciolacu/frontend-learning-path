@@ -1,0 +1,44 @@
+/* Base page styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f5f7fb;
+  color: #1f2937;
+  margin: 0;
+  padding: 2rem;
+}
+
+/* Grouped selectors */
+h1,
+h2 {
+  font-family: Georgia, serif;
+}
+
+/* ID selector */
+#page-header {
+  border-bottom: 3px solid #2563eb;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+/* Element selector */
+p {
+  line-height: 1.6;
+}
+
+/* Class selector */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #d1d5db;
+  border-radius: 0.75rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+}
+
+.highlight {
+  background-color: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.subtitle {
+  color: #475569;
+}

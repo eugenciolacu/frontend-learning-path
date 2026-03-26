@@ -1,0 +1,33 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 2rem;
+}
+
+button {
+  color: #ffffff;
+  background-color: #475569;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+}
+
+.button {
+  background-color: #2563eb;
+}
+
+.primary-action {
+  color: #fef3c7;
+}
+
+#main-action {
+  background-color: #7c3aed;
+}
+
+.button {
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15);
+}
+
+.explanation {
+  max-width: 42rem;
+}

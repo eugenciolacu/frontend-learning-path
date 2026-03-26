@@ -1,0 +1,49 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 2rem;
+  background-color: #fffdf7;
+  color: #1f2937;
+}
+
+.wrapper {
+  display: grid;
+  gap: 2rem;
+}
+
+a[href^="https"] {
+  color: #047857;
+  font-weight: bold;
+}
+
+input[type="email"] {
+  border: 2px solid #2563eb;
+}
+
+[disabled] {
+  background-color: #e5e7eb;
+  color: #6b7280;
+}
+
+button:hover {
+  background-color: #1d4ed8;
+  color: #ffffff;
+}
+
+button:focus {
+  outline: 3px solid #f59e0b;
+  outline-offset: 2px;
+}
+
+.zebra-list li:nth-child(odd) {
+  background-color: #fef3c7;
+}
+
+.tag::before {
+  content: "#";
+  color: #ff0000;
+}
+
+::selection {
+  background-color: #fde68a;
+}

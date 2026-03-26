@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Specificity and Cascade</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Specificity Demo</h1>
+      <p class="explanation">The first button is matched by element, class, and id selectors.</p>
+
+      <button id="main-action" class="button primary-action">Save changes</button>
+
+      <p class="explanation">The second button also has an inline style, which overrides normal author rules.</p>
+
+      <button class="button primary-action" style="color: black;">Inline style wins</button>
+    </main>
+  </body>
+</html>
