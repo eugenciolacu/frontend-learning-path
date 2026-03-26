@@ -1,0 +1,68 @@
+:root {
+	font-size: 16px;
+	color-scheme: light;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-size: 1rem;
+	line-height: 1.6;
+	color: #1f2937;
+	background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+}
+
+.page {
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+	padding: 2rem;
+}
+
+.card {
+	max-width: 48rem;
+	padding: 2rem;
+	background-color: #ffffff;
+	border: 1px solid #dbeafe;
+	border-radius: 1rem;
+	box-shadow: 0 16px 40px rgba(37, 99, 235, 0.12);
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.875rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #1d4ed8;
+}
+
+h1 {
+	margin: 0;
+	font-size: 2.5rem;
+	line-height: 1.15;
+	max-width: 18ch;
+}
+
+.subtitle {
+	margin: 1rem 0;
+	font-size: 1.125rem;
+	color: #475569;
+}
+
+p {
+	margin: 0 0 1rem;
+}
+
+code {
+	display: inline-block;
+	padding: 0.35rem 0.55rem;
+	font-family: "Courier New", Courier, monospace;
+	font-size: 0.95rem;
+	background-color: #e2e8f0;
+	border-radius: 0.4rem;
+}
