@@ -1,0 +1,76 @@
+:root {
+	font-size: 16px;
+	color-scheme: light;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	color: #1f2937;
+	background: linear-gradient(180deg, #f5f3ff 0%, #ffffff 100%);
+}
+
+img {
+	max-width: 100%;
+	height: auto;
+	display: block;
+}
+
+.page {
+	width: min(100% - 1.5rem, 72rem);
+	margin-inline: auto;
+	padding-block: 1.5rem 2rem;
+	display: grid;
+	gap: 1rem;
+}
+
+.content,
+.media-card {
+	background-color: rgba(255, 255, 255, 0.95);
+	border: 1px solid rgba(148, 163, 184, 0.25);
+	border-radius: 1rem;
+	padding: 1.25rem;
+	box-shadow: 0 18px 40px rgba(99, 102, 241, 0.1);
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #6d28d9;
+}
+
+h1 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+	font-size: clamp(2rem, 4.5vw, 3.4rem);
+	line-height: 1.15;
+	max-width: 16ch;
+}
+
+.content p:last-child,
+figcaption {
+	margin-bottom: 0;
+	color: #475569;
+}
+
+picture {
+	display: block;
+	overflow: hidden;
+	border-radius: 0.85rem;
+	margin-bottom: 1rem;
+}
+
+@media (min-width: 52rem) {
+	.page {
+		grid-template-columns: 0.9fr 1.1fr;
+		align-items: center;
+		padding-block: 2.5rem;
+	}
+}

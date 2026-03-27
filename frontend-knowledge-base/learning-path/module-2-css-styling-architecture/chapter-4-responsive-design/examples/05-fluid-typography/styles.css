@@ -1,0 +1,61 @@
+:root {
+	font-size: 16px;
+	color-scheme: light;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", serif;
+	color: #172554;
+	background: linear-gradient(180deg, #dbeafe 0%, #eff6ff 35%, #ffffff 100%);
+}
+
+.page {
+	min-height: 100vh;
+	display: grid;
+	place-items: center;
+	padding: clamp(1rem, 4vw, 3rem);
+}
+
+.article {
+	width: min(100%, 72rem);
+	padding: clamp(1.25rem, 3vw, 3rem);
+	border-radius: 1.25rem;
+	background-color: rgba(255, 255, 255, 0.92);
+	border: 1px solid rgba(37, 99, 235, 0.12);
+	box-shadow: 0 18px 40px rgba(30, 64, 175, 0.12);
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-size: clamp(0.8rem, 1vw, 0.95rem);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: #2563eb;
+}
+
+h1 {
+	margin-top: 0;
+	margin-bottom: 1rem;
+	max-width: 14ch;
+	font-size: clamp(2.1rem, 6vw, 4.75rem);
+	line-height: 1.05;
+}
+
+.lead {
+	font-size: clamp(1.05rem, 2vw, 1.4rem);
+	color: #1d4ed8;
+}
+
+p {
+	max-width: 65ch;
+	margin-bottom: 0;
+	font-size: clamp(1rem, 1.2vw, 1.125rem);
+	line-height: 1.75;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 4 - Responsive Images</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page">
+		<section class="content">
+			<p class="eyebrow">Responsive Images</p>
+			<h1>Choose image behavior for both layout and content clarity.</h1>
+			<p>
+				The `<picture>` element below changes the image composition at wider sizes. The `<img>` fallback remains accessible and scales fluidly inside its container.
+			</p>
+		</section>
+
+		<figure class="media-card">
+			<picture>
+				<source media="(min-width: 50rem)" srcset="hero-wide.svg">
+				<img src="hero-tall.svg" alt="Frontend students collaborating around a design wall">
+			</picture>
+			<figcaption>
+				Narrow screens use a taller illustration. Wider screens use a wider scene that shows more context.
+			</figcaption>
+		</figure>
+	</main>
+</body>
+</html>

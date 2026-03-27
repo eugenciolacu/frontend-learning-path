@@ -1,0 +1,15 @@
+<svg width="800" height="1000" viewBox="0 0 800 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="1000" rx="48" fill="#F5F3FF"/>
+  <rect x="72" y="70" width="656" height="860" rx="36" fill="#EDE9FE"/>
+  <circle cx="242" cy="318" r="106" fill="#C4B5FD"/>
+  <circle cx="560" cy="278" r="88" fill="#DDD6FE"/>
+  <circle cx="394" cy="490" r="138" fill="#A78BFA"/>
+  <rect x="150" y="640" width="500" height="154" rx="24" fill="#6D28D9"/>
+  <rect x="192" y="686" width="214" height="18" rx="9" fill="#F5F3FF"/>
+  <rect x="192" y="722" width="354" height="18" rx="9" fill="#DDD6FE"/>
+  <path d="M238 398C238 344.98 280.98 302 334 302H454C507.02 302 550 344.98 550 398V612H238V398Z" fill="#7C3AED"/>
+  <circle cx="320" cy="418" r="40" fill="#F5F3FF"/>
+  <circle cx="468" cy="418" r="40" fill="#DDD6FE"/>
+  <rect x="320" y="500" width="148" height="24" rx="12" fill="#EDE9FE"/>
+  <text x="164" y="866" fill="#5B21B6" font-family="Arial, sans-serif" font-size="34" font-weight="700">Mobile art direction</text>
+</svg>

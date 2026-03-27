@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 1 - Viewport and Mobile-First Layout</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page">
+		<section class="hero">
+			<p class="eyebrow">Responsive Design</p>
+			<h1>Start small, then enhance the layout as space becomes available.</h1>
+			<p class="intro">
+				This page uses a mobile-first approach. On narrow screens, content stacks in a single column. On wider screens, the layout expands into two columns without changing the HTML structure.
+			</p>
+		</section>
+
+		<section class="cards" aria-label="Responsive cards">
+			<article class="card">
+				<h2>Base Layout</h2>
+				<p>The default CSS is optimized for smaller screens first.</p>
+			</article>
+			<article class="card accent">
+				<h2>Enhancement</h2>
+				<p>A `min-width` media query turns the stack into a wider layout.</p>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

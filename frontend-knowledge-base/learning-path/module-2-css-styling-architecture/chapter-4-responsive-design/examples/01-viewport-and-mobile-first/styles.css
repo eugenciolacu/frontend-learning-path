@@ -1,0 +1,85 @@
+:root {
+	color-scheme: light;
+	font-size: 16px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	line-height: 1.6;
+	color: #14213d;
+	background: linear-gradient(180deg, #f8fbff 0%, #e6f0ff 100%);
+}
+
+.page {
+	width: min(100% - 1.5rem, 72rem);
+	margin-inline: auto;
+	padding-block: 1.5rem 2rem;
+	display: grid;
+	gap: 1rem;
+}
+
+.hero,
+.card {
+	padding: 1.25rem;
+	border-radius: 1rem;
+	background-color: rgba(255, 255, 255, 0.9);
+	border: 1px solid rgba(20, 33, 61, 0.1);
+	box-shadow: 0 18px 40px rgba(59, 130, 246, 0.12);
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	color: #2563eb;
+}
+
+h1,
+h2 {
+	margin-top: 0;
+	line-height: 1.2;
+}
+
+h1 {
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	max-width: 16ch;
+	margin-bottom: 0.75rem;
+}
+
+.intro,
+.card p {
+	margin-bottom: 0;
+	color: #334155;
+}
+
+.cards {
+	display: grid;
+	gap: 1rem;
+}
+
+.accent {
+	background: linear-gradient(135deg, #dbeafe 0%, #ffffff 100%);
+}
+
+@media (min-width: 48rem) {
+	.page {
+		grid-template-columns: 1.3fr 1fr;
+		align-items: start;
+		padding-block: 2.5rem;
+	}
+
+	.hero {
+		min-height: 100%;
+	}
+
+	.cards {
+		grid-template-columns: 1fr;
+	}
+}
