@@ -1,0 +1,81 @@
+:root {
+	--bg: #f1f0fa;
+	--surface: #ffffff;
+	--text: #201b31;
+	--muted: #5e5776;
+	--line: #d8d3ea;
+	--accent: #5d4b9a;
+	--card-a: #ece8fb;
+	--card-b: #f8f4ff;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Book Antiqua", "Palatino Linotype", serif;
+	background:
+		radial-gradient(circle at top left, rgba(143, 123, 214, 0.18), transparent 30%),
+		linear-gradient(180deg, #fbfaff 0%, #e7e2f6 100%);
+	color: var(--text);
+}
+
+.page {
+	width: min(100% - 2rem, 72rem);
+	margin-inline: auto;
+	padding-block: 2rem;
+}
+
+.intro {
+	margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.85rem;
+	font-weight: 700;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.intro h1 {
+	margin: 0 0 0.75rem;
+	font-size: clamp(1.9rem, 4vw, 3.2rem);
+}
+
+.intro p {
+	margin: 0;
+	max-width: 42rem;
+	line-height: 1.6;
+	color: var(--muted);
+}
+
+.gallery {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+	gap: 1rem;
+}
+
+.card {
+	padding: 1.25rem;
+	min-height: 12rem;
+	border: 1px solid var(--line);
+	border-radius: 1.25rem;
+	background: linear-gradient(180deg, var(--card-b) 0%, var(--card-a) 100%);
+	box-shadow: 0 1rem 1.75rem rgba(32, 27, 49, 0.08);
+}
+
+.card h2 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+	font-size: 1.25rem;
+}
+
+.card p {
+	margin: 0;
+	line-height: 1.6;
+	color: var(--muted);
+}

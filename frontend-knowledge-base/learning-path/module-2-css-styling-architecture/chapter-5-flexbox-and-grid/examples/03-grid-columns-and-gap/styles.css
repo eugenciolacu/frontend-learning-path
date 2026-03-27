@@ -1,0 +1,78 @@
+:root {
+	--bg: #eef5fa;
+	--surface: #ffffff;
+	--text: #13202c;
+	--muted: #526474;
+	--line: #c6d8e6;
+	--accent: #2e6f95;
+	--feature: #ddecf7;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Segoe UI", Tahoma, sans-serif;
+	background: linear-gradient(180deg, #f7fbff 0%, #dcecf6 100%);
+	color: var(--text);
+}
+
+.page {
+	width: min(100% - 2rem, 70rem);
+	margin-inline: auto;
+	padding-block: 2rem;
+}
+
+.intro {
+	margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.85rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.intro h1 {
+	margin: 0 0 0.75rem;
+	font-size: clamp(1.9rem, 4vw, 3rem);
+}
+
+.intro p {
+	margin: 0;
+	max-width: 42rem;
+	line-height: 1.6;
+	color: var(--muted);
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 1rem;
+}
+
+.tile {
+	padding: 2rem;
+	border: 1px solid var(--line);
+	border-radius: 1.25rem;
+	background: var(--surface);
+	font-size: 1.2rem;
+	font-weight: 700;
+	box-shadow: 0 0.75rem 1.5rem rgba(19, 32, 44, 0.08);
+}
+
+.feature {
+	background: var(--feature);
+	color: #17344a;
+}
+
+@media (min-width: 48rem) {
+	.grid {
+		grid-template-columns: 1fr 2fr 1fr;
+	}
+}

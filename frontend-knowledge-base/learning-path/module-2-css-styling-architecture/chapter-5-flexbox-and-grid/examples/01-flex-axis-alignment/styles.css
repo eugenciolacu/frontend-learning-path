@@ -1,0 +1,108 @@
+:root {
+	color-scheme: light;
+	--bg: #f4efe8;
+	--surface: #fffdf9;
+	--surface-strong: #f0dfcf;
+	--text: #1f1a17;
+	--muted: #6d6259;
+	--accent: #b85c38;
+	--border: #ddc9b9;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", serif;
+	background: linear-gradient(180deg, #f8f2eb 0%, #ead9ca 100%);
+	color: var(--text);
+}
+
+button {
+	font: inherit;
+}
+
+.page {
+	width: min(100% - 2rem, 70rem);
+	margin-inline: auto;
+	padding-block: 2rem;
+}
+
+.panel {
+	padding: 1.5rem;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: 1.25rem;
+	box-shadow: 0 1rem 2rem rgba(64, 40, 24, 0.08);
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.875rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.toolbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.5rem;
+}
+
+.toolbar h1 {
+	margin: 0 0 0.5rem;
+	font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.toolbar p {
+	margin: 0;
+	max-width: 38rem;
+	color: var(--muted);
+	line-height: 1.6;
+}
+
+.actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: flex-end;
+	gap: 0.75rem;
+}
+
+.actions button {
+	padding: 0.75rem 1rem;
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	background: var(--surface-strong);
+	color: var(--text);
+	cursor: pointer;
+}
+
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+}
+
+.chips span {
+	padding: 0.7rem 1rem;
+	background: #f9efe6;
+	border: 1px solid var(--border);
+	border-radius: 999px;
+	color: var(--text);
+}
+
+@media (max-width: 42rem) {
+	.toolbar {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.actions {
+		justify-content: flex-start;
+	}
+}

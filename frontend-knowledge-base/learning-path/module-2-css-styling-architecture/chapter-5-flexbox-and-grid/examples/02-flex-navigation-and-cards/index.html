@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 2 - Flex Navigation and Cards</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<nav class="nav">
+			<a class="brand" href="#">Studio Gridline</a>
+			<div class="nav-links">
+				<a href="#">Work</a>
+				<a href="#">Services</a>
+				<a href="#">Journal</a>
+				<a href="#">Contact</a>
+			</div>
+		</nav>
+	</header>
+
+	<main class="page">
+		<section class="cards" aria-label="Course cards">
+			<article class="card">
+				<p class="eyebrow">Card 1</p>
+				<h1>Flexbox handles rows that must wrap cleanly.</h1>
+				<p>Each card starts from a preferred width, grows when space is available, and moves to a new line when needed.</p>
+				<a href="#">Read lesson</a>
+			</article>
+			<article class="card accent">
+				<p class="eyebrow">Card 2</p>
+				<h1>Component content can also be flex.</h1>
+				<p>The content inside each card uses a column direction so the link stays near the bottom.</p>
+				<a href="#">Open example</a>
+			</article>
+			<article class="card">
+				<p class="eyebrow">Card 3</p>
+				<h1>Responsive behavior comes from the sizing rules.</h1>
+				<p>Instead of fixed widths, the layout uses flexible values that adapt to available space.</p>
+				<a href="#">View notes</a>
+			</article>
+		</section>
+	</main>
+</body>
+</html>
