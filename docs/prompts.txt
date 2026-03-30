@@ -1,0 +1,81 @@
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find
+"Chapter 8: Web APIs & Modern Capabilities (Advanced)"
+topics.
+I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
+"frontend-knowledge-base\learning-path\module-1-html-web-standards\chapter-8-web-apis-modern-capabilities\theory.md"
+document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
+Plese use 
+"frontend-learning-path\docs\repository-structure.md" 
+document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
+Then add relevant examples to the topics into 
+"frontend-knowledge-base\learning-path\module-1-html-web-standards\chapter-8-web-apis-modern-capabilities\examples" 
+folder. Please create a separate folder for each example.
+
+
+
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find all chapters from the module
+"Module 1: HTML & Web Standards"
+then find all
+"theory.md" and "examples"
+from
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards"
+folder and subfolders.
+Based on this information create a min-project
+"Personal homepage"
+and store it in
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards\mini-projects\personal-homepage"
+folder.
+This miniproject should be based on knowledge from module only.
+
+
+
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find all chapters from the module
+"Module 1: HTML & Web Standards"
+then find all
+"theory.md" and "examples"
+from
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards"
+folder and subfolders.
+Based on this information create
+"README.md"
+document that contains an overview and learning objectives of module chapters and topics
+and store it in 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards\README.md"
+file.
+Plese use 
+"frontend-learning-path\docs\repository-structure.md" 
+document structure for the "README.md" document ("Example README.md (Module)" part of the document).
+
+
+
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find
+"Chapter 6: Advanced Styling"
+topics.
+I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-6-advanced-styling\theory.md"
+document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
+Plese use 
+"frontend-learning-path\docs\repository-structure.md" 
+document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
+Then add relevant examples to the topics into 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-6-advanced-styling\examples" 
+folder. Please create a separate folder for each example.
+
+
+
+
+
+### Chapter 6: Advanced Styling
+- Pseudo-classes: hover, active, focus, nth-child, etc.
+- Pseudo-elements: before, after, first-line, first-letter
+- Transitions and animations: transition, keyframes, animation
+- CSS variables (custom properties)
+- Shadows, filters, border-radius, clip-path
