@@ -1,0 +1,8 @@
+@config "../tailwind.config.js";
+@import "tailwindcss";
+
+@layer components {
+	.panel-card {
+		@apply rounded-panel bg-white p-8 shadow-panel;
+	}
+}

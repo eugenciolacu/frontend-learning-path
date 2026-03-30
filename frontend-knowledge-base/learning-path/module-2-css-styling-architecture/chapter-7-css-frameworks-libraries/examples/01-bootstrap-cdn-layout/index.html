@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Bootstrap CDN Layout</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-body-tertiary">
+	<main class="container py-5">
+		<section class="text-center mb-5">
+			<p class="text-uppercase text-secondary fw-semibold mb-2">Chapter 7 Example</p>
+			<h1 class="display-5 fw-bold">Bootstrap Grid and Utility Classes</h1>
+			<p class="lead text-secondary mx-auto" style="max-width: 44rem;">
+				This demo uses Bootstrap's container, row, column, spacing, and card classes to create a responsive learning dashboard.
+			</p>
+		</section>
+
+		<section class="row g-4">
+			<div class="col-12 col-md-6 col-xl-4">
+				<article class="card border-0 shadow-sm h-100">
+					<div class="card-body p-4 d-flex flex-column">
+						<span class="badge text-bg-primary align-self-start mb-3">Bootstrap</span>
+						<h2 class="h4">Fast Setup</h2>
+						<p class="text-secondary flex-grow-1">A CDN link gives you ready-made typography, spacing, layout, and components within seconds.</p>
+						<a class="btn btn-primary mt-3" href="#">Review Setup</a>
+					</div>
+				</article>
+			</div>
+
+			<div class="col-12 col-md-6 col-xl-4">
+				<article class="card border-0 shadow-sm h-100">
+					<div class="card-body p-4 d-flex flex-column">
+						<span class="badge text-bg-success align-self-start mb-3">Utilities</span>
+						<h2 class="h4">Responsive Helpers</h2>
+						<p class="text-secondary flex-grow-1">Classes like `py-5`, `g-4`, `fw-bold`, and `text-secondary` reduce the amount of custom CSS needed.</p>
+						<a class="btn btn-outline-success mt-3" href="#">Open Utilities</a>
+					</div>
+				</article>
+			</div>
+
+			<div class="col-12 col-md-6 col-xl-4">
+				<article class="card border-0 shadow-sm h-100">
+					<div class="card-body p-4 d-flex flex-column">
+						<span class="badge text-bg-warning align-self-start mb-3">Grid</span>
+						<h2 class="h4">Column System</h2>
+						<p class="text-secondary flex-grow-1">The layout uses `col-12`, `col-md-6`, and `col-xl-4` so each card changes width as the screen grows.</p>
+						<a class="btn btn-warning mt-3" href="#">Inspect Layout</a>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

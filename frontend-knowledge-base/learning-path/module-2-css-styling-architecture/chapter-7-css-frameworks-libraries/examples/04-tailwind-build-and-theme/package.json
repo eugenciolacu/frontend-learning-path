@@ -1,0 +1,12 @@
+{
+	"name": "chapter-7-tailwind-build-and-theme",
+	"private": true,
+	"scripts": {
+		"build": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css",
+		"dev": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch"
+	},
+	"devDependencies": {
+		"@tailwindcss/cli": "^4.1.4",
+		"tailwindcss": "^4.1.4"
+	}
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tailwind Play CDN Utilities</title>
+	<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100">
+	<main class="mx-auto max-w-6xl px-6 py-12">
+		<header class="max-w-3xl">
+			<p class="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">Chapter 7 Example</p>
+			<h1 class="mt-4 text-4xl font-black tracking-tight sm:text-5xl">Tailwind Utility-First Layout</h1>
+			<p class="mt-4 text-lg leading-8 text-slate-300">
+				This page is built without custom CSS. The visual design comes from utility classes directly in the HTML.
+			</p>
+		</header>
+
+		<section class="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+			<article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-cyan-950/30">
+				<div class="flex items-center justify-between">
+					<h2 class="text-2xl font-bold">Utilities</h2>
+					<span class="rounded-full bg-cyan-400/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-200">Fast</span>
+				</div>
+				<p class="mt-4 leading-7 text-slate-300">Classes such as `p-6`, `rounded-3xl`, `shadow-2xl`, and `text-slate-300` describe spacing and appearance directly.</p>
+				<a href="#" class="mt-6 inline-flex rounded-xl bg-cyan-300 px-4 py-2 font-bold text-slate-950">Inspect Markup</a>
+			</article>
+
+			<article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-fuchsia-950/30">
+				<div class="flex items-center justify-between">
+					<h2 class="text-2xl font-bold">Responsive Grid</h2>
+					<span class="rounded-full bg-fuchsia-400/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-fuchsia-200">Adaptive</span>
+				</div>
+				<p class="mt-4 leading-7 text-slate-300">The section starts as one column, becomes two columns at `md`, and three columns at `xl`.</p>
+				<a href="#" class="mt-6 inline-flex rounded-xl bg-fuchsia-300 px-4 py-2 font-bold text-slate-950">Resize Screen</a>
+			</article>
+
+			<article class="rounded-3xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-emerald-950/30 md:col-span-2 xl:col-span-1">
+				<div class="flex items-center justify-between">
+					<h2 class="text-2xl font-bold">Composition</h2>
+					<span class="rounded-full bg-emerald-400/20 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200">Flexible</span>
+				</div>
+				<p class="mt-4 leading-7 text-slate-300">Tailwind is strongest when you combine utilities into reusable interface patterns instead of treating every screen as unrelated markup.</p>
+				<a href="#" class="mt-6 inline-flex rounded-xl bg-emerald-300 px-4 py-2 font-bold text-slate-950">Build Pattern</a>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

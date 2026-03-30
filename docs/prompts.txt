@@ -57,25 +57,23 @@ document structure for the "README.md" document ("Example README.md (Module)" pa
 Please read
 "frontend-learning-path\docs\frontend-learning-roadmap.md"
 and find
-"Chapter 6: Advanced Styling"
+"Chapter 7: CSS Frameworks & Libraries"
 topics.
 I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-6-advanced-styling\theory.md"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-7-css-frameworks-libraries\theory.md"
 document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
 Plese use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
 Then add relevant examples to the topics into 
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-6-advanced-styling\examples" 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-7-css-frameworks-libraries\examples" 
 folder. Please create a separate folder for each example.
 
 
 
 
 
-### Chapter 6: Advanced Styling
-- Pseudo-classes: hover, active, focus, nth-child, etc.
-- Pseudo-elements: before, after, first-line, first-letter
-- Transitions and animations: transition, keyframes, animation
-- CSS variables (custom properties)
-- Shadows, filters, border-radius, clip-path
+### Chapter 7: CSS Frameworks & Libraries
+- Installing Bootstrap (CDN, npm) or Tailwind CSS
+- Utility classes and grid systems
+- Customizing frameworks with variables and themes
