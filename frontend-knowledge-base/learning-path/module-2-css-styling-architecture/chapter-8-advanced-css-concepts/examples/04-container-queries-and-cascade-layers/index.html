@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 4 - Container Queries and Layers</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">Container Queries</p>
+			<h1>The same component can adapt to container width, not just screen width.</h1>
+			<p>This page also shows how cascade layers can separate resets, token definitions, component rules, and utility overrides.</p>
+		</header>
+
+		<section class="layout-columns">
+			<div class="column narrow-column">
+				<h2>Narrow container</h2>
+				<article class="lesson-card">
+					<div class="media-block">Narrow</div>
+					<div class="content-block">
+						<h3>Component in a sidebar</h3>
+						<p>The card stays stacked because the container is narrow, even on a wide viewport.</p>
+					</div>
+				</article>
+			</div>
+
+			<div class="column wide-column">
+				<h2>Wide container</h2>
+				<article class="lesson-card accent-surface">
+					<div class="media-block">Wide</div>
+					<div class="content-block">
+						<h3>Component in main content</h3>
+						<p>The same component switches to a two-column layout because its own container becomes wide enough.</p>
+					</div>
+				</article>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

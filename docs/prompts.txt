@@ -57,23 +57,24 @@ document structure for the "README.md" document ("Example README.md (Module)" pa
 Please read
 "frontend-learning-path\docs\frontend-learning-roadmap.md"
 and find
-"Chapter 7: CSS Frameworks & Libraries"
+"Chapter 8: Advanced CSS Concepts (Advanced)"
 topics.
 I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-7-css-frameworks-libraries\theory.md"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-8-advanced-css-concepts\theory.md"
 document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
 Plese use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
 Then add relevant examples to the topics into 
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-7-css-frameworks-libraries\examples" 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-8-advanced-css-concepts\examples" 
 folder. Please create a separate folder for each example.
 
 
 
 
 
-### Chapter 7: CSS Frameworks & Libraries
-- Installing Bootstrap (CDN, npm) or Tailwind CSS
-- Utility classes and grid systems
-- Customizing frameworks with variables and themes
+### Chapter 8: Advanced CSS Concepts (Advanced)
+- CSS Object Model (CSSOM) and Critical Rendering Path
+- Modern Layouts: Advanced Grid (subgrid, masonry), Flexbox mastery
+- Container Queries layer, CSS Custom Properties architecture
+- CSS functions: clamp(), min(), max(), calc(), color spaces (lch, oklab)

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 3 - Flexbox Mastery</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">Flexbox Mastery</p>
+			<h1>One-dimensional layout is simple only when the axis logic is clear.</h1>
+			<p>The toolbar uses auto margin to push actions apart, and the card row uses flexible basis values with wrapping.</p>
+		</header>
+
+		<nav class="toolbar" aria-label="Module actions">
+			<a href="#">Overview</a>
+			<a href="#">Notes</a>
+			<a href="#">Exercises</a>
+			<span class="spacer"></span>
+			<button type="button">Export</button>
+		</nav>
+
+		<section class="chip-row" aria-label="Skill tags">
+			<span class="chip">Alignment</span>
+			<span class="chip">Wrapping</span>
+			<span class="chip">Flex Basis</span>
+			<span class="chip">Intrinsic Size</span>
+			<span class="chip">Overflow Control</span>
+		</section>
+
+		<section class="card-row" aria-label="Flex cards">
+			<article class="card">
+				<h2>Fixed Sidebar Idea</h2>
+				<p>Use `flex: 0 0 18rem` when a panel should keep a stable width.</p>
+			</article>
+			<article class="card">
+				<h2>Flexible Main Area</h2>
+				<p>Use `flex: 1 1 auto` when the main content should absorb remaining space.</p>
+			</article>
+			<article class="card">
+				<h2>Long Content Safety</h2>
+				<p class="code-line">min-width: 0 keeps very-long-content-labels from forcing overflow in a narrow flex row.</p>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

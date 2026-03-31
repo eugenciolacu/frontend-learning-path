@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 5 - Custom Properties Architecture</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">Design Tokens</p>
+			<h1>Custom properties scale better when tokens have clear roles.</h1>
+			<p>This example separates raw values, semantic tokens, and component-level tokens. The toggle changes the theme by switching token values at the root.</p>
+			<button type="button" id="theme-toggle">Switch theme</button>
+		</header>
+
+		<section class="card-grid">
+			<article class="info-card">
+				<h2>Semantic tokens</h2>
+				<p>Names like `--color-text-primary` describe purpose instead of raw appearance.</p>
+				<a href="#">Read note</a>
+			</article>
+
+			<article class="info-card feature-card">
+				<h2>Component tokens</h2>
+				<p>This card overrides a few local tokens while still depending on the shared global system.</p>
+				<a href="#">Read note</a>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

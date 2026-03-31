@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 6 - CSS Functions and Color Spaces</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page-shell">
+		<header class="hero">
+			<p class="eyebrow">Fluid CSS</p>
+			<h1>Functions and modern color spaces reduce hard-coded values.</h1>
+			<p>The section below uses `calc()`, `min()`, `max()`, and `clamp()` to scale layout and typography while keeping safe limits.</p>
+		</header>
+
+		<section class="showcase">
+			<article class="panel panel-primary">
+				<h2>Fluid type</h2>
+				<p>The heading and spacing scale smoothly, but they never become too small or too large.</p>
+			</article>
+
+			<article class="panel panel-secondary">
+				<h2>Modern colors</h2>
+				<p>Each panel starts with a fallback color and then upgrades to `lch()` or `oklab()` when supported.</p>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

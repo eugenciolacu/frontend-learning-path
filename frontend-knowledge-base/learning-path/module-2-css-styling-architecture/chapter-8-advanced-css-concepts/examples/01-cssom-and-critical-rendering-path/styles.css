@@ -1,0 +1,128 @@
+:root {
+	--page-bg: #eef6f5;
+	--surface: #ffffff;
+	--surface-strong: #d9f2ee;
+	--text: #14323a;
+	--muted: #45626a;
+	--accent: #0f766e;
+	--line: #b9d8d3;
+	--shadow: 0 1.2rem 2.8rem rgba(20, 50, 58, 0.12);
+	--radius: 1.4rem;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", serif;
+	background:
+		radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
+		linear-gradient(180deg, #f5fbfa 0%, var(--page-bg) 100%);
+	color: var(--text);
+}
+
+.page-shell {
+	width: min(100% - 2rem, 72rem);
+	margin: 0 auto;
+	padding: 2.5rem 0 3rem;
+}
+
+.hero {
+	max-width: 46rem;
+	margin-bottom: 1.75rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.hero h1 {
+	margin: 0 0 0.75rem;
+	font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.hero p {
+	margin: 0;
+	line-height: 1.7;
+	color: var(--muted);
+}
+
+.playground {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: 1rem;
+}
+
+.preview-card,
+.control-panel {
+	padding: 1.5rem;
+	background: var(--surface);
+	border: 1px solid var(--line);
+	border-radius: var(--radius);
+	box-shadow: var(--shadow);
+}
+
+.preview-card {
+	background: linear-gradient(180deg, var(--surface) 0%, var(--surface-strong) 100%);
+	border-top: 0.45rem solid var(--accent);
+}
+
+.preview-card h2,
+.control-panel h2 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+}
+
+.preview-card p {
+	margin-top: 0;
+	line-height: 1.7;
+	color: var(--muted);
+}
+
+.badge-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-top: 1rem;
+}
+
+.badge {
+	padding: 0.45rem 0.75rem;
+	border-radius: 999px;
+	background: rgba(15, 118, 110, 0.12);
+	color: var(--accent);
+	font-weight: 700;
+}
+
+.control-panel button {
+	display: block;
+	width: 100%;
+	margin-bottom: 0.75rem;
+	padding: 0.9rem 1rem;
+	border: none;
+	border-radius: 0.95rem;
+	background: var(--accent);
+	color: #ffffff;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.output {
+	margin: 0.5rem 0 0;
+	padding: 1rem;
+	min-height: 12rem;
+	overflow: auto;
+	border-radius: 1rem;
+	background: #0f172a;
+	color: #d1fae5;
+	line-height: 1.6;
+	white-space: pre-wrap;
+}

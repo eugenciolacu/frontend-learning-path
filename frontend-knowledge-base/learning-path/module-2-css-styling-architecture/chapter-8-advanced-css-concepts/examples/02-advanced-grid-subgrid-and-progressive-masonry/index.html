@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 2 - Advanced Grid</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">Advanced Grid</p>
+			<h1>Subgrid keeps repeated card content aligned.</h1>
+			<p>The first section uses a parent grid with cards that inherit the row tracks. The second section shows a masonry-style enhancement with a regular grid fallback.</p>
+		</header>
+
+		<section class="lesson-grid" aria-label="Subgrid lesson cards">
+			<article class="lesson-card">
+				<p class="card-kicker">Module</p>
+				<h2>Layout Systems</h2>
+				<p>Subgrid lets the title, summary, and action row line up across a set of cards.</p>
+				<a href="#">Open module</a>
+			</article>
+			<article class="lesson-card">
+				<p class="card-kicker">Module</p>
+				<h2>Nested Dashboards</h2>
+				<p>Without subgrid, repeated cards often look uneven because their internal rows are sized independently.</p>
+				<a href="#">Open module</a>
+			</article>
+			<article class="lesson-card">
+				<p class="card-kicker">Module</p>
+				<h2>Editorial Interfaces</h2>
+				<p>Shared row tracks make scanning easier because important content starts and ends at the same visual points.</p>
+				<a href="#">Open module</a>
+			</article>
+		</section>
+
+		<section class="masonry-section">
+			<h2>Masonry enhancement</h2>
+			<div class="gallery">
+				<article class="tile tall"><h3>Performance</h3><p>Large stylesheets and expensive paint effects can slow rendering.</p></article>
+				<article class="tile"><h3>Fallbacks</h3><p>Build a strong baseline before enabling newer features.</p></article>
+				<article class="tile tall"><h3>Design Tokens</h3><p>Component, semantic, and raw tokens help teams manage scale.</p></article>
+				<article class="tile"><h3>Query Containers</h3><p>Components can react to container width, not only viewport width.</p></article>
+				<article class="tile"><h3>Functions</h3><p>`clamp()` and `minmax()` reduce breakpoint-heavy code.</p></article>
+			</div>
+		</section>
+	</main>
+</body>
+</html>

@@ -1,0 +1,137 @@
+:root {
+	--bg: #f5f8ef;
+	--surface: #ffffff;
+	--line: #cfe0be;
+	--text: #223019;
+	--muted: #54654a;
+	--accent: #4d7c0f;
+	--shadow: 0 1rem 2.2rem rgba(34, 48, 25, 0.11);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: "Trebuchet MS", Verdana, sans-serif;
+	background:
+		radial-gradient(circle at top right, rgba(77, 124, 15, 0.18), transparent 24%),
+		linear-gradient(180deg, #fbfdf7 0%, var(--bg) 100%);
+	color: var(--text);
+}
+
+.page-shell {
+	width: min(100% - 2rem, 72rem);
+	margin-inline: auto;
+	padding-block: 2.25rem 3rem;
+}
+
+.intro {
+	max-width: 48rem;
+	margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.intro h1 {
+	margin: 0 0 0.75rem;
+	font-size: clamp(2rem, 4vw, 3.2rem);
+}
+
+.intro p {
+	margin: 0;
+	line-height: 1.7;
+	color: var(--muted);
+}
+
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.75rem;
+	padding: 1rem;
+	margin-bottom: 1rem;
+	border: 1px solid var(--line);
+	border-radius: 1.2rem;
+	background: rgba(255, 255, 255, 0.86);
+	box-shadow: var(--shadow);
+}
+
+.toolbar a,
+.toolbar button {
+	padding: 0.75rem 1rem;
+	border-radius: 0.9rem;
+	font: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	color: var(--text);
+	background: #ecf8d7;
+	border: 1px solid #d5e8b7;
+}
+
+.toolbar button {
+	cursor: pointer;
+	background: var(--accent);
+	border-color: var(--accent);
+	color: #ffffff;
+}
+
+.spacer {
+	margin-inline-start: auto;
+}
+
+.chip-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	margin-bottom: 1rem;
+}
+
+.chip {
+	padding: 0.55rem 0.85rem;
+	border-radius: 999px;
+	background: rgba(77, 124, 15, 0.12);
+	color: var(--accent);
+	font-weight: 700;
+}
+
+.card-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 1rem;
+}
+
+.card {
+	flex: 1 1 16rem;
+	min-width: 0;
+	padding: 1.25rem;
+	border: 1px solid var(--line);
+	border-radius: 1.25rem;
+	background: var(--surface);
+	box-shadow: var(--shadow);
+}
+
+.card h2 {
+	margin-top: 0;
+	margin-bottom: 0.75rem;
+	font-size: 1.35rem;
+}
+
+.card p {
+	margin: 0;
+	line-height: 1.7;
+	color: var(--muted);
+}
+
+.code-line {
+	overflow-wrap: anywhere;
+	font-family: Consolas, "Courier New", monospace;
+}

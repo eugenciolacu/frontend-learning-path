@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 1 - CSSOM and Critical Rendering Path</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="page-shell">
+		<header class="hero">
+			<p class="eyebrow">CSSOM Demo</p>
+			<h1>Reading and changing CSS through browser APIs.</h1>
+			<p>The card below uses CSS custom properties. JavaScript reads the computed styles and updates the accent token without touching every rule manually.</p>
+		</header>
+
+		<section class="playground">
+			<article class="preview-card" id="preview-card">
+				<h2>Rendering Pipeline Card</h2>
+				<p>DOM and CSSOM are combined into a render tree before layout and paint happen.</p>
+				<div class="badge-row">
+					<span class="badge">DOM</span>
+					<span class="badge">CSSOM</span>
+					<span class="badge">Paint</span>
+				</div>
+			</article>
+
+			<aside class="control-panel">
+				<h2>Controls</h2>
+				<button type="button" id="inspect-button">Inspect computed styles</button>
+				<button type="button" id="accent-button">Change accent token</button>
+				<pre class="output" id="output" aria-live="polite">Press a button to inspect the card.</pre>
+			</aside>
+		</section>
+	</main>
+</body>
+</html>
