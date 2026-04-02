@@ -1,0 +1,20 @@
+.button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-4) var(--space-6);
+	border: 0;
+	border-radius: var(--radius-lg);
+	background: var(--action-bg);
+	color: var(--color-neutral-0);
+	font: inherit;
+	font-weight: 700;
+	text-decoration: none;
+	transition: background-color 180ms ease, transform 180ms ease;
+}
+
+.button:hover,
+.button:focus-visible {
+	background: var(--action-bg-hover);
+	transform: translateY(-1px);
+}

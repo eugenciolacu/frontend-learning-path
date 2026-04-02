@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 3 - CUBE CSS Composition and Utilities</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="wrapper stack-lg">
+		<header class="stack-sm">
+			<p class="eyebrow">CUBE CSS Demo</p>
+			<h1>Composition classes control layout while blocks control identity</h1>
+			<p class="measure">The `stack`, `cluster`, and `wrapper` classes manage flow and spacing. The card block only cares about how the component itself should look.</p>
+		</header>
+
+		<section class="cluster" aria-label="Lesson cards">
+			<article class="lesson-card stack-sm">
+				<span class="pill">Composition</span>
+				<h2 class="lesson-card__title">Reusable Layout Primitive</h2>
+				<p class="lesson-card__text">The outer `stack-sm` class handles internal rhythm instead of repeating margin rules inside the block.</p>
+			</article>
+			<article class="lesson-card lesson-card--accent stack-sm">
+				<span class="pill">Exception</span>
+				<h2 class="lesson-card__title">Rare Variation</h2>
+				<p class="lesson-card__text">A modifier or exception handles a special case without changing the composition utilities.</p>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

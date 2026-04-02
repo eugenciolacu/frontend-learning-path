@@ -1,0 +1,18 @@
+body {
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	background:
+		radial-gradient(circle at top right, rgba(29, 78, 216, 0.14), transparent 30%),
+		linear-gradient(180deg, #ffffff 0%, var(--color-bg) 100%);
+	color: var(--color-text);
+	line-height: 1.6;
+}
+
+h1,
+h2,
+p {
+	margin-top: 0;
+}
+
+p {
+	color: var(--color-muted);
+}

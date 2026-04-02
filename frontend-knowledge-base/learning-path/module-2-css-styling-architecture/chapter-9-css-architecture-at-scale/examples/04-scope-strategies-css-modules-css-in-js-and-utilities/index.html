@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 4 - Scope Strategies</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page-shell">
+		<header class="hero">
+			<p class="eyebrow">Scope Strategies Demo</p>
+			<h1>Comparing CSS Modules, CSS-in-JS, and utility-first styling</h1>
+			<p class="intro">This browser-friendly page mirrors the same button component rendered through three architectural approaches. The source React snippets stay in this folder, while this HTML file provides a direct visual reference.</p>
+		</header>
+
+		<section class="comparison-grid" aria-label="Styling strategy comparison">
+			<article class="strategy-card">
+				<p class="strategy-card__label">CSS Modules</p>
+				<h2 class="strategy-card__title">Build-time local scoping</h2>
+				<p class="strategy-card__text">Styles are written in a regular CSS file and imported into the component. The bundler rewrites class names to keep them local.</p>
+				<div class="button-row">
+					<button class="demo-button demo-button--primary" type="button">Enroll now</button>
+					<button class="demo-button demo-button--secondary" type="button">Preview syllabus</button>
+				</div>
+				<pre class="code-block"><code>import styles from "./Button.module.css";
+
+export function Button({ tone = "primary" }) {
+  const toneClass = tone === "secondary"
+    ? styles.secondary
+    : styles.primary;
+
+  return &lt;button className={`${styles.button} ${toneClass}`}&gt;...&lt;/button&gt;;
+}</code></pre>
+			</article>
+
+			<article class="strategy-card strategy-card--accent">
+				<p class="strategy-card__label">CSS-in-JS</p>
+				<h2 class="strategy-card__title">Dynamic styling with props</h2>
+				<p class="strategy-card__text">Styles are colocated with component logic. This is useful when component state or props control visual output directly.</p>
+				<div class="button-row">
+					<button class="demo-button demo-button--primary" type="button">Enroll now</button>
+					<button class="demo-button demo-button--secondary" type="button">Preview syllabus</button>
+				</div>
+				<pre class="code-block"><code>const StyledButton = styled.button`
+  background: ${({ $tone }) =&gt;
+    $tone === "secondary" ? "#e2e8f0" : "#0f766e"};
+  color: ${({ $tone }) =&gt;
+    $tone === "secondary" ? "#0f172a" : "#ffffff"};
+`;</code></pre>
+			</article>
+
+			<article class="strategy-card">
+				<p class="strategy-card__label">Utility-first</p>
+				<h2 class="strategy-card__title">Token-driven classes in markup</h2>
+				<p class="strategy-card__text">Utility classes make visual decisions visible in the component markup. This reduces custom CSS but increases class density.</p>
+				<div class="button-row">
+					<button class="demo-button demo-button--primary" type="button">Enroll now</button>
+					<button class="demo-button demo-button--secondary" type="button">Preview syllabus</button>
+				</div>
+				<pre class="code-block"><code>&lt;button
+  className="inline-flex items-center justify-center
+             rounded-xl px-4 py-3 font-semibold
+             bg-teal-700 text-white"
+&gt;
+  Enroll now
+&lt;/button&gt;</code></pre>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

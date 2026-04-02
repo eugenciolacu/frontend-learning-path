@@ -1,0 +1,24 @@
+:root {
+	--color-brand-600: #0f766e;
+	--color-brand-700: #115e59;
+	--color-neutral-0: #ffffff;
+	--color-neutral-100: #f8fafc;
+	--color-neutral-700: #334155;
+	--color-neutral-900: #0f172a;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--radius-lg: 1rem;
+	--shadow-md: 0 1rem 2rem rgba(15, 23, 42, 0.12);
+
+	--surface-default: var(--color-neutral-0);
+	--surface-page: var(--color-neutral-100);
+	--text-default: var(--color-neutral-900);
+	--text-muted: var(--color-neutral-700);
+	--action-bg: var(--color-brand-600);
+	--action-bg-hover: var(--color-brand-700);
+}
+
+[data-theme="forest"] {
+	--action-bg: #166534;
+	--action-bg-hover: #14532d;
+}

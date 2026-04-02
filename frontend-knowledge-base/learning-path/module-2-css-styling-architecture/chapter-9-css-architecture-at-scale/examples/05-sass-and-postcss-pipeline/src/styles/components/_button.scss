@@ -1,0 +1,10 @@
+@use "../tokens" as *;
+@use "../mixins" as mixins;
+
+.button {
+	@include mixins.button-surface($color-brand-600, #ffffff);
+}
+
+.button--secondary {
+	@include mixins.button-surface(#e2e8f0, $color-text);
+}

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 1 - BEM Component Architecture</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<main class="page-layout">
+		<header class="hero-banner">
+			<p class="hero-banner__eyebrow">BEM Demo</p>
+			<h1 class="hero-banner__title">Predictable naming for reusable components</h1>
+			<p class="hero-banner__description">This layout uses BEM naming so blocks, elements, and modifiers stay explicit even as the UI grows.</p>
+		</header>
+
+		<section class="course-grid" aria-label="Courses">
+			<article class="course-card course-card--featured">
+				<p class="course-card__tag">Featured</p>
+				<h2 class="course-card__title">CSS Architecture at Scale</h2>
+				<p class="course-card__summary">Learn how to organize styles for large teams and reusable systems.</p>
+				<ul class="course-card__meta">
+					<li class="course-card__meta-item">6 lessons</li>
+					<li class="course-card__meta-item">Advanced</li>
+				</ul>
+				<a class="course-card__action" href="#">Open chapter</a>
+			</article>
+
+			<article class="course-card">
+				<p class="course-card__tag">New</p>
+				<h2 class="course-card__title">Design Tokens Workshop</h2>
+				<p class="course-card__summary">Connect design decisions to code through reusable tokens and themes.</p>
+				<ul class="course-card__meta">
+					<li class="course-card__meta-item">4 lessons</li>
+					<li class="course-card__meta-item">Advanced</li>
+				</ul>
+				<a class="course-card__action" href="#">View details</a>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

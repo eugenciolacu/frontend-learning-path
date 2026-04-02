@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 2 - ITCSS Layered Styles</title>
+	<link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+	<main class="o-page-shell">
+		<header class="c-hero">
+			<p class="u-eyebrow">ITCSS Demo</p>
+			<h1>Layering broad rules before narrow component rules</h1>
+			<p>This page uses settings, generic, elements, objects, components, and utilities in a deliberate import order.</p>
+		</header>
+
+		<section class="o-grid">
+			<article class="c-panel">
+				<h2 class="c-panel__title">Settings</h2>
+				<p>Tokens live at the top because many later layers depend on them.</p>
+			</article>
+			<article class="c-panel c-panel--accent">
+				<h2 class="c-panel__title">Components</h2>
+				<p>Component rules appear later in the cascade, after generic and object layers.</p>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

@@ -1,0 +1,127 @@
+:root {
+	--page-bg: #eff6ff;
+	--surface: #ffffff;
+	--surface-strong: #dbeafe;
+	--line: #bfdbfe;
+	--text: #0f172a;
+	--muted: #475569;
+	--accent: #0f766e;
+	--shadow: 0 1rem 2rem rgba(15, 23, 42, 0.12);
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	background:
+		radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 25%),
+		linear-gradient(180deg, #f8fbff 0%, var(--page-bg) 100%);
+	color: var(--text);
+}
+
+.page-layout {
+	width: min(100% - 2rem, 72rem);
+	margin-inline: auto;
+	padding: 2.5rem 0 3rem;
+}
+
+.hero-banner {
+	margin-bottom: 2rem;
+}
+
+.hero-banner__eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.hero-banner__title {
+	margin: 0 0 0.75rem;
+	font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.hero-banner__description {
+	max-width: 46rem;
+	margin: 0;
+	line-height: 1.7;
+	color: var(--muted);
+}
+
+.course-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: 1.25rem;
+}
+
+.course-card {
+	display: grid;
+	gap: 1rem;
+	padding: 1.5rem;
+	border: 1px solid var(--line);
+	border-radius: 1.25rem;
+	background: var(--surface);
+	box-shadow: var(--shadow);
+}
+
+.course-card--featured {
+	background: linear-gradient(180deg, var(--surface) 0%, #f0fdfa 100%);
+	border-color: #99f6e4;
+}
+
+.course-card__tag {
+	margin: 0;
+	font-size: 0.8rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.course-card__title {
+	margin: 0;
+	font-size: 1.35rem;
+}
+
+.course-card__summary {
+	margin: 0;
+	line-height: 1.65;
+	color: var(--muted);
+}
+
+.course-card__meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.course-card__meta-item {
+	padding: 0.35rem 0.75rem;
+	border-radius: 999px;
+	background: var(--surface-strong);
+	color: #1d4ed8;
+	font-size: 0.9rem;
+}
+
+.course-card__action {
+	justify-self: start;
+	padding: 0.75rem 1rem;
+	border-radius: 0.9rem;
+	background: var(--accent);
+	color: #ffffff;
+	font-weight: 700;
+	text-decoration: none;
+}
+
+.course-card__action:hover,
+.course-card__action:focus-visible {
+	background: #115e59;
+}

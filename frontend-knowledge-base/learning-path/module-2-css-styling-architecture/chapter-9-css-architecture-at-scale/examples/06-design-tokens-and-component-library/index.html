@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="forest">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 6 - Design Tokens and Component Library</title>
+	<link rel="stylesheet" href="theme.css">
+	<link rel="stylesheet" href="components/card.css">
+	<link rel="stylesheet" href="components/button.css">
+	<style>
+		* { box-sizing: border-box; }
+		body {
+			margin: 0;
+			font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+			background: var(--surface-page);
+			color: var(--text-default);
+		}
+		.page-shell {
+			width: min(100% - 2rem, 68rem);
+			margin-inline: auto;
+			padding: 2.5rem 0 3rem;
+		}
+		.layout {
+			display: grid;
+			gap: var(--space-6);
+			grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+		}
+	</style>
+</head>
+<body>
+	<main class="page-shell">
+		<h1>Token-driven component library</h1>
+		<div class="layout">
+			<article class="card">
+				<h2 class="card__title">Semantic variables</h2>
+				<p class="card__text">The card and button consume semantic variables such as `--action-bg` and `--text-muted`, not raw color literals.</p>
+				<a class="button" href="#">Launch lesson</a>
+			</article>
+			<article class="card">
+				<h2 class="card__title">Theme switching</h2>
+				<p class="card__text">Changing the theme scope can update component appearance without rewriting component CSS.</p>
+				<a class="button" href="#">View tokens</a>
+			</article>
+		</div>
+	</main>
+</body>
+</html>

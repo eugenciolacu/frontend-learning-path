@@ -1,0 +1,11 @@
+.o-page-shell {
+	width: min(100% - 2rem, 70rem);
+	margin-inline: auto;
+	padding: 2.5rem 0 3rem;
+}
+
+.o-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+	gap: var(--space-4);
+}
