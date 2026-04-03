@@ -57,24 +57,23 @@ document structure for the "README.md" document ("Example README.md (Module)" pa
 Please read
 "frontend-learning-path\docs\frontend-learning-roadmap.md"
 and find
-"Chapter 9: CSS Architecture at Scale (Advanced)"
+"Chapter 10: Animation and Visual Performance (Advanced)"
 topics.
 I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-9-css-architecture-at-scale\theory.md"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-10-animation-visual-performance\theory.md"
 document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
 Plese use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
 Then add relevant examples to the topics into 
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-9-css-architecture-at-scale\examples" 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-10-animation-visual-performance\examples" 
 folder. Please create a separate folder for each example.
 
 
 
 
 
-### Chapter 9: CSS Architecture at Scale (Advanced)
-- Methodologies: BEM, ITCSS, CUBE CSS, Utility-first
-- CSS-in-JS (Styled Components, Emotion) vs CSS Modules vs Utility Frameworks (Tailwind)
-- Preprocessors and Postprocessors: Sass advanced tooling, PostCSS ecosystem
-- Design Tokens and Component Library architecture
+### Chapter 10: Animation and Visual Performance (Advanced)
+- High-performance animations (FLIP technique, hardware acceleration)
+- View Transitions API
+- Scroll-driven animations

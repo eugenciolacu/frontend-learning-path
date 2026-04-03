@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 3 - View Transitions API</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">View Transitions API</p>
+			<h1>Animate between a list and a detail panel with progressive enhancement.</h1>
+			<p>Select a lesson card to update the detail area. The browser can animate between the old and new states when the API is available.</p>
+		</header>
+
+		<section class="layout">
+			<div class="gallery" id="gallery"></div>
+
+			<aside class="detail-card">
+				<div class="detail-visual" id="detail-visual"></div>
+				<p class="detail-kicker" id="detail-kicker"></p>
+				<h2 id="detail-title"></h2>
+				<p id="detail-description"></p>
+				<dl class="detail-meta">
+					<div>
+						<dt>Estimated study time</dt>
+						<dd id="detail-duration"></dd>
+					</div>
+					<div>
+						<dt>Primary focus</dt>
+						<dd id="detail-focus"></dd>
+					</div>
+				</dl>
+			</aside>
+		</section>
+	</main>
+</body>
+</html>
