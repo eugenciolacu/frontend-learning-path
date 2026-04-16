@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 4 - Scroll-Driven Animations</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<div class="reading-progress" aria-hidden="true"></div>
+
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">Scroll Timelines</p>
+			<h1>Connect animation progress to scroll instead of time.</h1>
+			<p>This page shows a progress bar linked to page scroll and lesson cards that reveal as they enter view. The baseline remains readable even if the browser does not support scroll-driven animation features.</p>
+		</header>
+
+		<section class="article-stack">
+			<article class="story-block">
+				<h2>Why this matters</h2>
+				<p>Traditional scroll effects often depended on JavaScript listeners that ran continuously. Modern scroll-driven CSS can express many of those effects more declaratively and with less custom code.</p>
+			</article>
+
+			<article class="story-block reveal-card">
+				<h2>Progress Timeline</h2>
+				<p>A progress bar is a good example of scroll-linked motion because it communicates position in a long document. The user learns something meaningful from the animation state.</p>
+			</article>
+
+			<article class="story-block reveal-card">
+				<h2>View Timeline</h2>
+				<p>A reveal effect based on how much of an element is visible can create a soft entrance without writing manual observer or scroll math for every block.</p>
+			</article>
+
+			<article class="story-block reveal-card">
+				<h2>Progressive Enhancement</h2>
+				<p>Because support can vary, the card content should still appear in a readable final state by default. Enhancement should improve the experience, not become a dependency.</p>
+			</article>
+
+			<article class="story-block reveal-card">
+				<h2>Motion Safety</h2>
+				<p>Large parallax effects or aggressive movement can reduce comfort. The best motion is purposeful, brief, and adjustable for users who prefer reduced motion.</p>
+			</article>
+		</section>
+	</main>
+</body>
+</html>

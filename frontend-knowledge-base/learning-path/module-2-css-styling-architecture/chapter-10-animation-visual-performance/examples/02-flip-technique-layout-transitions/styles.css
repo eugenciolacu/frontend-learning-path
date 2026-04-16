@@ -1,0 +1,116 @@
+:root {
+	--bg: #eef4fb;
+	--surface: #ffffff;
+	--surface-strong: #dfeaff;
+	--text: #10233d;
+	--muted: #4d607a;
+	--line: #c6d8f2;
+	--accent: #2457c5;
+	--accent-soft: rgba(36, 87, 197, 0.12);
+	--shadow: 0 1rem 2.8rem rgba(16, 35, 61, 0.12);
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Georgia, "Times New Roman", serif;
+	background:
+		radial-gradient(circle at top left, rgba(36, 87, 197, 0.14), transparent 24%),
+		linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+	color: var(--text);
+}
+
+.page-shell {
+	width: min(100% - 2rem, 76rem);
+	margin: 0 auto;
+	padding: 2.5rem 0 3rem;
+}
+
+.intro {
+	max-width: 48rem;
+	margin-bottom: 1.5rem;
+}
+
+.eyebrow {
+	margin: 0 0 0.75rem;
+	font-size: 0.82rem;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+}
+
+.intro h1 {
+	margin: 0 0 0.75rem;
+	font-size: clamp(2rem, 4vw, 3.4rem);
+}
+
+.intro p,
+.status,
+.lesson-card p {
+	margin: 0;
+	line-height: 1.7;
+	color: var(--muted);
+}
+
+.toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+	margin-bottom: 1.25rem;
+	padding: 1rem 1.25rem;
+	border: 1px solid var(--line);
+	border-radius: 1.25rem;
+	background: rgba(255, 255, 255, 0.86);
+	box-shadow: var(--shadow);
+}
+
+button {
+	padding: 0.95rem 1.15rem;
+	border: 0;
+	border-radius: 999px;
+	background: var(--accent);
+	color: #ffffff;
+	font: inherit;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+	gap: 1rem;
+}
+
+.lesson-card {
+	padding: 1.35rem;
+	border: 1px solid var(--line);
+	border-radius: 1.4rem;
+	background: linear-gradient(180deg, var(--surface) 0%, var(--surface-strong) 100%);
+	box-shadow: var(--shadow);
+}
+
+.lesson-card h2 {
+	margin: 0.9rem 0 0.55rem;
+	font-size: 1.3rem;
+}
+
+.badge {
+	display: inline-block;
+	padding: 0.35rem 0.7rem;
+	border-radius: 999px;
+	background: var(--accent-soft);
+	color: var(--accent);
+	font-size: 0.88rem;
+	font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* {
+		scroll-behavior: auto;
+	}
+	}

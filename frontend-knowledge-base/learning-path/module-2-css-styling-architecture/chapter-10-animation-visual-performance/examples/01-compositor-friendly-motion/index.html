@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Example 1 - Compositor-Friendly Motion</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="script.js" defer></script>
+</head>
+<body>
+	<main class="page-shell">
+		<header class="intro">
+			<p class="eyebrow">Animation Cost</p>
+			<h1>Similar movement, different rendering cost.</h1>
+			<p>One demo shifts an element with `left`. The other uses `transform`. The visual goal is almost the same, but the browser work is different.</p>
+		</header>
+
+		<section class="demo-grid">
+			<article class="panel panel-layout">
+				<h2>Layout-heavy motion</h2>
+				<p>Animating positional layout properties can force more work during each frame.</p>
+				<div class="track">
+					<div class="token token-layout" id="token-layout">left</div>
+				</div>
+			</article>
+
+			<article class="panel panel-transform">
+				<h2>Compositor-friendly motion</h2>
+				<p>Animating `transform` often keeps the movement closer to the compositing stage.</p>
+				<div class="track">
+					<div class="token token-transform" id="token-transform">transform</div>
+				</div>
+			</article>
+		</section>
+
+		<div class="actions">
+			<button type="button" id="replay-button">Replay comparison</button>
+			<p class="hint">Use DevTools Performance panel if you want to profile the difference on your machine.</p>
+		</div>
+	</main>
+</body>
+</html>
