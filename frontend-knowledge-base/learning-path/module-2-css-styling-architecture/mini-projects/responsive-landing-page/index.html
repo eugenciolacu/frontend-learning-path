@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!--
+		Chapter 4: Viewport meta tag — tells the mobile browser to
+		use the actual device width instead of simulating a wide desktop.
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Horizon – the smarter way to manage your projects. Built for teams that want clarity, speed, and focus.">
+	<title>Horizon – Project Management for Modern Teams</title>
+
+	<!--
+		Chapter 7: Loading a web font via Google Fonts CDN link.
+		preconnect hints let the browser open socket connections early.
+	-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<!--
+		Accessibility: skip link lets keyboard users jump straight to
+		the main content, bypassing the navigation on every page load.
+	-->
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<!-- ================================================================
+	     SITE HEADER & NAVIGATION
+	     Chapter 2: position sticky, z-index
+	     Chapter 5: Flexbox layout
+	     Chapter 6: backdrop-filter, box-shadow, transitions
+	     ================================================================ -->
+	<header class="site-header" role="banner">
+		<nav class="nav container" aria-label="Primary navigation">
+			<!-- Logo: uses a CSS-drawn mark via ::before pseudo-element -->
+			<a class="nav__logo" href="#" aria-label="Horizon home">
+				<span class="nav__logo-mark" aria-hidden="true"></span>
+				Horizon
+			</a>
+
+			<!-- Flexbox row of navigation links -->
+			<ul class="nav__links" role="list">
+				<li><a class="nav__link" href="#features">Features</a></li>
+				<li><a class="nav__link" href="#how-it-works">How it works</a></li>
+				<li><a class="nav__link" href="#pricing">Pricing</a></li>
+				<li><a class="nav__link" href="#testimonials">Reviews</a></li>
+			</ul>
+
+			<div class="nav__actions">
+				<a class="btn btn--ghost" href="#pricing">Log in</a>
+				<a class="btn btn--primary" href="#pricing">Start free trial</a>
+			</div>
+		</nav>
+	</header>
+
+	<main id="main-content">
+
+		<!-- ================================================================
+		     HERO SECTION
+		     Chapter 3: linear-gradient background, text-gradient
+		     Chapter 4: responsive layout (stacked on mobile, side-by-side on desktop)
+		     Chapter 5: Flexbox for content + visual arrangement
+		     Chapter 6: @keyframes animation, pseudo-elements for decorative circles
+		     Chapter 8: clamp() for fluid heading size
+		     ================================================================ -->
+		<section class="hero" aria-labelledby="hero-heading">
+			<div class="hero__decoration hero__decoration--1" aria-hidden="true"></div>
+			<div class="hero__decoration hero__decoration--2" aria-hidden="true"></div>
+
+			<div class="container hero__inner">
+				<div class="hero__content">
+					<span class="badge">Now in public beta</span>
+
+					<h1 class="hero__heading" id="hero-heading">
+						Work smarter,<br>
+						ship <span class="text-gradient">faster</span>.
+					</h1>
+
+					<p class="hero__lead">
+						Horizon brings your team's tasks, timelines, and goals into one calm,
+						focused workspace. Less noise. More done.
+					</p>
+
+					<div class="hero__actions">
+						<a class="btn btn--primary btn--lg" href="#pricing">Get started for free</a>
+						<a class="btn btn--ghost btn--lg" href="#features">See how it works</a>
+					</div>
+
+					<p class="hero__footnote">No credit card required &middot; Cancel anytime</p>
+				</div>
+
+				<!--
+					CSS-only dashboard mockup — demonstrates the box model,
+					border-radius, gradients, and overflow: hidden working together.
+				-->
+				<div class="hero__visual" aria-hidden="true">
+					<div class="dashboard-mockup">
+						<div class="dashboard-mockup__titlebar">
+							<span class="titlebar__dot titlebar__dot--red"></span>
+							<span class="titlebar__dot titlebar__dot--yellow"></span>
+							<span class="titlebar__dot titlebar__dot--green"></span>
+							<span class="titlebar__name">Horizon — Q2 Roadmap</span>
+						</div>
+						<div class="dashboard-mockup__body">
+							<aside class="mockup__sidebar">
+								<div class="mockup__nav-item mockup__nav-item--active"></div>
+								<div class="mockup__nav-item"></div>
+								<div class="mockup__nav-item"></div>
+								<div class="mockup__nav-item"></div>
+							</aside>
+							<div class="mockup__kanban">
+								<div class="mockup__column">
+									<div class="mockup__col-header mockup__col-header--blue"></div>
+									<div class="mockup__card"></div>
+									<div class="mockup__card mockup__card--tall"></div>
+								</div>
+								<div class="mockup__column">
+									<div class="mockup__col-header mockup__col-header--purple"></div>
+									<div class="mockup__card"></div>
+									<div class="mockup__card"></div>
+									<div class="mockup__card mockup__card--featured"></div>
+								</div>
+								<div class="mockup__column">
+									<div class="mockup__col-header mockup__col-header--green"></div>
+									<div class="mockup__card mockup__card--done"></div>
+									<div class="mockup__card mockup__card--done"></div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     LOGOS STRIP
+		     Chapter 3: muted colors, opacity
+		     Chapter 5: Flexbox with wrap and gap
+		     Chapter 6: filter grayscale, transition on :hover
+		     ================================================================ -->
+		<section class="logos" aria-label="Trusted by teams at">
+			<div class="container">
+				<p class="logos__label">Trusted by engineering and product teams at</p>
+				<ul class="logos__list" role="list">
+					<li class="logos__item">Acme&nbsp;Corp</li>
+					<li class="logos__item">Bright&nbsp;Labs</li>
+					<li class="logos__item">NovaTech</li>
+					<li class="logos__item">Stellar&nbsp;Inc</li>
+					<li class="logos__item">Veritas</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     FEATURES SECTION
+		     Chapter 5: CSS Grid (1 → 2 → 3 columns)
+		     Chapter 2: Box model on cards
+		     Chapter 6: ::before for icon shape, :hover transitions, box-shadow
+		     ================================================================ -->
+		<section class="features" id="features" aria-labelledby="features-heading">
+			<div class="container">
+				<header class="section-header">
+					<span class="badge badge--indigo">Features</span>
+					<h2 class="section-title" id="features-heading">Everything your team needs</h2>
+					<p class="section-lead">
+						From planning to delivery, Horizon covers the full lifecycle of your work
+						without getting in the way.
+					</p>
+				</header>
+
+				<ul class="features__grid" role="list">
+					<li class="feature-card">
+						<div class="feature-card__icon feature-card__icon--blue" aria-hidden="true"></div>
+						<h3 class="feature-card__title">Visual Boards</h3>
+						<p class="feature-card__text">
+							Drag-and-drop Kanban boards that keep the whole team on the same page
+							without endless status meetings.
+						</p>
+					</li>
+					<li class="feature-card">
+						<div class="feature-card__icon feature-card__icon--purple" aria-hidden="true"></div>
+						<h3 class="feature-card__title">Smart Timelines</h3>
+						<p class="feature-card__text">
+							Gantt-style roadmaps that automatically adjust when tasks shift, so
+							your plan always reflects reality.
+						</p>
+					</li>
+					<li class="feature-card">
+						<div class="feature-card__icon feature-card__icon--green" aria-hidden="true"></div>
+						<h3 class="feature-card__title">Team Analytics</h3>
+						<p class="feature-card__text">
+							Velocity charts, blockers overview, and delivery trends surfaced
+							automatically — no manual reporting needed.
+						</p>
+					</li>
+					<li class="feature-card">
+						<div class="feature-card__icon feature-card__icon--orange" aria-hidden="true"></div>
+						<h3 class="feature-card__title">Integrations</h3>
+						<p class="feature-card__text">
+							Connect Slack, GitHub, Figma, and Notion in minutes. Horizon speaks
+							the tools your team already loves.
+						</p>
+					</li>
+					<li class="feature-card">
+						<div class="feature-card__icon feature-card__icon--blue" aria-hidden="true"></div>
+						<h3 class="feature-card__title">Goals &amp; OKRs</h3>
+						<p class="feature-card__text">
+							Link tasks directly to quarterly goals and watch progress update in
+							real time as work gets done.
+						</p>
+					</li>
+					<li class="feature-card">
+						<div class="feature-card__icon feature-card__icon--purple" aria-hidden="true"></div>
+						<h3 class="feature-card__title">Automations</h3>
+						<p class="feature-card__text">
+							Set up repeating tasks, auto-assignments, and status triggers without
+							writing a single line of code.
+						</p>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     HOW IT WORKS
+		     Chapter 1: CSS counters with counter-reset / counter-increment
+		     Chapter 6: ::before pseudo-element for step numbers
+		     Chapter 5: Grid layout for steps
+		     ================================================================ -->
+		<section class="how-it-works" id="how-it-works" aria-labelledby="how-heading">
+			<div class="container">
+				<header class="section-header">
+					<span class="badge">Process</span>
+					<h2 class="section-title" id="how-heading">Up and running in minutes</h2>
+					<p class="section-lead">No lengthy onboarding. No professional services required.</p>
+				</header>
+
+				<!--
+					The .steps list uses CSS counter-reset / counter-increment.
+					Each .step__number::before displays the auto-incremented counter value.
+				-->
+				<ol class="steps" role="list">
+					<li class="step">
+						<div class="step__number" aria-hidden="true"></div>
+						<div class="step__body">
+							<h3 class="step__title">Create your workspace</h3>
+							<p class="step__text">
+								Sign up, name your workspace, and invite your team in under two minutes.
+							</p>
+						</div>
+					</li>
+					<li class="step">
+						<div class="step__number" aria-hidden="true"></div>
+						<div class="step__body">
+							<h3 class="step__title">Import or start fresh</h3>
+							<p class="step__text">
+								Bring in data from Jira, Trello, or Asana — or start from one of our
+								ready-made templates.
+							</p>
+						</div>
+					</li>
+					<li class="step">
+						<div class="step__number" aria-hidden="true"></div>
+						<div class="step__body">
+							<h3 class="step__title">Ship with confidence</h3>
+							<p class="step__text">
+								Track progress, spot blockers early, and deliver work your stakeholders
+								will actually celebrate.
+							</p>
+						</div>
+					</li>
+				</ol>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     STATS SECTION
+		     Chapter 3: Large typography, color emphasis
+		     Chapter 5: CSS Grid (1 → 2 → 4 columns)
+		     Chapter 6: clip-path on the section background strip
+		     ================================================================ -->
+		<section class="stats" aria-label="Product statistics">
+			<div class="container">
+				<ul class="stats__grid" role="list">
+					<li class="stat">
+						<span class="stat__number">12 k+</span>
+						<span class="stat__label">Teams worldwide</span>
+					</li>
+					<li class="stat">
+						<span class="stat__number">98%</span>
+						<span class="stat__label">Customer satisfaction</span>
+					</li>
+					<li class="stat">
+						<span class="stat__number">4.9 ★</span>
+						<span class="stat__label">Average rating</span>
+					</li>
+					<li class="stat">
+						<span class="stat__number">3×</span>
+						<span class="stat__label">Faster delivery</span>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     PRICING SECTION
+		     Chapter 5: CSS Grid for three-card layout
+		     Chapter 6: featured card visuals, transitions, box-shadow on hover
+		     Chapter 6: ::before pseudo-element for checkmark / cross list items
+		     ================================================================ -->
+		<section class="pricing" id="pricing" aria-labelledby="pricing-heading">
+			<div class="container">
+				<header class="section-header">
+					<span class="badge badge--indigo">Pricing</span>
+					<h2 class="section-title" id="pricing-heading">Simple, honest pricing</h2>
+					<p class="section-lead">Start free. Upgrade when your team grows.</p>
+				</header>
+
+				<ul class="pricing__grid" role="list">
+
+					<!-- Starter plan -->
+					<li class="pricing-card">
+						<div class="pricing-card__header">
+							<h3 class="pricing-card__plan">Starter</h3>
+							<div class="pricing-card__price">
+								<span class="pricing-card__amount">$0</span>
+								<span class="pricing-card__period">&nbsp;/ month</span>
+							</div>
+							<p class="pricing-card__description">
+								Perfect for solo contributors and small experiments.
+							</p>
+						</div>
+						<ul class="pricing-card__features" role="list">
+							<li class="pricing-card__feature pricing-card__feature--check">Up to 3 projects</li>
+							<li class="pricing-card__feature pricing-card__feature--check">5 team members</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Basic boards &amp; lists</li>
+							<li class="pricing-card__feature pricing-card__feature--cross">Timeline view</li>
+							<li class="pricing-card__feature pricing-card__feature--cross">Analytics dashboard</li>
+							<li class="pricing-card__feature pricing-card__feature--cross">Priority support</li>
+						</ul>
+						<a class="btn btn--outline btn--block" href="#">Get started free</a>
+					</li>
+
+					<!-- Pro plan — featured card -->
+					<li class="pricing-card pricing-card--featured" aria-label="Recommended: Pro plan">
+						<div class="pricing-card__badge">Most popular</div>
+						<div class="pricing-card__header">
+							<h3 class="pricing-card__plan">Pro</h3>
+							<div class="pricing-card__price">
+								<span class="pricing-card__amount">$18</span>
+								<span class="pricing-card__period">&nbsp;/ seat / month</span>
+							</div>
+							<p class="pricing-card__description">
+								For growing teams that need real visibility.
+							</p>
+						</div>
+						<ul class="pricing-card__features" role="list">
+							<li class="pricing-card__feature pricing-card__feature--check">Unlimited projects</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Unlimited members</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Boards, lists &amp; timeline</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Analytics dashboard</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Integrations (10+)</li>
+							<li class="pricing-card__feature pricing-card__feature--cross">Priority support</li>
+						</ul>
+						<a class="btn btn--primary btn--block" href="#">Start 14-day trial</a>
+					</li>
+
+					<!-- Enterprise plan -->
+					<li class="pricing-card">
+						<div class="pricing-card__header">
+							<h3 class="pricing-card__plan">Enterprise</h3>
+							<div class="pricing-card__price">
+								<span class="pricing-card__amount">Custom</span>
+							</div>
+							<p class="pricing-card__description">
+								Tailored plans with SLAs and dedicated support.
+							</p>
+						</div>
+						<ul class="pricing-card__features" role="list">
+							<li class="pricing-card__feature pricing-card__feature--check">Everything in Pro</li>
+							<li class="pricing-card__feature pricing-card__feature--check">SSO &amp; SAML</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Audit logs</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Custom automations</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Dedicated CSM</li>
+							<li class="pricing-card__feature pricing-card__feature--check">Priority support</li>
+						</ul>
+						<a class="btn btn--outline btn--block" href="#">Contact sales</a>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     TESTIMONIALS
+		     Chapter 5: Flexbox with wrap
+		     Chapter 6: nth-child accent variation, box-shadow, border-radius
+		     ================================================================ -->
+		<section class="testimonials" id="testimonials" aria-labelledby="testimonials-heading">
+			<div class="container">
+				<header class="section-header">
+					<span class="badge badge--indigo">Testimonials</span>
+					<h2 class="section-title" id="testimonials-heading">Loved by teams everywhere</h2>
+				</header>
+
+				<ul class="testimonials__grid" role="list">
+					<li class="testimonial-card">
+						<blockquote class="testimonial-card__quote">
+							"Horizon replaced three tools we were using. The team was skeptical at first —
+							now nobody wants to go back."
+						</blockquote>
+						<footer class="testimonial-card__footer">
+							<div class="testimonial-card__avatar" aria-hidden="true">M</div>
+							<div>
+								<p class="testimonial-card__name">Maria G.</p>
+								<p class="testimonial-card__role">Engineering Manager, NovaTech</p>
+							</div>
+						</footer>
+					</li>
+					<li class="testimonial-card testimonial-card--accent">
+						<blockquote class="testimonial-card__quote">
+							"We went from monthly planning chaos to weekly clarity. The timeline view
+							is especially powerful."
+						</blockquote>
+						<footer class="testimonial-card__footer">
+							<div class="testimonial-card__avatar" aria-hidden="true">T</div>
+							<div>
+								<p class="testimonial-card__name">Tom H.</p>
+								<p class="testimonial-card__role">Product Lead, Bright Labs</p>
+							</div>
+						</footer>
+					</li>
+					<li class="testimonial-card">
+						<blockquote class="testimonial-card__quote">
+							"Setup took 20 minutes. Our roadmap was imported from Jira and the
+							automations saved hours immediately."
+						</blockquote>
+						<footer class="testimonial-card__footer">
+							<div class="testimonial-card__avatar" aria-hidden="true">S</div>
+							<div>
+								<p class="testimonial-card__name">Sora K.</p>
+								<p class="testimonial-card__role">CTO, Veritas</p>
+							</div>
+						</footer>
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     CTA SECTION
+		     Chapter 3: Gradient background
+		     Chapter 6: ::before decorative element, centered Flexbox layout
+		     ================================================================ -->
+		<section class="cta" aria-labelledby="cta-heading">
+			<div class="container cta__inner">
+				<h2 class="cta__heading" id="cta-heading">
+					Ready to work better<br>together?
+				</h2>
+				<p class="cta__lead">
+					Start your free trial today. No credit card, no setup fees, no surprises.
+				</p>
+				<div class="cta__actions">
+					<a class="btn btn--white btn--lg" href="#pricing">Start for free</a>
+					<a class="btn btn--ghost-white btn--lg" href="#features">Learn more</a>
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<!-- ================================================================
+	     SITE FOOTER
+	     Chapter 5: CSS Grid for brand + nav columns
+	     Chapter 3: muted color palette matching the brand system
+	     ================================================================ -->
+	<footer class="site-footer" role="contentinfo">
+		<div class="container footer__inner">
+			<div class="footer__brand">
+				<a class="nav__logo" href="#" aria-label="Horizon home">
+					<span class="nav__logo-mark" aria-hidden="true"></span>
+					Horizon
+				</a>
+				<p class="footer__tagline">The smarter way to manage your work.</p>
+			</div>
+
+			<nav class="footer__nav" aria-label="Footer navigation">
+				<div class="footer__col">
+					<h3 class="footer__col-heading">Product</h3>
+					<ul class="footer__links" role="list">
+						<li><a class="footer__link" href="#features">Features</a></li>
+						<li><a class="footer__link" href="#pricing">Pricing</a></li>
+						<li><a class="footer__link" href="#">Changelog</a></li>
+						<li><a class="footer__link" href="#">Roadmap</a></li>
+					</ul>
+				</div>
+				<div class="footer__col">
+					<h3 class="footer__col-heading">Company</h3>
+					<ul class="footer__links" role="list">
+						<li><a class="footer__link" href="#">About</a></li>
+						<li><a class="footer__link" href="#">Blog</a></li>
+						<li><a class="footer__link" href="#">Careers</a></li>
+						<li><a class="footer__link" href="#">Press</a></li>
+					</ul>
+				</div>
+				<div class="footer__col">
+					<h3 class="footer__col-heading">Legal</h3>
+					<ul class="footer__links" role="list">
+						<li><a class="footer__link" href="#">Privacy</a></li>
+						<li><a class="footer__link" href="#">Terms</a></li>
+						<li><a class="footer__link" href="#">Cookies</a></li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<div class="footer__bottom">
+			<div class="container">
+				<p class="footer__copy">
+					&copy; 2026 Horizon. All rights reserved.
+					Built as a Module 2 CSS &amp; Styling Architecture mini-project.
+				</p>
+			</div>
+		</div>
+	</footer>
+
+</body>
+</html>

@@ -1,0 +1,1586 @@
+/*
+  ============================================================
+  HORIZON LANDING PAGE — style.css
+  Module 2: CSS & Styling Architecture — Mini-Project
+
+  CSS concepts demonstrated:
+  Chapter 1  – Selectors, combinators, pseudo-classes, pseudo-elements,
+               CSS counters, specificity
+  Chapter 2  – Box model (box-sizing, padding, border, margin),
+               display types, position (sticky, absolute, relative),
+               overflow, z-index
+  Chapter 3  – Typography (Google Fonts, font stack, line-height,
+               letter-spacing, text-transform), hex / rgb / hsl colors,
+               linear and radial gradients, background properties
+  Chapter 4  – Mobile-first responsive design, viewport units,
+               media queries at 640 / 768 / 1024 px,
+               fluid containers with min() / clamp()
+  Chapter 5  – Flexbox (nav, hero actions, logos, testimonials),
+               CSS Grid (features, pricing, steps, footer),
+               fr units, repeat(), minmax(), auto-fit
+  Chapter 6  – Pseudo-classes (:hover, :focus-visible, :nth-child, :not),
+               pseudo-elements (::before, ::after),
+               CSS custom properties (design tokens),
+               transitions, @keyframes animations,
+               box-shadow, border-radius, filter, clip-path
+  Chapter 7  – Web font via Google Fonts <link> (same CDN pattern as
+               Bootstrap / Tailwind CDN)
+  Chapter 8  – clamp(), min(), max(), calc()
+  Chapter 9  – BEM-style naming, design token architecture in :root
+  Chapter 10 – GPU-composited animations (transform + opacity only),
+               prefers-reduced-motion media query
+  ============================================================
+*/
+
+
+/* ============================================================
+   1. DESIGN TOKENS
+   Chapter 6 & 9: All custom properties live here so every
+   value is defined once and changed in one place.
+   ============================================================ */
+
+:root {
+	/* --- Colors --- */
+	--color-primary:       #2563eb;   /* blue-600 */
+	--color-primary-dark:  #1d4ed8;   /* blue-700 */
+	--color-primary-light: #dbeafe;   /* blue-100 */
+	--color-accent:        #7c3aed;   /* violet-700 */
+	--color-accent-light:  #ede9fe;   /* violet-100 */
+	--color-success:       #059669;   /* emerald-600 */
+	--color-warning:       #d97706;   /* amber-600 */
+
+	--color-text:          #111827;   /* gray-900 */
+	--color-text-secondary: #374151; /* gray-700 */
+	--color-text-muted:    #6b7280;   /* gray-500 */
+	--color-text-subtle:   #9ca3af;   /* gray-400 */
+	--color-text-inverse:  #f9fafb;   /* gray-50 */
+
+	--color-bg:            #f9fafb;   /* gray-50 */
+	--color-surface:       #ffffff;
+	--color-surface-raised: #ffffff;
+	--color-border:        #e5e7eb;   /* gray-200 */
+	--color-border-light:  #f3f4f6;   /* gray-100 */
+
+	/* --- Spacing scale (multiples of 0.25rem) --- */
+	--space-1:  0.25rem;
+	--space-2:  0.5rem;
+	--space-3:  0.75rem;
+	--space-4:  1rem;
+	--space-5:  1.25rem;
+	--space-6:  1.5rem;
+	--space-8:  2rem;
+	--space-10: 2.5rem;
+	--space-12: 3rem;
+	--space-16: 4rem;
+	--space-20: 5rem;
+	--space-24: 6rem;
+
+	/* --- Typography --- */
+	--font-family-base: "Inter", "Segoe UI", Arial, sans-serif;
+	--font-size-xs:   0.75rem;    /* 12px */
+	--font-size-sm:   0.875rem;   /* 14px */
+	--font-size-base: 1rem;       /* 16px */
+	--font-size-lg:   1.125rem;   /* 18px */
+	--font-size-xl:   1.25rem;    /* 20px */
+	--font-size-2xl:  1.5rem;     /* 24px */
+	--font-size-3xl:  clamp(1.75rem, 4vw, 2.25rem);
+	--font-size-4xl:  clamp(2rem,    5vw, 3rem);
+	--font-size-hero: clamp(2.5rem,  7vw, 4rem);
+
+	--font-weight-normal:   400;
+	--font-weight-medium:   500;
+	--font-weight-semibold: 600;
+	--font-weight-bold:     700;
+
+	--line-height-tight:  1.2;
+	--line-height-snug:   1.4;
+	--line-height-normal: 1.6;
+	--line-height-relaxed: 1.75;
+
+	/* --- Border radius --- */
+	--radius-sm:   0.25rem;
+	--radius-md:   0.5rem;
+	--radius-lg:   0.75rem;
+	--radius-xl:   1rem;
+	--radius-2xl:  1.5rem;
+	--radius-full: 9999px;
+
+	/* --- Shadows --- */
+	--shadow-sm:  0 1px 2px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.08);
+	--shadow-md:  0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.06);
+	--shadow-lg:  0 10px 15px rgba(0, 0, 0, 0.06), 0 4px 6px rgba(0, 0, 0, 0.04);
+	--shadow-xl:  0 20px 25px rgba(0, 0, 0, 0.07), 0 8px 10px rgba(0, 0, 0, 0.04);
+	--shadow-focus: 0 0 0 3px rgba(37, 99, 235, 0.4);
+
+	/* --- Transitions (Chapter 6: timing and easing) --- */
+	--transition-fast:   150ms ease;
+	--transition-base:   250ms ease;
+	--transition-slow:   400ms ease;
+
+	/* --- Layout --- */
+	--container-max:     72rem;   /* max content width */
+	--container-padding: clamp(var(--space-4), 5vw, var(--space-8));
+	--header-height:     4rem;
+}
+
+
+/* ============================================================
+   2. RESET & BASE STYLES
+   Chapter 2: box-sizing applied to every element via * selector
+   Chapter 1: universal selector, element selectors
+   ============================================================ */
+
+/*
+  Apply border-box sizing globally.
+  This means padding and border are included in an element's
+  declared width/height, which prevents unexpected overflow.
+*/
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	/* Smooth scrolling for in-page anchor links */
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: var(--font-family-base);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-normal);
+	line-height: var(--line-height-normal);
+	color: var(--color-text);
+	background-color: var(--color-bg);
+	/* Prevent horizontal overflow caused by absolutely positioned elements */
+	overflow-x: hidden;
+}
+
+/* Remove default list bullets/numbers where role="list" is used */
+ul[role="list"],
+ol[role="list"] {
+	list-style: none;
+}
+
+img,
+video {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+/* Inheriting font styles on form elements is not automatic in all browsers */
+button,
+input,
+select,
+textarea {
+	font: inherit;
+}
+
+/* Remove default heading margins; spacing is managed per component */
+h1, h2, h3, h4, h5, h6 {
+	line-height: var(--line-height-tight);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+}
+
+/* Standard focus ring on interactive elements */
+a:focus-visible,
+button:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+	border-radius: var(--radius-sm);
+}
+
+
+/* ============================================================
+   3. UTILITIES
+   Layout helpers and reusable single-responsibility classes
+   ============================================================ */
+
+/*
+  Chapter 4 & 8: Fluid container using min().
+  min(100% - 2rem, 72rem) means: use near-full width on small screens,
+  but stop growing once we reach the max-width of 72rem.
+*/
+.container {
+	width: min(100% - var(--space-8), var(--container-max));
+	margin-inline: auto;
+}
+
+/* Accessibility: skip link — visible only on keyboard focus */
+.skip-link {
+	position: absolute;
+	top: var(--space-4);
+	left: var(--space-4);
+	padding: var(--space-2) var(--space-4);
+	background-color: var(--color-primary);
+	color: var(--color-text-inverse);
+	font-weight: var(--font-weight-semibold);
+	border-radius: var(--radius-md);
+	text-decoration: none;
+	z-index: 9999;
+	/* Hidden until focused via keyboard (Chapter 6: transforms for show/hide) */
+	transform: translateY(-200%);
+	transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+	transform: translateY(0);
+}
+
+/*
+  Chapter 3 & 6: Text gradient — a decorative gradient applied only
+  to the text by clipping the background to the text shape.
+  Used on the hero heading accent word.
+*/
+.text-gradient {
+	background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+/* Section layout helpers */
+.section-header {
+	text-align: center;
+	max-width: 42rem;
+	margin-inline: auto;
+	margin-bottom: var(--space-12);
+}
+
+.section-title {
+	font-size: var(--font-size-4xl);
+	margin-block: var(--space-3) var(--space-4);
+}
+
+.section-lead {
+	font-size: var(--font-size-lg);
+	color: var(--color-text-muted);
+	max-width: 36ch;
+	margin-inline: auto;
+}
+
+/*
+  Chapter 2 & 3: Badge component.
+  Inline-flex so padding is applied correctly around the text.
+  border-radius: full creates the pill shape.
+*/
+.badge {
+	display: inline-flex;
+	align-items: center;
+	padding: var(--space-1) var(--space-3);
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-semibold);
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	border-radius: var(--radius-full);
+	background-color: var(--color-primary-light);
+	color: var(--color-primary-dark);
+}
+
+.badge--indigo {
+	background-color: var(--color-accent-light);
+	color: var(--color-accent);
+}
+
+
+/* ============================================================
+   4. BUTTONS
+   Chapter 2: Box model (padding, border)
+   Chapter 6: :hover, :active, :focus-visible transitions
+   ============================================================ */
+
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--space-2);
+	padding: var(--space-3) var(--space-6);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-semibold);
+	line-height: 1;
+	border-radius: var(--radius-lg);
+	border: 2px solid transparent;
+	text-decoration: none;
+	cursor: pointer;
+	/* Transition multiple properties for smooth state changes */
+	transition:
+		background-color var(--transition-fast),
+		border-color     var(--transition-fast),
+		color            var(--transition-fast),
+		box-shadow       var(--transition-fast),
+		transform        var(--transition-fast);
+	white-space: nowrap;
+}
+
+/* Subtle lift on hover — GPU accelerated via transform */
+.btn:hover {
+	transform: translateY(-1px);
+}
+
+.btn:active {
+	transform: translateY(0);
+}
+
+/* Filled primary button */
+.btn--primary {
+	background-color: var(--color-primary);
+	color: var(--color-text-inverse);
+	border-color: var(--color-primary);
+}
+
+.btn--primary:hover {
+	background-color: var(--color-primary-dark);
+	border-color: var(--color-primary-dark);
+	box-shadow: var(--shadow-md);
+}
+
+/* Transparent button with text color */
+.btn--ghost {
+	background-color: transparent;
+	color: var(--color-text-secondary);
+	border-color: transparent;
+}
+
+.btn--ghost:hover {
+	background-color: var(--color-border-light);
+	color: var(--color-text);
+}
+
+/* Outlined button */
+.btn--outline {
+	background-color: transparent;
+	color: var(--color-primary);
+	border-color: var(--color-border);
+}
+
+.btn--outline:hover {
+	border-color: var(--color-primary);
+	background-color: var(--color-primary-light);
+}
+
+/* White button for use on dark/gradient sections */
+.btn--white {
+	background-color: var(--color-surface);
+	color: var(--color-primary);
+	border-color: var(--color-surface);
+}
+
+.btn--white:hover {
+	background-color: var(--color-primary-light);
+	box-shadow: var(--shadow-md);
+}
+
+/* Ghost button for dark sections */
+.btn--ghost-white {
+	background-color: transparent;
+	color: var(--color-text-inverse);
+	border-color: rgba(255, 255, 255, 0.4);
+}
+
+.btn--ghost-white:hover {
+	background-color: rgba(255, 255, 255, 0.12);
+	border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* Size modifier */
+.btn--lg {
+	padding: var(--space-4) var(--space-8);
+	font-size: var(--font-size-lg);
+	border-radius: var(--radius-xl);
+}
+
+/* Full-width modifier for pricing cards */
+.btn--block {
+	width: 100%;
+}
+
+
+/* ============================================================
+   5. SITE HEADER & NAVIGATION
+   Chapter 2: position sticky + z-index for layering
+   Chapter 5: Flexbox row with space-between alignment
+   Chapter 6: Box-shadow and transition for scroll effect
+   ============================================================ */
+
+.site-header {
+	/*
+	  position: sticky keeps the header at the top of the viewport
+	  as the user scrolls. z-index ensures it layers above content.
+	*/
+	position: sticky;
+	top: 0;
+	z-index: 100;
+	background-color: rgba(255, 255, 255, 0.92);
+	/*
+	  backdrop-filter creates the frosted-glass look.
+	  The rgba background provides fallback without blur support.
+	*/
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+	border-bottom: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+}
+
+.nav {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: var(--space-4);
+	height: var(--header-height);
+}
+
+/* Logo: Flexbox row, CSS-drawn mark via ::before */
+.nav__logo {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text);
+	text-decoration: none;
+	flex-shrink: 0;
+}
+
+/*
+  Chapter 6: ::before pseudo-element used for the logo mark shape.
+  No extra HTML element needed.
+*/
+.nav__logo-mark {
+	display: block;
+	width: 1.5rem;
+	height: 1.5rem;
+	border-radius: var(--radius-md);
+	background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+	flex-shrink: 0;
+}
+
+/* Nav links row — hidden on mobile, shown on wider screens */
+.nav__links {
+	display: none;
+	list-style: none;
+	gap: var(--space-1);
+}
+
+.nav__link {
+	display: block;
+	padding: var(--space-2) var(--space-3);
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-secondary);
+	text-decoration: none;
+	border-radius: var(--radius-md);
+	transition: color var(--transition-fast), background-color var(--transition-fast);
+}
+
+.nav__link:hover {
+	color: var(--color-primary);
+	background-color: var(--color-primary-light);
+}
+
+.nav__actions {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+}
+
+/* Hide "Log in" on very small screens */
+.nav__actions > .btn--ghost {
+	display: none;
+}
+
+
+/* ============================================================
+   6. HERO SECTION
+   Chapter 3: Gradient background, text styles, clamp() font size
+   Chapter 5: Flexbox for actions row, Grid for content + visual
+   Chapter 6: @keyframes animation, ::before decorative circles,
+              clip-path for diagonal bottom edge
+   ============================================================ */
+
+.hero {
+	position: relative;
+	padding-block: var(--space-20) var(--space-24);
+	background: linear-gradient(
+		160deg,
+		hsl(220, 100%, 97%) 0%,
+		hsl(240, 100%, 96%) 50%,
+		hsl(260, 100%, 96%) 100%
+	);
+	overflow: hidden;
+	/*
+	  Chapter 6: clip-path creates a diagonal bottom edge so the
+	  hero visually "flows" into the next section.
+	*/
+	clip-path: polygon(0 0, 100% 0, 100% 92%, 0 100%);
+}
+
+/*
+  Chapter 6: ::before / ::after decorative circles use absolute
+  positioning layered behind the hero content (z-index: 0 on hero,
+  negative z-index on circles). This adds depth without extra markup.
+*/
+.hero__decoration {
+	position: absolute;
+	border-radius: var(--radius-full);
+	pointer-events: none;
+	z-index: 0;
+}
+
+.hero__decoration--1 {
+	width: 40rem;
+	height: 40rem;
+	top: -12rem;
+	right: -8rem;
+	background: radial-gradient(
+		circle,
+		rgba(37, 99, 235, 0.12) 0%,
+		transparent 70%
+	);
+}
+
+.hero__decoration--2 {
+	width: 30rem;
+	height: 30rem;
+	bottom: -8rem;
+	left: -6rem;
+	background: radial-gradient(
+		circle,
+		rgba(124, 58, 237, 0.1) 0%,
+		transparent 70%
+	);
+}
+
+/* Two-column layout (stacked on mobile, side-by-side on desktop) */
+.hero__inner {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-12);
+	text-align: center;
+}
+
+.hero__content {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-5);
+	/* Chapter 6: animation applies to the hero content block */
+	animation: fadeInUp 0.6s ease both;
+}
+
+.hero__heading {
+	/* Chapter 8: clamp() ensures the heading is always readable */
+	font-size: var(--font-size-hero);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--line-height-tight);
+	letter-spacing: -0.02em;
+	max-width: 14ch;
+}
+
+.hero__lead {
+	font-size: var(--font-size-xl);
+	color: var(--color-text-secondary);
+	line-height: var(--line-height-relaxed);
+	max-width: 40ch;
+}
+
+/* Chapter 5: Flexbox row for the two hero buttons */
+.hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	justify-content: center;
+}
+
+.hero__footnote {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+
+/* Right column: CSS dashboard mockup */
+.hero__visual {
+	width: 100%;
+	max-width: 32rem;
+	/* Chapter 6: float animation (only translate, so GPU-accelerated) */
+	animation: float 4s ease-in-out infinite;
+}
+
+
+/* CSS-only Kanban board mockup
+   Demonstrates box model, border-radius, overflow, flex/grid working together */
+.dashboard-mockup {
+	border-radius: var(--radius-xl);
+	overflow: hidden;             /* clips children to rounded corners */
+	box-shadow: var(--shadow-xl);
+	border: 1px solid var(--color-border);
+	background-color: var(--color-surface);
+}
+
+.dashboard-mockup__titlebar {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+	padding: var(--space-3) var(--space-4);
+	background-color: #f3f4f6;
+	border-bottom: 1px solid var(--color-border);
+}
+
+/* Traffic-light dots */
+.titlebar__dot {
+	display: block;
+	width: 0.625rem;
+	height: 0.625rem;
+	border-radius: var(--radius-full);
+}
+
+.titlebar__dot--red    { background-color: #fc605b; }
+.titlebar__dot--yellow { background-color: #fdbc3d; }
+.titlebar__dot--green  { background-color: #33c748; }
+
+.titlebar__name {
+	margin-left: var(--space-2);
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-muted);
+}
+
+.dashboard-mockup__body {
+	display: flex;
+}
+
+/* Sidebar strip */
+.mockup__sidebar {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+	padding: var(--space-4) var(--space-3);
+	background-color: #f9fafb;
+	border-right: 1px solid var(--color-border);
+	min-width: 3.5rem;
+}
+
+.mockup__nav-item {
+	height: 0.5rem;
+	border-radius: var(--radius-full);
+	background-color: var(--color-border);
+}
+
+/* Chapter 6: :nth-child or modifier class changes the active item color */
+.mockup__nav-item--active {
+	background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+}
+
+/* Kanban columns */
+.mockup__kanban {
+	display: flex;
+	gap: var(--space-3);
+	padding: var(--space-4);
+	flex: 1;
+	overflow: hidden;
+}
+
+.mockup__column {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+	flex: 1;
+}
+
+.mockup__col-header {
+	height: var(--space-2);
+	border-radius: var(--radius-full);
+	margin-bottom: var(--space-1);
+}
+
+.mockup__col-header--blue   { background-color: var(--color-primary); }
+.mockup__col-header--purple { background-color: var(--color-accent); }
+.mockup__col-header--green  { background-color: var(--color-success); }
+
+/* Task cards inside the Kanban columns */
+.mockup__card {
+	height: 2.5rem;
+	border-radius: var(--radius-md);
+	background-color: var(--color-border-light);
+	border: 1px solid var(--color-border);
+}
+
+.mockup__card--tall    { height: 3.5rem; }
+.mockup__card--featured { background-color: hsl(220, 100%, 96%); border-color: var(--color-primary-light); }
+.mockup__card--done    { background-color: hsl(152, 76%, 96%); border-color: #bbf7d0; }
+
+
+/* ============================================================
+   7. LOGOS STRIP
+   Chapter 5: Flexbox, wrap
+   Chapter 6: filter, opacity, hover transition
+   ============================================================ */
+
+.logos {
+	padding-block: var(--space-10);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.logos__label {
+	text-align: center;
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-medium);
+	color: var(--color-text-subtle);
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	margin-bottom: var(--space-6);
+}
+
+/* Chapter 5: Flexbox with wrap so logos reflow on narrow screens */
+.logos__list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: var(--space-6) var(--space-10);
+	list-style: none;
+}
+
+.logos__item {
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text-subtle);
+	letter-spacing: -0.02em;
+	/*
+	  Chapter 6: grayscale filter + opacity for a muted brand look.
+	  Transition makes the color reveal on hover feel smooth.
+	*/
+	filter: grayscale(1);
+	opacity: 0.5;
+	transition: filter var(--transition-base), opacity var(--transition-base);
+}
+
+.logos__item:hover {
+	filter: grayscale(0);
+	opacity: 0.9;
+}
+
+
+/* ============================================================
+   8. FEATURES SECTION
+   Chapter 5: CSS Grid (1 col → 2 col → 3 col)
+   Chapter 6: ::before icon shape, box-shadow, :hover transitions
+   Chapter 2: Card box model
+   ============================================================ */
+
+.features {
+	padding-block: var(--space-20);
+}
+
+/*
+  Chapter 5: auto-fit + minmax creates a responsive grid without
+  media queries. Each card is at least 16rem wide; when space
+  allows 3 columns, they appear automatically.
+*/
+.features__grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-6);
+}
+
+.feature-card {
+	padding: var(--space-6);
+	background-color: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-xl);
+	box-shadow: var(--shadow-sm);
+	transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.feature-card:hover {
+	box-shadow: var(--shadow-lg);
+	transform: translateY(-3px);
+}
+
+/* Icon block — a colored square with a pseudo-element overlay shape */
+.feature-card__icon {
+	position: relative;
+	width: 3rem;
+	height: 3rem;
+	border-radius: var(--radius-lg);
+	margin-bottom: var(--space-4);
+	overflow: hidden;
+}
+
+/*
+  Chapter 6: ::before pseudo-element adds a diagonal stripe decoration
+  inside each icon block without extra HTML.
+*/
+.feature-card__icon::before {
+	content: "";
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 60%;
+	height: 60%;
+	border-radius: var(--radius-md) 0 0 0;
+	opacity: 0.4;
+	background-color: rgba(255, 255, 255, 0.4);
+}
+
+.feature-card__icon--blue   { background-color: var(--color-primary); }
+.feature-card__icon--purple { background-color: var(--color-accent); }
+.feature-card__icon--green  { background-color: var(--color-success); }
+.feature-card__icon--orange { background-color: var(--color-warning); }
+
+.feature-card__title {
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-semibold);
+	margin-bottom: var(--space-2);
+}
+
+.feature-card__text {
+	font-size: var(--font-size-base);
+	color: var(--color-text-muted);
+	line-height: var(--line-height-relaxed);
+}
+
+
+/* ============================================================
+   9. HOW IT WORKS
+   Chapter 1: CSS counters (counter-reset, counter-increment)
+   Chapter 6: ::before pseudo-element displays the counter value
+   Chapter 5: Flex layout for each step row
+   ============================================================ */
+
+.how-it-works {
+	padding-block: var(--space-20);
+	background-color: var(--color-surface);
+	border-top: 1px solid var(--color-border);
+	border-bottom: 1px solid var(--color-border);
+}
+
+/*
+  Chapter 1: counter-reset initializes the CSS counter named "step".
+  Each .step__number element increments it by 1.
+*/
+.steps {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-8);
+	counter-reset: step;
+	list-style: none;
+}
+
+.step {
+	display: flex;
+	gap: var(--space-6);
+	align-items: flex-start;
+}
+
+/*
+  Chapter 1 & 6: counter-increment moves the counter forward.
+  ::before displays the counter value as styled text.
+*/
+.step__number {
+	counter-increment: step;
+	flex-shrink: 0;
+	width: 3rem;
+	height: 3rem;
+	border-radius: var(--radius-full);
+	background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.step__number::before {
+	content: counter(step);
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text-inverse);
+}
+
+.step__body {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-2);
+	padding-top: var(--space-2);
+}
+
+.step__title {
+	font-size: var(--font-size-xl);
+	font-weight: var(--font-weight-semibold);
+}
+
+.step__text {
+	color: var(--color-text-muted);
+	line-height: var(--line-height-relaxed);
+	max-width: 44ch;
+}
+
+
+/* ============================================================
+   10. STATS SECTION
+   Chapter 3: Large display typography, color
+   Chapter 5: CSS Grid (1 → 2 → 4 columns)
+   Chapter 6: clip-path for diagonal top/bottom edges
+   ============================================================ */
+
+.stats {
+	padding-block: var(--space-16);
+	background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+	/*
+	  Chapter 6: clip-path cuts diagonal slices from the top and bottom
+	  so the section blends visually with sections above and below.
+	*/
+	clip-path: polygon(0 6%, 100% 0, 100% 94%, 0 100%);
+	margin-block: -3rem;   /* overlap the clipped areas */
+}
+
+.stats__grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--space-8);
+	list-style: none;
+}
+
+.stat {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-1);
+	text-align: center;
+}
+
+.stat__number {
+	/* Chapter 3: very large display size with clamp() */
+	font-size: clamp(2rem, 8vw, 3.5rem);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text-inverse);
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+.stat__label {
+	font-size: var(--font-size-sm);
+	color: rgba(255, 255, 255, 0.75);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+
+/* ============================================================
+   11. PRICING SECTION
+   Chapter 5: CSS Grid for three cards
+   Chapter 6: Featured card elevation, ::before badge position,
+              transitions on :hover
+   ============================================================ */
+
+.pricing {
+	padding-block: var(--space-24) var(--space-20);
+}
+
+.pricing__grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-6);
+	list-style: none;
+	align-items: start;
+}
+
+.pricing-card {
+	position: relative;    /* Chapter 2: needed for the absolutely positioned badge */
+	padding: var(--space-8);
+	background-color: var(--color-surface);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-2xl);
+	box-shadow: var(--shadow-sm);
+	transition: box-shadow var(--transition-base), transform var(--transition-base);
+}
+
+.pricing-card:hover {
+	box-shadow: var(--shadow-lg);
+	transform: translateY(-2px);
+}
+
+/*
+  Featured / highlighted card: more prominent border, stronger shadow,
+  scaled slightly larger than sibling cards.
+*/
+.pricing-card--featured {
+	border-color: var(--color-primary);
+	box-shadow: var(--shadow-xl), 0 0 0 2px var(--color-primary);
+}
+
+.pricing-card--featured:hover {
+	box-shadow:
+		var(--shadow-xl),
+		0 0 0 2px var(--color-primary),
+		0 0 0 5px var(--color-primary-light);
+}
+
+/*
+  Chapter 2 & 6: Absolutely positioned "Most popular" badge.
+  position: absolute relative to the nearest position: relative ancestor.
+*/
+.pricing-card__badge {
+	position: absolute;
+	top: -0.75rem;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: var(--space-1) var(--space-4);
+	background-color: var(--color-primary);
+	color: var(--color-text-inverse);
+	font-size: var(--font-size-xs);
+	font-weight: var(--font-weight-semibold);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	border-radius: var(--radius-full);
+	white-space: nowrap;
+}
+
+.pricing-card__header {
+	margin-bottom: var(--space-6);
+}
+
+.pricing-card__plan {
+	font-size: var(--font-size-lg);
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-text-muted);
+	margin-bottom: var(--space-3);
+}
+
+.pricing-card__price {
+	display: flex;
+	align-items: baseline;
+	gap: 0;
+	margin-bottom: var(--space-3);
+}
+
+.pricing-card__amount {
+	font-size: clamp(2rem, 6vw, 3rem);
+	font-weight: var(--font-weight-bold);
+	line-height: 1;
+	letter-spacing: -0.03em;
+}
+
+.pricing-card__period {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+
+.pricing-card__description {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+
+.pricing-card__features {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+	margin-bottom: var(--space-8);
+}
+
+.pricing-card__feature {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+	font-size: var(--font-size-sm);
+	line-height: var(--line-height-snug);
+}
+
+/*
+  Chapter 6: ::before pseudo-element adds the check or cross icon
+  so the markup stays clean — just list items with modifier classes.
+*/
+.pricing-card__feature::before {
+	content: "";
+	display: inline-block;
+	flex-shrink: 0;
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: var(--radius-full);
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 0.75rem;
+}
+
+.pricing-card__feature--check {
+	color: var(--color-text-secondary);
+}
+
+.pricing-card__feature--check::before {
+	background-color: hsl(152, 76%, 92%);
+	/* The checkmark is drawn from two borders rotated with CSS */
+	box-shadow: inset 0 0 0 2px var(--color-success);
+	position: relative;
+}
+
+/* Simpler approach: use content itself for the symbol */
+.pricing-card__feature--check::before {
+	content: "✓";
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: var(--radius-full);
+	background-color: hsl(152, 76%, 92%);
+	color: var(--color-success);
+	font-size: 0.75rem;
+	font-weight: var(--font-weight-bold);
+}
+
+.pricing-card__feature--cross {
+	color: var(--color-text-subtle);
+}
+
+.pricing-card__feature--cross::before {
+	content: "×";
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.25rem;
+	height: 1.25rem;
+	border-radius: var(--radius-full);
+	background-color: var(--color-border-light);
+	color: var(--color-text-subtle);
+	font-size: 0.875rem;
+}
+
+
+/* ============================================================
+   12. TESTIMONIALS
+   Chapter 5: Responsive Flexbox with wrap
+   Chapter 3: blockquote typography
+   Chapter 6: :nth-child accent variant, box-shadow, border-radius
+   ============================================================ */
+
+.testimonials {
+	padding-block: var(--space-20);
+	background-color: var(--color-surface);
+	border-top: 1px solid var(--color-border);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.testimonials__grid {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-6);
+	list-style: none;
+}
+
+.testimonial-card {
+	padding: var(--space-6) var(--space-8);
+	border-radius: var(--radius-xl);
+	background-color: var(--color-bg);
+	border: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	transition: box-shadow var(--transition-base);
+}
+
+.testimonial-card:hover {
+	box-shadow: var(--shadow-md);
+}
+
+/*
+  Chapter 6: nth-child targets the second testimonial card
+  to apply an accent background variation without an extra class.
+  Using a modifier class (testimonial-card--accent) is the BEM approach;
+  this demonstrates both alternatives.
+*/
+.testimonial-card--accent {
+	background: linear-gradient(135deg, var(--color-primary-light), var(--color-accent-light));
+	border-color: transparent;
+}
+
+.testimonial-card__quote {
+	font-size: var(--font-size-lg);
+	line-height: var(--line-height-relaxed);
+	color: var(--color-text-secondary);
+	font-style: normal;
+	margin-bottom: var(--space-6);
+	quotes: "\201C" "\201D";
+}
+
+/*
+  Chapter 6: ::before pseudo-element adds the opening quotation mark
+  as a large typographic decoration.
+*/
+.testimonial-card__quote::before {
+	content: open-quote;
+	display: block;
+	font-size: 3.5rem;
+	line-height: 1;
+	color: var(--color-primary);
+	opacity: 0.3;
+	margin-bottom: var(--space-2);
+}
+
+.testimonial-card__footer {
+	display: flex;
+	align-items: center;
+	gap: var(--space-3);
+}
+
+/* Chapter 3: Avatar circle — background color, border-radius: full */
+.testimonial-card__avatar {
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: var(--radius-full);
+	background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+	color: var(--color-text-inverse);
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-bold);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+}
+
+.testimonial-card__name {
+	font-size: var(--font-size-base);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--line-height-snug);
+}
+
+.testimonial-card__role {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+
+
+/* ============================================================
+   13. CTA SECTION
+   Chapter 3: Gradient background
+   Chapter 5: Centered Flexbox column layout
+   Chapter 6: ::before decorative radial gradient overlay
+   ============================================================ */
+
+.cta {
+	position: relative;
+	padding-block: var(--space-20);
+	background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+	overflow: hidden;
+	text-align: center;
+}
+
+/*
+  Chapter 6: ::before adds a large radial gradient circle on top of
+  the gradient background for a subtle light-bloom effect.
+*/
+.cta::before {
+	content: "";
+	position: absolute;
+	inset: -50%;
+	background: radial-gradient(
+		ellipse 80% 60% at 50% 30%,
+		rgba(255, 255, 255, 0.15) 0%,
+		transparent 60%
+	);
+	pointer-events: none;
+}
+
+.cta__inner {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: var(--space-6);
+}
+
+.cta__heading {
+	font-size: var(--font-size-4xl);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-text-inverse);
+	line-height: var(--line-height-tight);
+}
+
+.cta__lead {
+	font-size: var(--font-size-lg);
+	color: rgba(255, 255, 255, 0.8);
+	max-width: 42ch;
+}
+
+.cta__actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-3);
+	justify-content: center;
+}
+
+
+/* ============================================================
+   14. SITE FOOTER
+   Chapter 5: CSS Grid for the brand column + nav columns
+   Chapter 3: Muted color palette
+   ============================================================ */
+
+.site-footer {
+	background-color: var(--color-text);
+	color: var(--color-text-subtle);
+}
+
+.footer__inner {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: var(--space-10);
+	padding-block: var(--space-12) var(--space-10);
+}
+
+.footer__brand .nav__logo {
+	color: var(--color-text-inverse);
+	margin-bottom: var(--space-3);
+}
+
+.footer__tagline {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+	max-width: 26ch;
+}
+
+/* Chapter 5: Flexbox row for the three nav columns */
+.footer__nav {
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--space-8);
+}
+
+.footer__col {
+	flex: 1;
+	min-width: 8rem;
+}
+
+.footer__col-heading {
+	font-size: var(--font-size-sm);
+	font-weight: var(--font-weight-semibold);
+	text-transform: uppercase;
+	letter-spacing: 0.07em;
+	color: var(--color-text-inverse);
+	margin-bottom: var(--space-4);
+}
+
+.footer__links {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-3);
+	list-style: none;
+}
+
+.footer__link {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+	text-decoration: none;
+	transition: color var(--transition-fast);
+}
+
+.footer__link:hover {
+	color: var(--color-text-inverse);
+}
+
+/* Bottom bar */
+.footer__bottom {
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+	padding-block: var(--space-5);
+}
+
+.footer__copy {
+	font-size: var(--font-size-sm);
+	color: var(--color-text-muted);
+}
+
+
+/* ============================================================
+   15. RESPONSIVE BREAKPOINTS — MOBILE-FIRST
+   Chapter 4: min-width breakpoints, 640px / 768px / 1024px
+   ============================================================ */
+
+/*
+  Mobile-first strategy means the base styles above target the
+  smallest screens. These @media blocks progressively add layout
+  complexity as more horizontal space becomes available.
+*/
+
+/* --- Small: 640px and wider --- */
+@media (min-width: 640px) {
+	.nav__links {
+		display: flex;  /* show navigation links when space allows */
+	}
+
+	.nav__actions > .btn--ghost {
+		display: inline-flex;   /* show Log in button on wider screens */
+	}
+
+	.hero__heading {
+		text-align: left;
+	}
+
+	.features__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	.steps {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.step {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.step__text {
+		max-width: 100%;
+	}
+
+	.stats__grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+
+	.pricing__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+
+	/* Enterprise card spans full row until we hit 3-col layout */
+	.pricing__grid > li:last-child {
+		grid-column: 1 / -1;
+	}
+
+	.testimonials__grid {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	.testimonial-card {
+		flex: 1;
+		min-width: 16rem;
+	}
+
+	.footer__inner {
+		grid-template-columns: auto 1fr;
+	}
+}
+
+/* --- Medium: 768px and wider --- */
+@media (min-width: 768px) {
+	.hero__inner {
+		flex-direction: row;
+		text-align: left;
+		align-items: center;
+	}
+
+	.hero__content {
+		align-items: flex-start;
+		flex: 1;
+	}
+
+	.hero__visual {
+		flex: 0 0 auto;
+		width: 50%;
+	}
+
+	.hero__actions {
+		justify-content: flex-start;
+	}
+}
+
+/* --- Large: 1024px and wider --- */
+@media (min-width: 1024px) {
+	.features__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.pricing__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	/* Reset the enterprise card spanning */
+	.pricing__grid > li:last-child {
+		grid-column: auto;
+	}
+
+	/* Scale the featured card slightly larger than its siblings */
+	.pricing-card--featured {
+		transform: scale(1.03);
+	}
+
+	.pricing-card--featured:hover {
+		transform: scale(1.03) translateY(-2px);
+	}
+
+	.footer__inner {
+		grid-template-columns: 16rem 1fr;
+		gap: var(--space-16);
+	}
+}
+
+
+/* ============================================================
+   16. KEYFRAME ANIMATIONS
+   Chapter 6 & 10: @keyframes with transform + opacity only
+   (GPU-composited, never triggers layout or paint)
+   ============================================================ */
+
+/*
+  Chapter 10: fadeInUp entrance animation.
+  Uses only opacity and transform so the browser can composite
+  this on the GPU without recalculating layout.
+*/
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(1.5rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/*
+  Chapter 10: Gentle floating loop for the hero visual mockup.
+  translateY does not trigger layout, making this animation
+  "jank-free" even on lower-end devices.
+*/
+@keyframes float {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-0.75rem);
+	}
+}
+
+
+/* ============================================================
+   17. ACCESSIBILITY — REDUCED MOTION
+   Chapter 10: Respect the user's OS-level motion preference.
+   When "Reduce motion" is enabled, disable all decorative
+   animations and slow down transitions.
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration:   0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration:  0.01ms !important;
+	}
+
+	html {
+		scroll-behavior: auto;
+	}
+
+	.hero__visual {
+		animation: none;
+	}
+
+	.hero__content {
+		animation: none;
+	}
+}

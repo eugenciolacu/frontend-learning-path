@@ -24,7 +24,7 @@ then find all
 from
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards"
 folder and subfolders.
-Based on this information create a min-project
+Based on this information create a mini-project
 "Personal homepage"
 and store it in
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards\mini-projects\personal-homepage"
@@ -52,7 +52,7 @@ Plese use
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "README.md" document ("Example README.md (Module)" part of the document).
 
-
+--------------------------------------------------
 
 Please read
 "frontend-learning-path\docs\frontend-learning-roadmap.md"
@@ -71,10 +71,18 @@ folder. Please create a separate folder for each example.
 
 
 
-
-
-### Chapter 9: CSS Architecture at Scale (Advanced)
-- Methodologies: BEM, ITCSS, CUBE CSS, Utility-first
-- CSS-in-JS (Styled Components, Emotion) vs CSS Modules vs Utility Frameworks (Tailwind)
-- Preprocessors and Postprocessors: Sass advanced tooling, PostCSS ecosystem
-- Design Tokens and Component Library architecture
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find all chapters from the module
+"Module 2: CSS & Styling Architecture"
+then find all
+"theory.md" and "examples"
+from
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture"
+folder and subfolders.
+Based on this information create a mini-project
+"Responsive landing page"
+and store it in
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\mini-projects\responsive-landing-page"
+folder.
+This miniproject should be based on knowledge from module only.
