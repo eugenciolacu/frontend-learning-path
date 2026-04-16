@@ -1,0 +1,224 @@
+/* ============================================================
+ * ITCSS Layer 6 — Utilities
+ *
+ * Chapter 7:  CSS Frameworks & Libraries — utility-first approach
+ *             (inspired by how Tailwind CSS works)
+ * Chapter 8:  CSS functions — clamp(), min(), max()
+ * Chapter 9:  Utility-first as an architectural strategy;
+ *             utilities intentionally have the highest specificity
+ *
+ * Convention: "u-" prefix marks utility classes.
+ * Utilities use !important so they always win when applied.
+ * Use sparingly — for one-off overrides, not primary styling.
+ * ============================================================ */
+
+/* ---- Display ---- */
+
+.u-block  { display: block !important; }
+.u-flex   { display: flex !important; }
+.u-grid   { display: grid !important; }
+.u-hidden { display: none !important; }
+
+/* Screen-reader only — visually hidden but accessible */
+/* Chapter 4 — accessibility, Chapter 9 — utility pattern */
+.u-sr-only {
+	position:   absolute  !important;
+	width:      1px       !important;
+	height:     1px       !important;
+	padding:    0         !important;
+	margin:     -1px      !important;
+	overflow:   hidden    !important;
+	clip:       rect(0, 0, 0, 0) !important;
+	white-space: nowrap   !important;
+	border:     0         !important;
+}
+
+/* ---- Flexbox ---- */
+/* Chapter 5 — Flexbox properties as utilities */
+
+.u-flex-col     { flex-direction:  column        !important; }
+.u-flex-wrap    { flex-wrap:       wrap          !important; }
+.u-items-start  { align-items:     flex-start    !important; }
+.u-items-center { align-items:     center        !important; }
+.u-items-end    { align-items:     flex-end      !important; }
+.u-items-baseline { align-items:   baseline      !important; }
+.u-justify-start  { justify-content: flex-start  !important; }
+.u-justify-center { justify-content: center      !important; }
+.u-justify-end    { justify-content: flex-end    !important; }
+.u-justify-between{ justify-content: space-between !important; }
+.u-self-start   { align-self:      flex-start    !important; }
+.u-self-center  { align-self:      center        !important; }
+.u-self-end     { align-self:      flex-end      !important; }
+.u-flex-1       { flex:            1 1 0%        !important; }
+.u-flex-none    { flex:            none          !important; }
+.u-flex-shrink-0{ flex-shrink:     0             !important; }
+
+.u-gap-1 { gap: var(--space-1) !important; }
+.u-gap-2 { gap: var(--space-2) !important; }
+.u-gap-3 { gap: var(--space-3) !important; }
+.u-gap-4 { gap: var(--space-4) !important; }
+.u-gap-6 { gap: var(--space-6) !important; }
+.u-gap-8 { gap: var(--space-8) !important; }
+
+/* ---- Margin ---- */
+
+.u-m-0   { margin:         0                    !important; }
+.u-mt-0  { margin-top:     0                    !important; }
+.u-mt-2  { margin-top:     var(--space-2)       !important; }
+.u-mt-4  { margin-top:     var(--space-4)       !important; }
+.u-mt-6  { margin-top:     var(--space-6)       !important; }
+.u-mt-8  { margin-top:     var(--space-8)       !important; }
+.u-mb-0  { margin-bottom:  0                    !important; }
+.u-mb-2  { margin-bottom:  var(--space-2)       !important; }
+.u-mb-4  { margin-bottom:  var(--space-4)       !important; }
+.u-mb-6  { margin-bottom:  var(--space-6)       !important; }
+.u-mb-8  { margin-bottom:  var(--space-8)       !important; }
+.u-my-4  { margin-block:   var(--space-4)       !important; }
+.u-my-8  { margin-block:   var(--space-8)       !important; }
+.u-ml-auto { margin-left:  auto                 !important; }
+.u-mr-auto { margin-right: auto                 !important; }
+.u-mx-auto { margin-inline: auto                !important; }
+
+/* ---- Padding ---- */
+
+.u-p-0  { padding:         0               !important; }
+.u-p-4  { padding:         var(--space-4)  !important; }
+.u-p-6  { padding:         var(--space-6)  !important; }
+.u-p-8  { padding:         var(--space-8)  !important; }
+.u-px-4 { padding-inline:  var(--space-4)  !important; }
+.u-px-6 { padding-inline:  var(--space-6)  !important; }
+.u-py-2 { padding-block:   var(--space-2)  !important; }
+.u-py-4 { padding-block:   var(--space-4)  !important; }
+.u-py-6 { padding-block:   var(--space-6)  !important; }
+.u-py-8 { padding-block:   var(--space-8)  !important; }
+
+/* ---- Typography ---- */
+/* Chapter 3 — font-size, font-weight, text-align utilities */
+
+.u-text-xs    { font-size: var(--text-xs)   !important; }
+.u-text-sm    { font-size: var(--text-sm)   !important; }
+.u-text-base  { font-size: var(--text-base) !important; }
+.u-text-lg    { font-size: var(--text-lg)   !important; }
+.u-text-xl    { font-size: var(--text-xl)   !important; }
+.u-text-2xl   { font-size: var(--text-2xl)  !important; }
+.u-text-3xl   { font-size: var(--text-3xl)  !important; }
+
+.u-font-regular  { font-weight: var(--font-regular)  !important; }
+.u-font-medium   { font-weight: var(--font-medium)   !important; }
+.u-font-semibold { font-weight: var(--font-semibold) !important; }
+.u-font-bold     { font-weight: var(--font-bold)     !important; }
+
+.u-font-mono    { font-family: var(--font-mono) !important; }
+.u-font-sans    { font-family: var(--font-sans) !important; }
+
+.u-leading-tight   { line-height: var(--leading-tight)   !important; }
+.u-leading-normal  { line-height: var(--leading-normal)  !important; }
+.u-leading-relaxed { line-height: var(--leading-relaxed) !important; }
+
+.u-uppercase      { text-transform: uppercase  !important; }
+.u-capitalize     { text-transform: capitalize !important; }
+.u-text-center    { text-align:     center     !important; }
+.u-text-left      { text-align:     left       !important; }
+.u-text-right     { text-align:     right      !important; }
+.u-tracking-wide  { letter-spacing: 0.05em     !important; }
+.u-no-wrap        { white-space:    nowrap      !important; }
+.u-italic         { font-style:     italic      !important; }
+
+/* ---- Colors ---- */
+
+.u-text-primary    { color: var(--color-text-primary)   !important; }
+.u-text-secondary  { color: var(--color-text-secondary) !important; }
+.u-text-disabled   { color: var(--color-text-disabled)  !important; }
+.u-text-brand      { color: var(--color-brand)          !important; }
+.u-text-success    { color: var(--color-success)        !important; }
+.u-text-warning    { color: var(--color-warning)        !important; }
+.u-text-error      { color: var(--color-error)          !important; }
+.u-text-white      { color: white                       !important; }
+
+.u-bg-surface  { background-color: var(--color-bg-surface) !important; }
+.u-bg-subtle   { background-color: var(--color-bg-subtle)  !important; }
+.u-bg-canvas   { background-color: var(--color-bg-canvas)  !important; }
+.u-bg-brand    { background-color: var(--color-brand)      !important; }
+
+/* ---- Borders ---- */
+
+.u-border          { border:        1px solid var(--color-border)  !important; }
+.u-border-top      { border-top:    1px solid var(--color-border)  !important; }
+.u-border-bottom   { border-bottom: 1px solid var(--color-border)  !important; }
+.u-border-none     { border:        none                            !important; }
+
+.u-rounded-sm   { border-radius: var(--radius-sm)   !important; }
+.u-rounded      { border-radius: var(--radius-md)   !important; }
+.u-rounded-lg   { border-radius: var(--radius-lg)   !important; }
+.u-rounded-xl   { border-radius: var(--radius-xl)   !important; }
+.u-rounded-full { border-radius: var(--radius-full) !important; }
+
+/* ---- Shadows ---- */
+/* Chapter 6 — box-shadow as a depth tool */
+
+.u-shadow-none { box-shadow: none              !important; }
+.u-shadow-xs   { box-shadow: var(--shadow-xs)  !important; }
+.u-shadow-sm   { box-shadow: var(--shadow-sm)  !important; }
+.u-shadow-md   { box-shadow: var(--shadow-md)  !important; }
+.u-shadow-lg   { box-shadow: var(--shadow-lg)  !important; }
+
+/* ---- Sizing ---- */
+
+.u-w-full  { width:     100%    !important; }
+.u-h-full  { height:    100%    !important; }
+.u-min-w-0 { min-width: 0       !important; }
+.u-max-w-sm { max-width: 24rem  !important; }
+.u-max-w-md { max-width: 36rem  !important; }
+.u-max-w-lg { max-width: 48rem  !important; }
+.u-max-w-xl { max-width: 64rem  !important; }
+
+/* Chapter 8 — clamp() for fluid sizing */
+.u-text-fluid-sm {
+	font-size: clamp(var(--text-sm), 1.5vw, var(--text-base)) !important;
+}
+.u-text-fluid-lg {
+	font-size: clamp(var(--text-lg), 3vw, var(--text-3xl)) !important;
+}
+
+/* ---- Overflow ---- */
+/* Chapter 2 — overflow property */
+
+.u-overflow-hidden { overflow:   hidden !important; }
+.u-overflow-auto   { overflow:   auto   !important; }
+.u-overflow-x-auto { overflow-x: auto   !important; }
+.u-truncate {
+	white-space:   nowrap    !important;
+	overflow:      hidden    !important;
+	text-overflow: ellipsis  !important;
+}
+
+/* ---- Position ---- */
+/* Chapter 2 — positioning */
+
+.u-relative { position: relative !important; }
+.u-absolute { position: absolute !important; }
+.u-sticky   { position: sticky   !important; }
+.u-inset-0  { inset:    0        !important; }
+.u-z-raised { z-index:  var(--z-raised) !important; }
+
+/* ---- Cursor ---- */
+
+.u-cursor-pointer { cursor: pointer   !important; }
+.u-cursor-default { cursor: default   !important; }
+.u-cursor-not-allowed { cursor: not-allowed !important; }
+
+/* ---- Aspect ratio ---- */
+
+.u-aspect-square { aspect-ratio: 1 / 1   !important; }
+.u-aspect-video  { aspect-ratio: 16 / 9  !important; }
+
+/* ---- Opacity ---- */
+
+.u-opacity-0  { opacity: 0    !important; }
+.u-opacity-50 { opacity: 0.5  !important; }
+.u-opacity-75 { opacity: 0.75 !important; }
+
+/* ---- Pointer events ---- */
+
+.u-pointer-none  { pointer-events: none !important; }
+.u-select-none   { user-select:    none !important; }

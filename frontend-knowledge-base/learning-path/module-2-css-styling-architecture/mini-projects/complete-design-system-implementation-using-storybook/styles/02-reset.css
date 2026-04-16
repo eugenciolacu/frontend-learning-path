@@ -1,0 +1,121 @@
+/* ============================================================
+ * ITCSS Layer 2 — Generic / Reset
+ *
+ * Chapter 2: The Box Model and Layout (box-sizing: border-box)
+ * Chapter 9: CSS Architecture at Scale (cascade management,
+ *             establishing a controlled baseline)
+ * Chapter 10: prefers-reduced-motion (accessibility)
+ *
+ * Goal: correct browser inconsistencies without imposing
+ * any visual opinions. All visual defaults live in 03-base.css.
+ * ============================================================ */
+
+/* Apply border-box sizing to every element and its pseudo-elements.
+ * This makes width/height include padding and border, which is far
+ * more predictable than the default content-box model.
+ * Chapter 2 — box model fundamentals. */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+/* Remove default margin and padding so we start from zero. */
+* {
+	margin: 0;
+	padding: 0;
+}
+
+/* Respect the user's browser font-size preference.
+ * Using 100% instead of 16px preserves accessibility settings.
+ * Chapter 3 — typography baseline. */
+html {
+	font-size: 100%;
+	-webkit-text-size-adjust: 100%;  /* prevent iOS font scaling on rotation */
+	tab-size: 2;
+	scroll-behavior: smooth;
+}
+
+/* Ensure the document fills at least the full viewport height. */
+body {
+	min-height: 100vh;
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* Block-level media elements — prevent them from overflowing
+ * their containers. Chapter 2 — overflow control. */
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+/* Form controls do not inherit font by default in most browsers.
+ * Inheriting from the document removes the need to redeclare fonts
+ * on every input. Chapter 3 — typography inheritance. */
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+/* Remove the default button appearance so component styles start
+ * from a neutral baseline. Chapter 2 — display and box model. */
+button {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+/* Prevent heading and paragraph text from overflowing its container
+ * when long words or URLs appear inside them. */
+p,
+h1, h2, h3, h4, h5, h6 {
+	overflow-wrap: break-word;
+}
+
+/* Remove list markers from lists that are given an explicit
+ * role="list", since the marker carries no informational value
+ * when the list is semantically announced by ARIA.
+ * Preserving default markers on unmarked lists maintains semantics. */
+ul[role="list"],
+ol[role="list"] {
+	list-style: none;
+}
+
+/* Remove the summary marker in Chromium-based browsers. */
+details > summary {
+	list-style: none;
+}
+details > summary::-webkit-details-marker {
+	display: none;
+}
+
+/* ============================================================
+ * Reduced Motion — respect user OS preference
+ *
+ * Chapter 10: Animation and Visual Performance
+ *   "Respect prefers-reduced-motion and avoid motion patterns
+ *    that reduce usability."
+ *
+ * This rule disables most CSS animations and transitions globally
+ * when the user has requested reduced motion in their OS settings.
+ * Individual components may still show subtle state transitions
+ * if they use a more conservative motion budget.
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration:        0.01ms !important;
+		animation-iteration-count: 1      !important;
+		transition-duration:       0.01ms !important;
+		scroll-behavior:           auto   !important;
+	}
+}

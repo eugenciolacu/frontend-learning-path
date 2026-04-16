@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Nova Design System — CSS Module 2 Mini-Project</title>
+	<meta name="description" content="A complete design system visual catalog demonstrating all concepts from Module 2: CSS & Styling Architecture." />
+
+	<!-- Chapter 3: Google Fonts — web font loading with preconnect hints -->
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+		rel="stylesheet"
+	/>
+
+	<!-- ITCSS-ordered stylesheets — Chapter 9 -->
+	<link rel="stylesheet" href="styles/01-tokens.css" />
+	<link rel="stylesheet" href="styles/02-reset.css" />
+	<link rel="stylesheet" href="styles/03-base.css" />
+	<link rel="stylesheet" href="styles/04-layout.css" />
+	<link rel="stylesheet" href="styles/05-components.css" />
+	<link rel="stylesheet" href="styles/06-utilities.css" />
+	<link rel="stylesheet" href="styles/07-animations.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     CATALOG SHELL — Chapter 5 (CSS Grid named areas)
+     ============================================================ -->
+<div class="catalog" id="catalog">
+
+	<!-- ── SIDEBAR BRAND (top-left cell) ── -->
+	<div class="catalog__sidebar-header">
+		<div class="sidebar-brand" aria-label="Nova Design System home">
+			<div class="sidebar-brand__icon" aria-hidden="true">N</div>
+			<div>
+				<div class="sidebar-brand__name">Nova DS</div>
+				<div class="sidebar-brand__version">v1.0 · Module 2</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ── MAIN HEADER (top-right cell) ── -->
+	<!-- Chapter 2: position: sticky, z-index -->
+	<header class="catalog__main-header main-header">
+		<nav class="main-header__path" aria-label="Breadcrumb">
+			<span>Nova Design System</span>
+			<span class="main-header__sep" aria-hidden="true"> / </span>
+			<span class="main-header__current" id="current-path">Introduction</span>
+		</nav>
+
+		<div class="main-header__actions">
+			<!-- Chapter 6: custom toggle component -->
+			<button
+				class="toggle"
+				id="theme-toggle"
+				role="switch"
+				aria-checked="false"
+				aria-label="Toggle dark mode"
+				title="Toggle dark mode"
+			>
+				<span aria-hidden="true" style="font-size:0.9em">☀</span>
+				<span class="toggle__track">
+					<span class="toggle__thumb"></span>
+				</span>
+				<span aria-hidden="true" style="font-size:0.9em">☾</span>
+			</button>
+		</div>
+	</header>
+
+	<!-- ── SIDEBAR NAVIGATION ── -->
+	<!-- Chapter 1: descendant selectors, pseudo-classes -->
+	<aside class="catalog__sidebar" aria-label="Design system navigation">
+		<nav class="sidebar-nav" aria-label="Design system sections">
+
+			<div class="sidebar-nav__section">
+				<ul class="sidebar-nav__list" role="list">
+					<li class="sidebar-nav__item">
+						<a href="#introduction" data-path="Introduction" class="is-active">
+							<svg class="u-sr-only" aria-hidden="true"></svg>
+							Introduction
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="sidebar-nav__section">
+				<span class="sidebar-nav__section-label">Foundations</span>
+				<ul class="sidebar-nav__list" role="list">
+					<li class="sidebar-nav__item"><a href="#colors" data-path="Foundations / Colors">Colors</a></li>
+					<li class="sidebar-nav__item"><a href="#typography" data-path="Foundations / Typography">Typography</a></li>
+					<li class="sidebar-nav__item"><a href="#spacing" data-path="Foundations / Spacing">Spacing</a></li>
+					<li class="sidebar-nav__item"><a href="#shadows" data-path="Foundations / Shadows">Shadows</a></li>
+				</ul>
+			</div>
+
+			<div class="sidebar-nav__section">
+				<span class="sidebar-nav__section-label">Components</span>
+				<ul class="sidebar-nav__list" role="list">
+					<li class="sidebar-nav__item"><a href="#button"   data-path="Components / Button">Button</a></li>
+					<li class="sidebar-nav__item"><a href="#card"     data-path="Components / Card">Card</a></li>
+					<li class="sidebar-nav__item"><a href="#badge"    data-path="Components / Badge">Badge</a></li>
+					<li class="sidebar-nav__item"><a href="#input"    data-path="Components / Input">Input</a></li>
+					<li class="sidebar-nav__item"><a href="#alert"    data-path="Components / Alert">Alert</a></li>
+					<li class="sidebar-nav__item"><a href="#chip"     data-path="Components / Chip">Chip</a></li>
+					<li class="sidebar-nav__item"><a href="#avatar"   data-path="Components / Avatar">Avatar</a></li>
+					<li class="sidebar-nav__item"><a href="#progress" data-path="Components / Progress">Progress</a></li>
+				</ul>
+			</div>
+
+			<div class="sidebar-nav__section">
+				<span class="sidebar-nav__section-label">Utilities</span>
+				<ul class="sidebar-nav__list" role="list">
+					<li class="sidebar-nav__item"><a href="#layout-utils"    data-path="Utilities / Layout">Layout</a></li>
+					<li class="sidebar-nav__item"><a href="#animation-utils" data-path="Utilities / Animation">Animation</a></li>
+				</ul>
+			</div>
+
+			<div class="sidebar-nav__section">
+				<span class="sidebar-nav__section-label">Patterns</span>
+				<ul class="sidebar-nav__list" role="list">
+					<li class="sidebar-nav__item"><a href="#card-grid"   data-path="Patterns / Card Grid">Card Grid</a></li>
+					<li class="sidebar-nav__item"><a href="#form-layout" data-path="Patterns / Form Layout">Form Layout</a></li>
+				</ul>
+			</div>
+
+		</nav>
+	</aside>
+
+	<!-- ── MAIN CONTENT ── -->
+	<main class="catalog__main" id="main-content" tabindex="-1">
+
+		<!-- ======================================================
+		     INTRODUCTION
+		     ====================================================== -->
+		<section id="introduction" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h1 class="story-section__title">Nova Design System</h1>
+				<span class="story-section__chapter-tag">Module 2</span>
+			</div>
+
+			<p class="story-section__intro">
+				A complete, token-driven design system built entirely with CSS — no external UI framework.
+				Every component, layout pattern, and animation in this catalog demonstrates a concept from
+				<strong>Module 2: CSS &amp; Styling Architecture</strong> of the Frontend Learning Path.
+			</p>
+
+			<div class="story">
+				<div class="story__toolbar">
+					<span class="story__name">Architecture Overview</span>
+					<span class="story__tag">ITCSS · BEM · Design Tokens</span>
+				</div>
+				<div class="story__canvas story__canvas--col" style="gap:var(--space-3)">
+					<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--space-3);">
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;1</span>
+							<span class="u-font-semibold u-text-primary">01-tokens.css</span>
+							<span class="u-text-xs u-text-secondary">Design tokens — primitive &amp; semantic</span>
+						</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;2</span>
+							<span class="u-font-semibold u-text-primary">02-reset.css</span>
+							<span class="u-text-xs u-text-secondary">Generic reset &amp; box-sizing</span>
+						</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;3</span>
+							<span class="u-font-semibold u-text-primary">03-base.css</span>
+							<span class="u-text-xs u-text-secondary">Element defaults — type, links, code</span>
+						</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;4</span>
+							<span class="u-font-semibold u-text-primary">04-layout.css</span>
+							<span class="u-text-xs u-text-secondary">Layout objects — grid, flex containers</span>
+						</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;5</span>
+							<span class="u-font-semibold u-text-primary">05-components.css</span>
+							<span class="u-text-xs u-text-secondary">BEM components — Button, Card …</span>
+						</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;6</span>
+							<span class="u-font-semibold u-text-primary">06-utilities.css</span>
+							<span class="u-text-xs u-text-secondary">Utility classes — u-flex, u-text-sm …</span>
+						</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 o-stack o-stack--xs">
+							<span class="u-text-xs u-font-mono u-text-secondary">Layer&nbsp;7</span>
+							<span class="u-font-semibold u-text-primary">07-animations.css</span>
+							<span class="u-text-xs u-text-secondary">@keyframes, scroll reveal, View Transitions</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     FOUNDATIONS: COLORS
+		     Chapter 3 — Colors: hex, hsl, rgba, named
+		     Chapter 9 — Design token palette
+		     ====================================================== -->
+		<section id="colors" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Colors</h2>
+				<span class="story-section__chapter-tag">Ch. 3 · Ch. 9</span>
+			</div>
+			<p class="story-section__intro">
+				Colors are defined as two-tier CSS custom properties: primitive scales (raw values) and
+				semantic aliases (meaningful names). Components reference only semantic tokens, so swapping
+				a theme redeclares only the aliases — not every component.
+			</p>
+
+			<!-- Brand scale -->
+			<div class="story">
+				<div class="story__toolbar">
+					<span class="story__name">Brand — Teal scale (primitive tokens)</span>
+					<span class="story__tag">Ch. 3 · Ch. 9</span>
+				</div>
+				<div class="story__canvas">
+					<div class="token-grid" style="width:100%">
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-50)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-50</div><div class="token-swatch__hex">#f0fdfa</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-100)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-100</div><div class="token-swatch__hex">#ccfbf1</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-300)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-300</div><div class="token-swatch__hex">#5eead4</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-500)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-500</div><div class="token-swatch__hex">#14b8a6</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-600)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-600</div><div class="token-swatch__hex">#0d9488</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-700)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-700</div><div class="token-swatch__hex">#0f766e</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-800)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-800</div><div class="token-swatch__hex">#115e59</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-teal-900)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-teal-900</div><div class="token-swatch__hex">#134e4a</div></div></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Semantic feedback colors -->
+			<div class="story">
+				<div class="story__toolbar">
+					<span class="story__name">Semantic Feedback Colors</span>
+					<span class="story__tag">Ch. 3 · Ch. 9</span>
+				</div>
+				<div class="story__canvas">
+					<div class="token-grid" style="width:100%">
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-brand)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-brand</div><div class="token-swatch__hex">teal-700</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-success)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-success</div><div class="token-swatch__hex">#16a34a</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-warning)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-warning</div><div class="token-swatch__hex">#ca8a04</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-error)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-error</div><div class="token-swatch__hex">#dc2626</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-info)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-info</div><div class="token-swatch__hex">#2563eb</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-bg-canvas)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-bg-canvas</div><div class="token-swatch__hex">bg-canvas</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-bg-surface)"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-bg-surface</div><div class="token-swatch__hex">bg-surface</div></div></div>
+						<div class="token-swatch"><div class="token-swatch__color" style="background:var(--color-text-primary);border-radius:0"></div><div class="token-swatch__info"><div class="token-swatch__name">--color-text-primary</div></div></div>
+					</div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-sel">:root</span> {
+  <span class="c-prop">--color-brand</span>:       <span class="c-value">var(--color-teal-700)</span>;  <span class="c-comment">/* ← semantic alias */</span>
+  <span class="c-prop">--color-brand-hover</span>: <span class="c-value">var(--color-teal-800)</span>;
+}
+<span class="c-comment">/* Dark theme: only redefine semantic tokens */</span>
+<span class="c-sel">[data-theme="dark"]</span> {
+  <span class="c-prop">--color-brand</span>: <span class="c-value">var(--color-teal-500)</span>;
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     FOUNDATIONS: TYPOGRAPHY
+		     Chapter 3 — fonts, sizes, weights, line-heights
+		     ====================================================== -->
+		<section id="typography" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Typography</h2>
+				<span class="story-section__chapter-tag">Ch. 3</span>
+			</div>
+			<p class="story-section__intro">
+				The type scale uses CSS custom properties for font sizes, weights, and line heights.
+				Inter (sans-serif) and JetBrains Mono are loaded from Google Fonts.
+				Fluid headings use <code>clamp()</code> from Chapter 8.
+			</p>
+
+			<div class="story">
+				<div class="story__toolbar">
+					<span class="story__name">Type Scale</span>
+					<span class="story__tag">Ch. 3 · Ch. 8 clamp()</span>
+				</div>
+				<div class="story__canvas story__canvas--col">
+					<div style="font-size:var(--text-5xl);font-weight:var(--font-bold);line-height:var(--leading-tight);color:var(--color-text-heading)">Display — 3rem</div>
+					<div style="font-size:var(--text-4xl);font-weight:var(--font-bold);line-height:var(--leading-tight);color:var(--color-text-heading)">Heading 1 — 2.25rem</div>
+					<div style="font-size:var(--text-3xl);font-weight:var(--font-semibold);color:var(--color-text-heading)">Heading 2 — 1.875rem</div>
+					<div style="font-size:var(--text-2xl);font-weight:var(--font-semibold);color:var(--color-text-heading)">Heading 3 — 1.5rem</div>
+					<div style="font-size:var(--text-xl);font-weight:var(--font-semibold);color:var(--color-text-heading)">Heading 4 — 1.25rem</div>
+					<div style="font-size:var(--text-lg);color:var(--color-text-primary)">Body Large — 1.125rem</div>
+					<div style="font-size:var(--text-base);color:var(--color-text-primary)">Body Base — 1rem · The quick brown fox jumps over the lazy dog.</div>
+					<div style="font-size:var(--text-sm);color:var(--color-text-secondary)">Body Small — 0.875rem · Secondary information, captions, hints.</div>
+					<div style="font-size:var(--text-xs);color:var(--color-text-disabled)">Caption — 0.75rem · Micro labels, timestamps, version numbers.</div>
+					<div style="font-family:var(--font-mono);font-size:var(--text-sm);color:var(--color-code-text);background:var(--color-code-bg);padding:0.5rem 1rem;border-radius:var(--radius-md)">Mono — const greeting = "Nova Design System";</div>
+				</div>
+			</div>
+
+			<!-- Fluid heading using clamp() -->
+			<div class="story">
+				<div class="story__toolbar">
+					<span class="story__name">Fluid Heading with clamp()</span>
+					<span class="story__tag">Ch. 8 · CSS Functions</span>
+				</div>
+				<div class="story__canvas">
+					<h2 style="font-size:clamp(1.5rem,5vw,3rem);font-weight:var(--font-bold);color:var(--color-text-heading);letter-spacing:-0.03em;line-height:var(--leading-tight)">
+						Fluid type adapts<br>to any viewport
+					</h2>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 8 — clamp(min, preferred, max) */</span>
+<span class="c-sel">h1</span> {
+  <span class="c-prop">font-size</span>: <span class="c-value">clamp(1.5rem, 5vw, 3rem)</span>;
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     FOUNDATIONS: SPACING
+		     Chapter 9 — Design tokens: spacing scale
+		     ====================================================== -->
+		<section id="spacing" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Spacing</h2>
+				<span class="story-section__chapter-tag">Ch. 2 · Ch. 9</span>
+			</div>
+			<p class="story-section__intro">
+				All spacing values use a 0.25 rem (4 px) base unit. Sharing spacing through tokens
+				prevents magic numbers and keeps components consistently aligned.
+			</p>
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Spacing Scale</span><span class="story__tag">Ch. 9 · Tokens</span></div>
+				<div class="story__canvas story__canvas--col" style="gap:var(--space-3)">
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-1)"></div><div class="token-spacing-item__label">--space-1</div><div class="token-spacing-item__value">0.25rem (4px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-2)"></div><div class="token-spacing-item__label">--space-2</div><div class="token-spacing-item__value">0.5rem (8px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-3)"></div><div class="token-spacing-item__label">--space-3</div><div class="token-spacing-item__value">0.75rem (12px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-4)"></div><div class="token-spacing-item__label">--space-4</div><div class="token-spacing-item__value">1rem (16px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-6)"></div><div class="token-spacing-item__label">--space-6</div><div class="token-spacing-item__value">1.5rem (24px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-8)"></div><div class="token-spacing-item__label">--space-8</div><div class="token-spacing-item__value">2rem (32px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-12)"></div><div class="token-spacing-item__label">--space-12</div><div class="token-spacing-item__value">3rem (48px)</div></div>
+					<div class="token-spacing-item"><div class="token-spacing-item__bar" style="width:var(--space-16)"></div><div class="token-spacing-item__label">--space-16</div><div class="token-spacing-item__value">4rem (64px)</div></div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     FOUNDATIONS: SHADOWS
+		     Chapter 6 — box-shadow as depth and elevation
+		     ====================================================== -->
+		<section id="shadows" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Shadows &amp; Effects</h2>
+				<span class="story-section__chapter-tag">Ch. 6</span>
+			</div>
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Shadow Scale</span><span class="story__tag">Ch. 6 · box-shadow</span></div>
+				<div class="story__canvas">
+					<div class="shadow-preview" style="box-shadow:var(--shadow-xs)">xs</div>
+					<div class="shadow-preview" style="box-shadow:var(--shadow-sm)">sm</div>
+					<div class="shadow-preview" style="box-shadow:var(--shadow-md)">md</div>
+					<div class="shadow-preview" style="box-shadow:var(--shadow-lg)">lg</div>
+					<div class="shadow-preview" style="box-shadow:var(--shadow-xl)">xl</div>
+					<div class="shadow-preview" style="box-shadow:var(--shadow-2xl)">2xl</div>
+				</div>
+			</div>
+
+			<!-- Gradients — Chapter 3 -->
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Gradients</span><span class="story__tag">Ch. 3 · Backgrounds</span></div>
+				<div class="story__canvas">
+					<div style="height:80px;width:200px;border-radius:var(--radius-xl);background:linear-gradient(135deg,var(--color-teal-400),var(--color-teal-800))"></div>
+					<div style="height:80px;width:200px;border-radius:var(--radius-xl);background:linear-gradient(135deg,#667eea,#764ba2)"></div>
+					<div style="height:80px;width:200px;border-radius:var(--radius-xl);background:radial-gradient(circle at 30% 50%,var(--color-teal-200),var(--color-teal-600))"></div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 3 — linear-gradient, radial-gradient */</span>
+<span class="c-sel">.hero</span> {
+  <span class="c-prop">background</span>: <span class="c-value">linear-gradient(135deg, #667eea, #764ba2)</span>;
+}
+<span class="c-sel">.blob</span> {
+  <span class="c-prop">background</span>: <span class="c-value">radial-gradient(circle at 30% 50%,
+    var(--color-teal-200), var(--color-teal-600))</span>;
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: BUTTON
+		     ====================================================== -->
+		<section id="button" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Button</h2>
+				<span class="story-section__chapter-tag">Ch. 1 · Ch. 6</span>
+			</div>
+			<p class="story-section__intro">
+				Buttons use BEM naming (<code>.button--primary</code>), CSS custom properties for color,
+				<code>:hover</code>, <code>:active</code>, <code>:focus-visible</code>, and <code>:disabled</code>
+				pseudo-classes, <code>transform</code> for the press effect, and a <code>::after</code>
+				pseudo-element for the loading spinner.
+			</p>
+
+			<!-- Variants -->
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Variants</span><span class="story__tag">BEM modifiers</span></div>
+				<div class="story__canvas">
+					<button class="button button--primary">Primary</button>
+					<button class="button button--secondary">Secondary</button>
+					<button class="button button--outline">Outline</button>
+					<button class="button button--ghost">Ghost</button>
+					<button class="button button--danger">Danger</button>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-string">"button button--primary"</span><span class="c-tag">&gt;</span>Primary<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-string">"button button--secondary"</span><span class="c-tag">&gt;</span>Secondary<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-string">"button button--outline"</span><span class="c-tag">&gt;</span>Outline<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-string">"button button--ghost"</span><span class="c-tag">&gt;</span>Ghost<span class="c-tag">&lt;/button&gt;</span>
+<span class="c-tag">&lt;button</span> <span class="c-attr">class</span>=<span class="c-string">"button button--danger"</span><span class="c-tag">&gt;</span>Danger<span class="c-tag">&lt;/button&gt;</span></pre>
+				</div>
+			</div>
+
+			<!-- Sizes -->
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Sizes</span><span class="story__tag">BEM size modifiers</span></div>
+				<div class="story__canvas" style="align-items:center">
+					<button class="button button--primary button--xs">XSmall</button>
+					<button class="button button--primary button--sm">Small</button>
+					<button class="button button--primary">Default</button>
+					<button class="button button--primary button--lg">Large</button>
+					<button class="button button--primary button--xl">XLarge</button>
+				</div>
+			</div>
+
+			<!-- States -->
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">States</span><span class="story__tag">Ch. 6 · pseudo-classes</span></div>
+				<div class="story__canvas">
+					<button class="button button--primary">Normal</button>
+					<button class="button button--primary button--loading" aria-label="Loading">Loading</button>
+					<button class="button button--primary" disabled>Disabled</button>
+					<button class="button button--secondary" disabled>Disabled</button>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Loading — spinner via ::after pseudo-element (Ch. 6) */</span>
+<span class="c-sel">.button--loading</span> {
+  <span class="c-prop">color</span>: <span class="c-value">transparent</span>;
+}
+<span class="c-sel">.button--loading::after</span> {
+  <span class="c-prop">content</span>: <span class="c-string">""</span>;
+  <span class="c-prop">border</span>: <span class="c-value">2px solid white</span>;
+  <span class="c-prop">border-top-color</span>: <span class="c-value">transparent</span>;
+  <span class="c-prop">animation</span>: <span class="c-value">button-spin 500ms linear infinite</span>;
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: CARD
+		     ====================================================== -->
+		<section id="card" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Card</h2>
+				<span class="story-section__chapter-tag">Ch. 2 · Ch. 6 · Ch. 8</span>
+			</div>
+			<p class="story-section__intro">
+				Cards demonstrate <code>overflow: hidden</code>, <code>border-radius</code>,
+				<code>box-shadow</code>, <code>transform</code> on hover, and a container query
+				that increases internal padding when the card has enough width (Chapter 8).
+			</p>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Variants</span><span class="story__tag">Ch. 2 · Ch. 6</span></div>
+				<div class="story__canvas o-grid" style="width:100%">
+					<!-- Default -->
+					<div class="card">
+						<div class="card__body">
+							<p class="card__title">Default Card</p>
+							<p class="card__description u-mt-2">A simple white card with a subtle border. The base state with no modifier applied.</p>
+						</div>
+					</div>
+					<!-- Elevated -->
+					<div class="card card--elevated">
+						<div class="card__body">
+							<p class="card__title">Elevated Card</p>
+							<p class="card__description u-mt-2">Uses <code>box-shadow</code> for depth without a border. Good for cards that should float above the background.</p>
+						</div>
+					</div>
+					<!-- Featured -->
+					<div class="card card--featured">
+						<div class="card__body">
+							<p class="card__title">Featured Card</p>
+							<p class="card__description u-mt-2">A double border effect using <code>box-shadow</code> alongside the normal <code>border</code> property.</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Interactive -->
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Interactive (hover)</span><span class="story__tag">Ch. 6 · transform, transitions</span></div>
+				<div class="story__canvas o-grid" style="width:100%">
+					<div class="card card--interactive" tabindex="0" role="button" aria-label="CSS Architecture card">
+						<div class="card__header">
+							<div>
+								<p class="card__title">CSS Architecture</p>
+								<p class="card__meta">Chapter 9</p>
+							</div>
+							<span class="badge badge--primary">New</span>
+						</div>
+						<div class="card__body">
+							<p class="card__description">BEM, ITCSS, CUBE CSS, CSS Modules, design tokens — strategies for large codebases.</p>
+						</div>
+						<div class="card__footer">
+							<span class="u-text-xs u-text-secondary">8 lessons</span>
+							<button class="button button--outline button--sm">Open</button>
+						</div>
+					</div>
+
+					<div class="card card--interactive" tabindex="0" role="button" aria-label="Responsive Design card">
+						<div class="card__header">
+							<div>
+								<p class="card__title">Responsive Design</p>
+								<p class="card__meta">Chapter 4</p>
+							</div>
+							<span class="badge badge--success badge--dot">Done</span>
+						</div>
+						<div class="card__body">
+							<p class="card__description">Media queries, mobile-first strategy, viewport meta, fluid typography with <code>clamp()</code>.</p>
+						</div>
+						<div class="card__footer">
+							<span class="u-text-xs u-text-secondary">6 lessons</span>
+							<button class="button button--outline button--sm">Review</button>
+						</div>
+					</div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 6 — :hover with transform and box-shadow */</span>
+<span class="c-sel">.card--interactive:hover</span> {
+  <span class="c-prop">box-shadow</span>: <span class="c-value">var(--shadow-lg)</span>;
+  <span class="c-prop">transform</span>:  <span class="c-value">translateY(-3px)</span>;  <span class="c-comment">/* compositor layer — Ch. 10 */</span>
+}
+<span class="c-comment">/* Chapter 8 — container query */</span>
+<span class="c-sel">@container (min-width: 380px)</span> {
+  <span class="c-sel">.card__header</span> { <span class="c-prop">padding-inline</span>: <span class="c-value">var(--space-8)</span>; }
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: BADGE
+		     ====================================================== -->
+		<section id="badge" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Badge</h2>
+				<span class="story-section__chapter-tag">Ch. 1 · Ch. 3</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Color Variants</span><span class="story__tag">Ch. 3 · Semantic colors</span></div>
+				<div class="story__canvas">
+					<span class="badge badge--primary">Primary</span>
+					<span class="badge badge--success">Success</span>
+					<span class="badge badge--warning">Warning</span>
+					<span class="badge badge--error">Error</span>
+					<span class="badge badge--info">Info</span>
+					<span class="badge badge--neutral">Neutral</span>
+				</div>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">With Dot Indicator</span><span class="story__tag">Ch. 6 · ::before pseudo-element</span></div>
+				<div class="story__canvas">
+					<span class="badge badge--success badge--dot">Active</span>
+					<span class="badge badge--warning badge--dot">Pending</span>
+					<span class="badge badge--error badge--dot">Offline</span>
+					<span class="badge badge--neutral badge--dot">Draft</span>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 6 — ::before pseudo-element for the dot */</span>
+<span class="c-sel">.badge--dot::before</span> {
+  <span class="c-prop">content</span>:       <span class="c-string">""</span>;
+  <span class="c-prop">border-radius</span>: <span class="c-value">var(--radius-full)</span>;
+  <span class="c-prop">background</span>:    <span class="c-value">currentColor</span>;
+  <span class="c-prop">width</span>:         <span class="c-value">0.45em</span>;
+  <span class="c-prop">height</span>:        <span class="c-value">0.45em</span>;
+}</pre>
+				</div>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Sizes</span></div>
+				<div class="story__canvas" style="align-items:center">
+					<span class="badge badge--primary badge--sm">SM</span>
+					<span class="badge badge--primary">Default</span>
+					<span class="badge badge--primary badge--lg">LG</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: INPUT
+		     ====================================================== -->
+		<section id="input" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Input</h2>
+				<span class="story-section__chapter-tag">Ch. 4 · Ch. 6</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Default Inputs</span><span class="story__tag">Ch. 4 · Form elements</span></div>
+				<div class="story__canvas story__canvas--col" style="max-width:480px">
+					<div class="input-group">
+						<label class="input-label input-label--required" for="name">Full Name</label>
+						<input class="input-field" id="name" type="text" placeholder="Jane Smith" />
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="role">Role</label>
+						<div class="input-wrapper">
+							<select class="input-field input-field--select" id="role">
+								<option>Frontend Developer</option>
+								<option>UX Designer</option>
+								<option>Full-Stack Developer</option>
+							</select>
+						</div>
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="bio">Bio</label>
+						<textarea class="input-field input-field--textarea" id="bio" placeholder="A short description…"></textarea>
+					</div>
+				</div>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">States</span><span class="story__tag">Ch. 6 · :focus, :disabled pseudo-classes</span></div>
+				<div class="story__canvas story__canvas--col" style="max-width:480px">
+					<div class="input-group">
+						<label class="input-label" for="default">Default</label>
+						<input class="input-field" id="default" type="text" placeholder="Placeholder text" />
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="error-field">Email</label>
+						<input class="input-field input-field--error" id="error-field" type="email" value="not-an-email" />
+						<p class="input-hint input-hint--error">Please enter a valid email address.</p>
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="success-field">Username</label>
+						<input class="input-field input-field--success" id="success-field" type="text" value="nova_learner" />
+						<p class="input-hint input-hint--success">Username is available.</p>
+					</div>
+					<div class="input-group">
+						<label class="input-label" for="disabled-field">API Key (read-only)</label>
+						<input class="input-field" id="disabled-field" type="text" value="sk-••••••••••••••••" disabled />
+					</div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 6 — :focus with box-shadow focus ring */</span>
+<span class="c-sel">.input-field:focus</span> {
+  <span class="c-prop">border-color</span>: <span class="c-value">var(--color-border-focus)</span>;
+  <span class="c-prop">box-shadow</span>:   <span class="c-value">0 0 0 3px var(--color-focus-ring)</span>;
+}
+<span class="c-comment">/* Required label marker via ::after (Ch. 6) */</span>
+<span class="c-sel">.input-label--required::after</span> {
+  <span class="c-prop">content</span>: <span class="c-string">" *"</span>;
+  <span class="c-prop">color</span>:   <span class="c-value">var(--color-error)</span>;
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: ALERT
+		     ====================================================== -->
+		<section id="alert" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Alert</h2>
+				<span class="story-section__chapter-tag">Ch. 3 · Ch. 5</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">All Variants</span><span class="story__tag">Ch. 3 · Semantic colors</span></div>
+				<div class="story__canvas story__canvas--col">
+					<div class="alert alert--info" role="alert">
+						<span class="alert__icon" aria-hidden="true">ℹ</span>
+						<div class="alert__body">
+							<p class="alert__title">Tip</p>
+							<p class="alert__message">Use container queries (Ch. 8) to make components responsive without media queries.</p>
+						</div>
+					</div>
+					<div class="alert alert--success" role="alert">
+						<span class="alert__icon" aria-hidden="true">✓</span>
+						<div class="alert__body">
+							<p class="alert__title">All tests passed</p>
+							<p class="alert__message">Your design system is consistent across all 10 component stories.</p>
+						</div>
+					</div>
+					<div class="alert alert--warning" role="alert">
+						<span class="alert__icon" aria-hidden="true">⚠</span>
+						<div class="alert__body">
+							<p class="alert__title">Deprecation notice</p>
+							<p class="alert__message"><code>will-change: transform</code> should be applied only when a transition is imminent (Ch. 10).</p>
+						</div>
+					</div>
+					<div class="alert alert--error" role="alert">
+						<span class="alert__icon" aria-hidden="true">✕</span>
+						<div class="alert__body">
+							<p class="alert__title">Build failed</p>
+							<p class="alert__message">Specificity conflict: <code>#id .component</code> overrides a component class. Refactor to BEM (Ch. 9).</p>
+						</div>
+						<button class="alert__dismiss" aria-label="Dismiss alert">✕</button>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: CHIP
+		     ====================================================== -->
+		<section id="chip" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Chip</h2>
+				<span class="story-section__chapter-tag">Ch. 1 · Ch. 6</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Chip States</span><span class="story__tag">Ch. 6 · :hover, :focus-visible</span></div>
+				<div class="story__canvas">
+					<span class="chip">CSS Grid</span>
+					<span class="chip chip--interactive">Flexbox</span>
+					<span class="chip chip--interactive chip--selected">BEM</span>
+					<span class="chip chip--interactive">ITCSS</span>
+					<span class="chip chip--interactive chip--selected">Design Tokens</span>
+					<span class="chip chip--interactive">Animations</span>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: AVATAR
+		     ====================================================== -->
+		<section id="avatar" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Avatar</h2>
+				<span class="story-section__chapter-tag">Ch. 2 · Ch. 3</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Sizes</span><span class="story__tag">Ch. 2 · border-radius</span></div>
+				<div class="story__canvas" style="align-items:center">
+					<div class="avatar avatar--xs">JD</div>
+					<div class="avatar avatar--sm">JD</div>
+					<div class="avatar">JD</div>
+					<div class="avatar avatar--lg" style="background:linear-gradient(135deg,var(--color-blue-400),var(--color-blue-600))">MK</div>
+					<div class="avatar avatar--xl" style="background:linear-gradient(135deg,#f093fb,#f5576c)">SA</div>
+				</div>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Avatar Group</span><span class="story__tag">Ch. 5 · flex-direction: row-reverse</span></div>
+				<div class="story__canvas">
+					<div class="avatar-group">
+						<div class="avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c)">+3</div>
+						<div class="avatar" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">AB</div>
+						<div class="avatar" style="background:linear-gradient(135deg,var(--color-teal-400),var(--color-teal-700))">JD</div>
+						<div class="avatar" style="background:linear-gradient(135deg,#667eea,#764ba2)">MK</div>
+					</div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 5 — overlap via row-reverse + negative margin */</span>
+<span class="c-sel">.avatar-group</span> {
+  <span class="c-prop">display</span>:          <span class="c-value">flex</span>;
+  <span class="c-prop">flex-direction</span>:   <span class="c-value">row-reverse</span>;
+  <span class="c-prop">justify-content</span>: <span class="c-value">flex-end</span>;
+}
+<span class="c-sel">.avatar-group .avatar</span> {
+  <span class="c-prop">margin-left</span>: <span class="c-value">-0.75rem</span>;
+  <span class="c-prop">border</span>:       <span class="c-value">2px solid var(--color-bg-surface)</span>;
+}</pre>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     COMPONENT: PROGRESS
+		     ====================================================== -->
+		<section id="progress" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Progress</h2>
+				<span class="story-section__chapter-tag">Ch. 3 · Ch. 6 · Ch. 10</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Animated Progress Bars</span><span class="story__tag">Ch. 6 · transition · Ch. 10 · IntersectionObserver</span></div>
+				<div class="story__canvas story__canvas--col" style="max-width:520px;gap:var(--space-5)">
+					<div class="progress">
+						<div class="progress__header">
+							<span class="progress__label">Flexbox &amp; Grid</span>
+							<span class="progress__value">90%</span>
+						</div>
+						<div class="progress__track"><div class="progress__fill" data-value="90" style="width:0%"></div></div>
+					</div>
+					<div class="progress">
+						<div class="progress__header">
+							<span class="progress__label">CSS Architecture</span>
+							<span class="progress__value">72%</span>
+						</div>
+						<div class="progress__track"><div class="progress__fill" data-value="72" style="width:0%"></div></div>
+					</div>
+					<div class="progress">
+						<div class="progress__header">
+							<span class="progress__label">Animations &amp; Performance</span>
+							<span class="progress__value">55%</span>
+						</div>
+						<div class="progress__track"><div class="progress__fill" data-value="55" style="width:0%"></div></div>
+					</div>
+					<div class="progress progress--lg">
+						<div class="progress__header">
+							<span class="progress__label">Overall Module 2</span>
+							<span class="progress__value">78%</span>
+						</div>
+						<div class="progress__track"><div class="progress__fill" data-value="78" style="width:0%"></div></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     UTILITIES: LAYOUT
+		     Chapter 5, 7, 9
+		     ====================================================== -->
+		<section id="layout-utils" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Layout Utilities</h2>
+				<span class="story-section__chapter-tag">Ch. 5 · Ch. 7 · Ch. 9</span>
+			</div>
+			<p class="story-section__intro">
+				Layout objects (<code>.o-*</code>) and utilities (<code>.u-flex</code>, <code>.u-grid</code>)
+				cover the most common layout needs without writing new CSS. This is the utility-first
+				approach from Chapter 7, built on the Flexbox and Grid principles from Chapter 5.
+			</p>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">o-grid — Auto-fit Responsive Grid</span><span class="story__tag">Ch. 5 · Ch. 8</span></div>
+				<div class="story__canvas story__canvas--col" style="width:100%">
+					<div class="o-grid" style="width:100%">
+						<div class="u-bg-subtle u-rounded-lg u-p-4 u-text-center u-text-sm">Card 1</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 u-text-center u-text-sm">Card 2</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 u-text-center u-text-sm">Card 3</div>
+						<div class="u-bg-subtle u-rounded-lg u-p-4 u-text-center u-text-sm">Card 4</div>
+					</div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 5 + 8 — auto-responsive grid, no media queries */</span>
+<span class="c-sel">.o-grid</span> {
+  <span class="c-prop">display</span>:               <span class="c-value">grid</span>;
+  <span class="c-prop">grid-template-columns</span>: <span class="c-value">repeat(auto-fit, minmax(min(100%, 280px), 1fr))</span>;
+  <span class="c-prop">gap</span>:                   <span class="c-value">var(--space-4)</span>;
+}</pre>
+				</div>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">o-cluster — Wrapping Row</span><span class="story__tag">Ch. 5 · flex-wrap</span></div>
+				<div class="story__canvas">
+					<div class="o-cluster">
+						<span class="badge badge--primary">Design Tokens</span>
+						<span class="badge badge--info">BEM</span>
+						<span class="badge badge--success">ITCSS</span>
+						<span class="badge badge--warning">Container Queries</span>
+						<span class="badge badge--neutral">View Transitions</span>
+						<span class="badge badge--error">FLIP</span>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     UTILITIES: ANIMATION
+		     Chapter 6, 10
+		     ====================================================== -->
+		<section id="animation-utils" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Animation Utilities</h2>
+				<span class="story-section__chapter-tag">Ch. 6 · Ch. 10</span>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Skeleton Loader</span><span class="story__tag">Ch. 6 · @keyframes, ::after · Ch. 10 · hardware acceleration</span></div>
+				<div class="story__canvas story__canvas--col" style="max-width:380px;gap:var(--space-4)">
+					<!-- Skeleton card -->
+					<div class="card">
+						<div class="card__body o-stack o-stack--sm">
+							<div class="skeleton skeleton--text" style="width:60%"></div>
+							<div class="skeleton skeleton--text" style="width:100%"></div>
+							<div class="skeleton skeleton--text" style="width:90%"></div>
+							<div class="skeleton skeleton--text" style="width:70%"></div>
+							<div style="display:flex;gap:var(--space-3);margin-top:var(--space-2)">
+								<div class="skeleton skeleton--button" style="width:6rem"></div>
+								<div class="skeleton skeleton--button" style="width:5rem;opacity:0.6"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="story__code">
+					<pre><span class="c-comment">/* Chapter 10 — shimmer uses translateX (compositor-safe) */</span>
+<span class="c-sel">.skeleton::after</span> {
+  <span class="c-prop">content</span>:    <span class="c-string">""</span>;
+  <span class="c-prop">position</span>:   <span class="c-value">absolute</span>;
+  <span class="c-prop">inset</span>:      <span class="c-value">0</span>;
+  <span class="c-prop">background</span>: <span class="c-value">linear-gradient(90deg, transparent, rgba(255,255,255,.25), transparent)</span>;
+  <span class="c-prop">animation</span>:  <span class="c-value">shimmer 1.6s ease-in-out infinite</span>;
+}
+<span class="c-sel">@keyframes shimmer</span> {
+  <span class="c-sel">from</span> { <span class="c-prop">transform</span>: <span class="c-value">translateX(-100%)</span>; }
+  <span class="c-sel">to</span>   { <span class="c-prop">transform</span>: <span class="c-value">translateX( 100%)</span>; }
+}</pre>
+				</div>
+			</div>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Scroll-Reveal (js-reveal)</span><span class="story__tag">Ch. 10 · scroll-driven, IntersectionObserver</span></div>
+				<div class="story__canvas story__canvas--col" style="gap:var(--space-4)">
+					<div class="alert alert--info">
+						<span class="alert__icon">ℹ</span>
+						<div class="alert__body">
+							<p class="alert__title">How it works</p>
+							<p class="alert__message">
+								Elements with <code>.js-reveal</code> start at <code>opacity: 0</code>.
+								When they enter the viewport, <code>script.js</code> adds <code>.is-revealed</code>
+								which transitions them in. Browsers supporting <code>animation-timeline: view()</code>
+								use native scroll-driven animation instead.
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     PATTERN: CARD GRID
+		     Chapter 5 (CSS Grid), Chapter 9 (component composition)
+		     ====================================================== -->
+		<section id="card-grid" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Pattern — Card Grid</h2>
+				<span class="story-section__chapter-tag">Ch. 5 · Ch. 9</span>
+			</div>
+			<p class="story-section__intro">
+				Composing existing components — Card, Badge, Button, Avatar — inside a responsive
+				<code>.o-grid</code> layout. No new CSS required: this is pure composition, the
+				core principle of good CSS architecture (Chapter 9).
+			</p>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Module Cards</span><span class="story__tag">Ch. 5 · Ch. 9 · Composition</span></div>
+				<div class="story__canvas story__canvas--col" style="width:100%">
+					<div class="o-grid" style="width:100%">
+
+						<div class="card card--interactive js-reveal u-delay-75" tabindex="0">
+							<div class="card__header">
+								<div>
+									<p class="card__title">CSS Syntax &amp; Selectors</p>
+									<p class="card__meta">Chapter 1</p>
+								</div>
+								<span class="badge badge--success badge--dot">Done</span>
+							</div>
+							<div class="card__body">
+								<p class="card__description">Selectors, specificity, BEM naming, pseudo-classes and pseudo-elements.</p>
+							</div>
+							<div class="card__footer">
+								<div class="avatar-group">
+									<div class="avatar avatar--xs" style="background:var(--color-brand)">JD</div>
+								</div>
+								<button class="button button--ghost button--sm">Review</button>
+							</div>
+						</div>
+
+						<div class="card card--interactive js-reveal u-delay-150" tabindex="0">
+							<div class="card__header">
+								<div>
+									<p class="card__title">Flexbox &amp; Grid</p>
+									<p class="card__meta">Chapter 5</p>
+								</div>
+								<span class="badge badge--primary">In Progress</span>
+							</div>
+							<div class="card__body">
+								<p class="card__description">Flex container, grid areas, <code>fr</code> units, <code>auto-fit</code>, responsive grids.</p>
+							</div>
+							<div class="card__footer">
+								<div class="progress" style="flex:1">
+									<div class="progress__track">
+										<div class="progress__fill" data-value="65" style="width:0%"></div>
+									</div>
+								</div>
+								<span class="u-text-xs u-text-secondary u-font-mono u-ml-auto">65%</span>
+							</div>
+						</div>
+
+						<div class="card card--interactive js-reveal u-delay-200" tabindex="0">
+							<div class="card__header">
+								<div>
+									<p class="card__title">CSS Architecture</p>
+									<p class="card__meta">Chapter 9</p>
+								</div>
+								<span class="badge badge--warning">New</span>
+							</div>
+							<div class="card__body">
+								<p class="card__description">BEM, ITCSS, CUBE CSS, design tokens, CSS Modules vs CSS-in-JS.</p>
+							</div>
+							<div class="card__footer">
+								<span class="u-text-xs u-text-secondary">10 lessons</span>
+								<button class="button button--outline button--sm">Start</button>
+							</div>
+						</div>
+
+						<div class="card card--featured card--interactive js-reveal u-delay-300" tabindex="0">
+							<div class="card__header">
+								<div>
+									<p class="card__title">Animations</p>
+									<p class="card__meta">Chapter 10</p>
+								</div>
+								<span class="badge badge--error">Advanced</span>
+							</div>
+							<div class="card__body">
+								<p class="card__description">FLIP technique, View Transitions API, scroll-driven animations, <code>prefers-reduced-motion</code>.</p>
+							</div>
+							<div class="card__footer">
+								<span class="u-text-xs u-text-secondary">8 lessons</span>
+								<button class="button button--primary button--sm">Begin</button>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- ======================================================
+		     PATTERN: FORM LAYOUT
+		     Chapter 4 (form elements), Chapter 5 (grid layout),
+		     Chapter 6 (pseudo-classes), Chapter 9 (composition)
+		     ====================================================== -->
+		<section id="form-layout" class="story-section js-reveal">
+			<div class="story-section__heading">
+				<h2 class="story-section__title">Pattern — Form Layout</h2>
+				<span class="story-section__chapter-tag">Ch. 4 · Ch. 5 · Ch. 6</span>
+			</div>
+			<p class="story-section__intro">
+				A complete contact form composed using Input, Button, Badge, and Alert components
+				inside a responsive grid layout. Demonstrates mobile-first design (Chapter 4),
+				CSS Grid for form columns (Chapter 5), and focus state handling (Chapter 6).
+			</p>
+
+			<div class="story">
+				<div class="story__toolbar"><span class="story__name">Contact Form</span><span class="story__tag">Ch. 4 · 5 · 6 · Composition</span></div>
+				<div class="story__canvas story__canvas--col">
+					<div class="card card--elevated" style="max-width:560px">
+						<div class="card__header">
+							<div>
+								<p class="card__title">Get in Touch</p>
+								<p class="card__description">We'll respond within 24 hours.</p>
+							</div>
+							<span class="badge badge--success badge--dot">Online</span>
+						</div>
+
+						<form class="card__body o-stack" novalidate>
+
+							<!-- Chapter 5 — CSS Grid two-column form layout -->
+							<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4)">
+								<div class="input-group">
+									<label class="input-label input-label--required" for="form-fname">First Name</label>
+									<input class="input-field" id="form-fname" type="text" placeholder="Jane" />
+								</div>
+								<div class="input-group">
+									<label class="input-label input-label--required" for="form-lname">Last Name</label>
+									<input class="input-field" id="form-lname" type="text" placeholder="Smith" />
+								</div>
+							</div>
+
+							<div class="input-group">
+								<label class="input-label input-label--required" for="form-email">Email</label>
+								<input class="input-field" id="form-email" type="email" placeholder="jane@example.com" />
+							</div>
+
+							<div class="input-group">
+								<label class="input-label" for="form-subject">Subject</label>
+								<div class="input-wrapper">
+									<select class="input-field input-field--select" id="form-subject">
+										<option value="">Choose a topic…</option>
+										<option>Design Token Feedback</option>
+										<option>Component Request</option>
+										<option>Bug Report</option>
+										<option>General Question</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="input-group">
+								<label class="input-label input-label--required" for="form-message">Message</label>
+								<textarea class="input-field input-field--textarea" id="form-message" placeholder="Describe your question or feedback…"></textarea>
+								<p class="input-hint">Minimum 20 characters.</p>
+							</div>
+
+							<div class="alert alert--info" role="note">
+								<span class="alert__icon" aria-hidden="true">ℹ</span>
+								<div class="alert__body">
+									<p class="alert__message">
+										This is a demo form. Submitting will not send any data.
+									</p>
+								</div>
+							</div>
+
+						</form>
+
+						<div class="card__footer">
+							<button class="button button--ghost button--sm" type="button">Cancel</button>
+							<div class="o-cluster o-cluster--sm">
+								<button class="button button--secondary button--sm" type="button">Save Draft</button>
+								<button class="button button--primary button--sm" type="submit">Send Message</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+	</main><!-- /.catalog__main -->
+</div><!-- /.catalog -->
+
+<script src="script.js"></script>
+</body>
+</html>

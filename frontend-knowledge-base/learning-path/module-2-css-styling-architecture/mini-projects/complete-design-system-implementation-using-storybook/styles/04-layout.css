@@ -1,0 +1,202 @@
+/* ============================================================
+ * ITCSS Layer 4 — Objects / Layout
+ *
+ * Chapter 4: Responsive Design — media queries, mobile-first
+ * Chapter 5: Flexbox and Grid — containers, gap, fr units
+ * Chapter 8: Advanced CSS Concepts — min(), minmax(),
+ *             named grid areas, container context
+ * Chapter 9: CSS Architecture at Scale — layout objects are
+ *             structure-only (no colors, fonts, or shadows)
+ *
+ * Naming convention: "o-" prefix marks layout objects.
+ * Objects provide spacing and arrangement but carry no
+ * decorative styles. Components are layered on top of them.
+ * ============================================================ */
+
+/* ---- Wrapper ---- */
+/* Chapter 4 — responsive max-width container               */
+/* Chapter 8 — min() function for fluid widths              */
+
+.o-wrapper {
+	/* Fluid width: takes full viewport minus horizontal padding
+	 * but never exceeds 72rem (1152px). */
+	width: min(100% - 2 * var(--space-4), 72rem);
+	margin-inline: auto;
+}
+
+.o-wrapper--narrow {
+	width: min(100% - 2 * var(--space-4), 48rem);
+}
+
+.o-wrapper--wide {
+	width: min(100% - 2 * var(--space-4), 90rem);
+}
+
+/* ---- Stack ---- */
+/* Chapter 5 — Flexbox column layout                        */
+/* Creates vertical rhythm using margin-top on siblings     */
+
+.o-stack {
+	display: flex;
+	flex-direction: column;
+}
+
+.o-stack > * + * {
+	margin-top: var(--space-4);
+}
+
+.o-stack--xs > * + * { margin-top: var(--space-1); }
+.o-stack--sm > * + * { margin-top: var(--space-2); }
+.o-stack--lg > * + * { margin-top: var(--space-8); }
+.o-stack--xl > * + * { margin-top: var(--space-12); }
+
+/* ---- Cluster ---- */
+/* Chapter 5 — flex-wrap: wrap for naturally reflowing rows */
+
+.o-cluster {
+	display:     flex;
+	flex-wrap:   wrap;
+	gap:         var(--space-3);
+	align-items: center;
+}
+
+.o-cluster--xs  { gap: var(--space-1); }
+.o-cluster--sm  { gap: var(--space-2); }
+.o-cluster--lg  { gap: var(--space-6); }
+
+/* ---- Grid ---- */
+/* Chapter 5 — CSS Grid with auto-fit and minmax()          */
+/* Chapter 8 — Using fr units and repeat() for responsiveness */
+
+.o-grid {
+	display: grid;
+	/* auto-fit creates as many columns as can fit the minimum
+	 * width, automatically adapting without any media queries. */
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+	gap: var(--space-4);
+}
+
+.o-grid--tight    { gap: var(--space-2); }
+.o-grid--spacious { gap: var(--space-8); }
+
+/* Fixed column counts (used in pattern examples) */
+.o-grid--2 { grid-template-columns: repeat(2, 1fr); }
+.o-grid--3 { grid-template-columns: repeat(3, 1fr); }
+
+/* ---- Split ---- */
+/* Chapter 5 — sidebar + main two-column layout             */
+
+.o-split {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: var(--space-4);
+}
+
+.o-split--reverse {
+	grid-template-columns: 1fr auto;
+}
+
+/* ---- Center ---- */
+/* Chapter 5 — flexbox centering pattern                    */
+
+.o-center {
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+}
+
+/* ---- Cover ---- */
+/* Chapter 5 — stretch content to fill the viewport         */
+
+.o-cover {
+	display:        flex;
+	flex-direction: column;
+	min-height:     100vh;
+	padding:        var(--space-4);
+}
+
+.o-cover > *:only-child {
+	margin-block: auto;
+}
+
+/* ============================================================
+ * CATALOG SHELL LAYOUT
+ *
+ * The visual catalog uses CSS Grid named areas to create
+ * a Storybook-like two-panel UI:
+ *
+ *   [ sidebar-header | main-header  ]   ← 56px sticky header row
+ *   [ sidebar        | main         ]   ← fills remaining height
+ *
+ * Chapter 5 — grid-template-areas, grid-template-columns
+ * Chapter 2 — position: sticky, overflow, z-index
+ * Chapter 4 — responsive media query collapses to single column
+ * ============================================================ */
+
+.catalog {
+	display: grid;
+	grid-template-columns: 260px 1fr;
+	grid-template-rows:    auto 1fr;
+	grid-template-areas:
+		"sidebar-header  main-header"
+		"sidebar         main";
+	min-height: 100vh;
+}
+
+/* Sidebar header — logo/brand cell */
+.catalog__sidebar-header {
+	grid-area:   sidebar-header;
+	position:    sticky;
+	top:         0;
+	z-index:     var(--z-sticky);
+}
+
+/* Sidebar navigation panel */
+.catalog__sidebar {
+	grid-area:    sidebar;
+	position:     sticky;
+	top:          56px;                    /* starts below the 56px header */
+	height:       calc(100vh - 56px);
+	overflow-y:   auto;
+	border-right: 1px solid rgba(255, 255, 255, 0.06);
+	background:   var(--color-sidebar-bg);
+	scrollbar-width: thin;
+	scrollbar-color: var(--color-slate-700) transparent;
+}
+
+/* Main header — breadcrumb + controls */
+.catalog__main-header {
+	grid-area:    main-header;
+	position:     sticky;
+	top:          0;
+	z-index:      var(--z-raised);
+}
+
+/* Main content area */
+.catalog__main {
+	grid-area:  main;
+	padding:    var(--space-8) var(--space-8) var(--space-20);
+	background: var(--color-bg-canvas);
+	transition: background-color var(--transition-slow);
+}
+
+/* ---- Responsive: collapse sidebar on narrow screens ---- */
+/* Chapter 4 — media queries, mobile-first strategy         */
+
+@media (max-width: 768px) {
+	.catalog {
+		grid-template-columns: 1fr;
+		grid-template-areas:
+			"main-header"
+			"main";
+	}
+
+	.catalog__sidebar-header,
+	.catalog__sidebar {
+		display: none;
+	}
+
+	.catalog__main {
+		padding: var(--space-5) var(--space-4) var(--space-16);
+	}
+}

@@ -1,0 +1,1184 @@
+/* ============================================================
+ * ITCSS Layer 5 — Components
+ *
+ * Chapter 1:  CSS Syntax and Selectors — BEM naming convention,
+ *             advanced selectors, pseudo-classes, pseudo-elements
+ * Chapter 2:  Box Model — padding, border, margin, overflow,
+ *             position, z-index
+ * Chapter 3:  Typography and Colors — colors, gradients, fonts
+ * Chapter 4:  Responsive Design — responsive form elements
+ * Chapter 5:  Flexbox and Grid — component-level layouts
+ * Chapter 6:  Advanced Styling — :hover/:focus-visible/:active,
+ *             ::before/::after, transitions, shadows, clip-path
+ * Chapter 7:  CSS Frameworks & Libraries — component conventions
+ * Chapter 8:  Advanced CSS Concepts — container queries,
+ *             cascade layers, CSS functions
+ * Chapter 9:  CSS Architecture — BEM, component library patterns
+ *
+ * Naming convention: BEM — Block__Element--Modifier
+ * ============================================================ */
+
+/* ============================================================
+ *  CATALOG SHELL COMPONENTS
+ * ============================================================ */
+
+/* ---- Sidebar Brand ---- */
+/* Chapter 3 — gradients, Chapter 5 — flex layout           */
+
+.sidebar-brand {
+	display:       flex;
+	align-items:   center;
+	gap:           var(--space-3);
+	padding:       0 var(--space-5);
+	height:        56px;
+	background:    var(--color-sidebar-bg);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+	text-decoration: none;
+}
+
+.sidebar-brand__icon {
+	width:           32px;
+	height:          32px;
+	background:      linear-gradient(135deg, var(--color-teal-500) 0%, var(--color-teal-800) 100%);
+	border-radius:   var(--radius-md);
+	display:         flex;
+	align-items:     center;
+	justify-content: center;
+	color:           white;
+	font-weight:     var(--font-bold);
+	font-size:       var(--text-sm);
+	flex-shrink:     0;
+	user-select:     none;
+}
+
+.sidebar-brand__name {
+	font-size:      var(--text-sm);
+	font-weight:    var(--font-semibold);
+	color:          var(--color-sidebar-active);
+	letter-spacing: -0.01em;
+}
+
+.sidebar-brand__version {
+	font-size: var(--text-xs);
+	color:     var(--color-sidebar-section);
+}
+
+/* ---- Sidebar Navigation ---- */
+/* Chapter 1 — descendant selectors, :hover, ::before pseudo-element */
+/* Chapter 2 — position: absolute for the active indicator  */
+/* Chapter 6 — transitions on color and background          */
+
+.sidebar-nav {
+	padding: var(--space-3) 0;
+}
+
+.sidebar-nav__section {
+	margin-bottom: var(--space-1);
+}
+
+.sidebar-nav__section-label {
+	display:         block;
+	padding:         var(--space-2) var(--space-5) var(--space-1);
+	font-size:       var(--text-xs);
+	font-weight:     var(--font-semibold);
+	text-transform:  uppercase;
+	letter-spacing:  0.08em;
+	color:           var(--color-sidebar-section);
+}
+
+.sidebar-nav__list {
+	list-style: none;
+}
+
+.sidebar-nav__item a {
+	display:        flex;
+	align-items:    center;
+	gap:            var(--space-2);
+	padding:        var(--space-2) var(--space-5);
+	font-size:      var(--text-sm);
+	color:          var(--color-sidebar-text);
+	text-decoration: none;
+	position:       relative;
+	transition:
+		background-color var(--transition-fast),
+		color            var(--transition-fast);
+}
+
+.sidebar-nav__item a:hover {
+	background: var(--color-sidebar-hover-bg);
+	color:      var(--color-sidebar-active);
+}
+
+/* Active state — ::before creates the left-edge indicator bar */
+/* Chapter 6 — pseudo-elements */
+.sidebar-nav__item a.is-active {
+	background:  var(--color-sidebar-hover-bg);
+	color:       var(--color-sidebar-active);
+	font-weight: var(--font-medium);
+}
+
+.sidebar-nav__item a.is-active::before {
+	content:       "";
+	position:      absolute;
+	left:          0;
+	top:           0;
+	bottom:        0;
+	width:         3px;
+	background:    var(--color-teal-500);
+	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* ---- Main Header (breadcrumb bar) ---- */
+/* Chapter 2 — position: sticky, z-index                    */
+/* Chapter 5 — flexbox space-between layout                 */
+
+.main-header {
+	display:         flex;
+	align-items:     center;
+	justify-content: space-between;
+	padding:         0 var(--space-8);
+	height:          56px;
+	background:      var(--color-header-bg);
+	border-bottom:   1px solid var(--color-border);
+	transition:
+		background-color var(--transition-slow),
+		border-color     var(--transition-slow);
+}
+
+.main-header__path {
+	display:     flex;
+	align-items: center;
+	gap:         var(--space-2);
+	font-size:   var(--text-sm);
+	color:       var(--color-text-secondary);
+}
+
+.main-header__sep {
+	color: var(--color-text-disabled);
+}
+
+.main-header__current {
+	color:       var(--color-text-primary);
+	font-weight: var(--font-medium);
+}
+
+.main-header__actions {
+	display:     flex;
+	align-items: center;
+	gap:         var(--space-3);
+}
+
+/* ---- Story Section ---- */
+/* Chapter 2 — scroll-margin-top for sticky header offset   */
+
+.story-section {
+	margin-bottom:   var(--space-20);
+	scroll-margin-top: var(--space-8);
+}
+
+.story-section__heading {
+	display:         flex;
+	align-items:     center;
+	gap:             var(--space-3);
+	margin-bottom:   var(--space-6);
+	padding-bottom:  var(--space-4);
+	border-bottom:   1px solid var(--color-border);
+	transition:      border-color var(--transition-slow);
+}
+
+.story-section__title {
+	font-size:      var(--text-2xl);
+	font-weight:    var(--font-bold);
+	color:          var(--color-text-heading);
+	letter-spacing: -0.02em;
+	margin: 0;
+}
+
+.story-section__chapter-tag {
+	font-size:   var(--text-xs);
+	color:       var(--color-text-secondary);
+	padding:     0.2em 0.65em;
+	background:  var(--color-bg-subtle);
+	border:      1px solid var(--color-border);
+	border-radius: var(--radius-full);
+	white-space: nowrap;
+	font-family: var(--font-mono);
+}
+
+.story-section__intro {
+	font-size:   var(--text-sm);
+	color:       var(--color-text-secondary);
+	line-height: var(--leading-relaxed);
+	max-width:   68ch;
+	margin-bottom: var(--space-8);
+}
+
+/* ---- Story Card ---- */
+/* Each "story" is one component variant in the catalog       */
+/* Chapter 1 — BEM naming, :hover on .story                 */
+/* Chapter 2 — border, border-radius, overflow               */
+/* Chapter 6 — transitions on hover                         */
+
+.story {
+	border:        1px solid var(--color-border);
+	border-radius: var(--radius-xl);
+	overflow:      hidden;
+	margin-bottom: var(--space-6);
+	background:    var(--color-bg-surface);
+	transition:
+		border-color var(--transition-base),
+		box-shadow   var(--transition-base),
+		background-color var(--transition-slow);
+}
+
+.story:hover {
+	border-color: var(--color-border-strong);
+	box-shadow:   var(--shadow-sm);
+}
+
+.story__toolbar {
+	display:         flex;
+	align-items:     center;
+	justify-content: space-between;
+	padding:         var(--space-3) var(--space-5);
+	border-bottom:   1px solid var(--color-border);
+	background:      var(--color-bg-subtle);
+	transition:
+		background-color var(--transition-slow),
+		border-color     var(--transition-slow);
+}
+
+.story__name {
+	font-size:   var(--text-sm);
+	font-weight: var(--font-semibold);
+	color:       var(--color-text-primary);
+}
+
+.story__tag {
+	font-size:     var(--text-xs);
+	color:         var(--color-text-secondary);
+	padding:       0.15em 0.55em;
+	background:    var(--color-bg-canvas);
+	border:        1px solid var(--color-border);
+	border-radius: var(--radius-full);
+	font-family:   var(--font-mono);
+}
+
+/* Story canvas — the preview area where components render   */
+/* Chapter 3 — background color from token                  */
+.story__canvas {
+	padding:     var(--space-8);
+	background:  var(--color-canvas-bg);
+	border-bottom: 1px solid var(--color-canvas-border);
+	display:     flex;
+	flex-wrap:   wrap;
+	gap:         var(--space-4);
+	align-items: flex-start;
+	transition:
+		background-color var(--transition-slow),
+		border-color     var(--transition-slow);
+}
+
+.story__canvas--col {
+	flex-direction: column;
+	align-items:    stretch;
+}
+
+.story__canvas--center {
+	justify-content: center;
+}
+
+/* Story code block — syntax-highlighted snippet             */
+/* Chapter 3 — monospace fonts, dark background             */
+.story__code {
+	background: #0d1117;
+}
+
+.story__code pre {
+	margin:      0;
+	border:      none;
+	border-radius: 0;
+	background:  #0d1117;
+	color:       #c9d1d9;
+	font-size:   var(--text-xs);
+	line-height: var(--leading-relaxed);
+	padding:     var(--space-5);
+	overflow-x:  auto;
+}
+
+/* Minimal token-based syntax highlights (no external library) */
+.story__code .c-tag     { color: #7ee787; }
+.story__code .c-attr    { color: #79c0ff; }
+.story__code .c-string  { color: #a5d6ff; }
+.story__code .c-comment { color: #8b949e; font-style: italic; }
+.story__code .c-prop    { color: #d2a8ff; }
+.story__code .c-value   { color: #79c0ff; }
+.story__code .c-sel     { color: #ff7b72; }
+
+/* ---- Token Display Helpers ---- */
+/* Chapter 9 — design token tables                          */
+
+.token-grid {
+	display:               grid;
+	grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+	gap:                   var(--space-3);
+}
+
+.token-swatch {
+	border:        1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	overflow:      hidden;
+	background:    var(--color-bg-surface);
+	transition:    border-color var(--transition-slow);
+}
+
+.token-swatch__color {
+	height: 52px;
+	width:  100%;
+}
+
+.token-swatch__info {
+	padding: var(--space-2) var(--space-3);
+}
+
+.token-swatch__name {
+	font-family:   var(--font-mono);
+	font-size:     0.68rem;
+	font-weight:   var(--font-medium);
+	color:         var(--color-text-primary);
+	word-break:    break-all;
+}
+
+.token-swatch__hex {
+	font-family: var(--font-mono);
+	font-size:   0.65rem;
+	color:       var(--color-text-secondary);
+	margin-top:  2px;
+}
+
+/* Spacing token visual bars */
+.token-spacing-item {
+	display:     flex;
+	align-items: center;
+	gap:         var(--space-4);
+}
+
+.token-spacing-item__bar {
+	background:    var(--color-brand);
+	height:        20px;
+	border-radius: var(--radius-sm);
+	opacity:       0.7;
+	flex-shrink:   0;
+}
+
+.token-spacing-item__label {
+	font-family:  var(--font-mono);
+	font-size:    var(--text-xs);
+	color:        var(--color-text-secondary);
+	white-space:  nowrap;
+	min-width:    5rem;
+}
+
+.token-spacing-item__value {
+	font-family: var(--font-mono);
+	font-size:   var(--text-xs);
+	color:       var(--color-text-disabled);
+}
+
+/* Shadow preview boxes */
+.shadow-preview {
+	width:         120px;
+	height:        80px;
+	background:    var(--color-bg-surface);
+	border-radius: var(--radius-lg);
+	display:       flex;
+	flex-direction: column;
+	align-items:   center;
+	justify-content: center;
+	gap:           var(--space-2);
+	font-size:     var(--text-xs);
+	color:         var(--color-text-secondary);
+	font-family:   var(--font-mono);
+}
+
+/* ============================================================
+ *  BUTTON COMPONENT
+ *
+ * Block:    .button
+ * Elements: .button__icon (slot for icons)
+ * Modifiers: --primary, --secondary, --outline, --ghost, --danger
+ *            --xs, --sm, --lg, --xl, --full
+ *            --icon, --loading
+ *
+ * Chapter 1:  BEM naming, :hover, :active, :focus-visible, :disabled
+ * Chapter 2:  padding, border, inline-flex display
+ * Chapter 3:  color tokens, font-weight, font-size
+ * Chapter 6:  transitions, transform on :active, ::after for spinner
+ * ============================================================ */
+
+.button {
+	display:          inline-flex;
+	align-items:      center;
+	justify-content:  center;
+	gap:              var(--space-2);
+	padding:          0.625rem 1.25rem;
+	font-size:        var(--text-sm);
+	font-weight:      var(--font-medium);
+	line-height:      1;
+	border-radius:    var(--radius-lg);
+	border:           1px solid transparent;
+	cursor:           pointer;
+	text-decoration:  none;
+	white-space:      nowrap;
+	user-select:      none;
+	position:         relative;
+	transition:
+		background-color  var(--transition-fast),
+		color             var(--transition-fast),
+		border-color      var(--transition-fast),
+		box-shadow        var(--transition-fast),
+		transform         var(--duration-75) var(--ease-out);
+}
+
+/* Subtle downward nudge to simulate a physical press */
+.button:hover  { transform: translateY(-1px); }
+.button:active { transform: translateY(0);    }
+
+/* Keyboard focus ring — Chapter 6 */
+.button:focus-visible {
+	outline:        2px solid var(--color-border-focus);
+	outline-offset: 3px;
+}
+
+/* --- Variants --- */
+
+.button--primary {
+	background:   var(--color-brand);
+	color:        var(--color-white);
+}
+.button--primary:hover  { background: var(--color-brand-hover); }
+.button--primary:active { background: var(--color-teal-900); }
+
+.button--secondary {
+	background:   var(--color-bg-surface);
+	color:        var(--color-text-primary);
+	border-color: var(--color-border-strong);
+}
+.button--secondary:hover { background: var(--color-bg-hover); }
+
+.button--outline {
+	background:   transparent;
+	color:        var(--color-brand);
+	border-color: var(--color-brand);
+}
+.button--outline:hover { background: var(--color-brand-faint); }
+
+.button--ghost {
+	background:  transparent;
+	color:       var(--color-text-secondary);
+}
+.button--ghost:hover {
+	background: var(--color-bg-hover);
+	color:      var(--color-text-primary);
+}
+
+.button--danger {
+	background: var(--color-error);
+	color:      var(--color-white);
+}
+.button--danger:hover { background: var(--color-red-700); }
+
+/* --- Sizes --- */
+
+.button--xs {
+	padding:       0.3rem 0.6rem;
+	font-size:     var(--text-xs);
+	border-radius: var(--radius-md);
+	gap:           var(--space-1);
+}
+
+.button--sm {
+	padding:   0.45rem 0.875rem;
+	font-size: var(--text-xs);
+}
+
+.button--lg {
+	padding:       0.875rem 1.75rem;
+	font-size:     var(--text-base);
+	border-radius: var(--radius-xl);
+}
+
+.button--xl {
+	padding:       1.125rem 2.25rem;
+	font-size:     var(--text-lg);
+	border-radius: var(--radius-xl);
+}
+
+.button--full { width: 100%; }
+
+/* Square icon-only button */
+.button--icon {
+	padding:       0.625rem;
+	width:         2.5rem;
+	height:        2.5rem;
+	border-radius: var(--radius-lg);
+}
+
+.button--icon.button--sm { width: 2rem; height: 2rem; padding: 0.375rem; }
+.button--icon.button--lg { width: 3rem; height: 3rem; padding: 0.75rem;  }
+
+/* --- States --- */
+
+/* Disabled — Chapter 6 pseudo-class */
+.button:disabled,
+.button[aria-disabled="true"] {
+	opacity:        0.45;
+	cursor:         not-allowed;
+	pointer-events: none;
+	transform:      none;
+}
+
+/* Loading — spinner via ::after pseudo-element               */
+/* Chapter 6 — ::after, Chapter 10 — @keyframes animation    */
+.button--loading {
+	cursor:         wait;
+	pointer-events: none;
+	color:          transparent !important;
+}
+
+.button--loading::after {
+	content:          "";
+	position:         absolute;
+	top:              50%;
+	left:             50%;
+	width:            1em;
+	height:           1em;
+	transform:        translate(-50%, -50%);
+	border:           2px solid white;
+	border-top-color: transparent;
+	border-radius:    var(--radius-full);
+	animation:        button-spin var(--duration-500) var(--ease-linear) infinite;
+}
+
+/* ============================================================
+ *  CARD COMPONENT
+ *
+ * Block:     .card
+ * Elements:  .card__header, .card__body, .card__footer,
+ *            .card__media, .card__title, .card__description, .card__meta
+ * Modifiers: --flat, --elevated, --interactive, --featured
+ *
+ * Chapter 1:  BEM naming
+ * Chapter 2:  overflow: hidden clips child media, border, border-radius
+ * Chapter 3:  Colors, backgrounds
+ * Chapter 5:  Flexbox inside header/footer
+ * Chapter 6:  Transitions, box-shadow, :hover, :focus-visible
+ * Chapter 8:  Container queries — card adapts based on its own width
+ * ============================================================ */
+
+/* Container context lets child rules react to the card's own width.
+ * Chapter 8 — Container Queries */
+.card {
+	container-type: inline-size;
+	background:     var(--color-bg-surface);
+	border:         1px solid var(--color-border);
+	border-radius:  var(--radius-xl);
+	overflow:       hidden;
+	transition:
+		box-shadow       var(--transition-base),
+		border-color     var(--transition-base),
+		transform        var(--transition-base),
+		background-color var(--transition-slow);
+}
+
+.card--flat { box-shadow: none; }
+
+.card--elevated {
+	box-shadow:   var(--shadow-md);
+	border-color: transparent;
+}
+
+.card--interactive { cursor: pointer; }
+
+.card--interactive:hover {
+	box-shadow:   var(--shadow-lg);
+	transform:    translateY(-3px);
+	border-color: var(--color-border-strong);
+}
+
+.card--interactive:focus-visible {
+	outline:        2px solid var(--color-border-focus);
+	outline-offset: 3px;
+}
+
+/* Featured — double border using box-shadow trick           */
+/* Chapter 6 — box-shadow as a design element               */
+.card--featured {
+	border-color: var(--color-brand);
+	box-shadow:   0 0 0 1px var(--color-brand), var(--shadow-md);
+}
+
+/* Sub-elements */
+.card__header {
+	padding:         var(--space-5) var(--space-6);
+	border-bottom:   1px solid var(--color-border);
+	display:         flex;
+	align-items:     flex-start;
+	justify-content: space-between;
+	gap:             var(--space-4);
+	transition:      border-color var(--transition-slow);
+}
+
+.card__body {
+	padding: var(--space-5) var(--space-6);
+}
+
+.card__footer {
+	padding:         var(--space-4) var(--space-6);
+	border-top:      1px solid var(--color-border);
+	background:      var(--color-bg-subtle);
+	display:         flex;
+	align-items:     center;
+	justify-content: space-between;
+	gap:             var(--space-3);
+	transition:
+		background-color var(--transition-slow),
+		border-color     var(--transition-slow);
+}
+
+.card__media {
+	width:       100%;
+	aspect-ratio: 16 / 9;
+	object-fit:  cover;
+	display:     block;
+}
+
+.card__title {
+	font-size:   var(--text-base);
+	font-weight: var(--font-semibold);
+	color:       var(--color-text-heading);
+	margin:      0;
+	line-height: var(--leading-snug);
+}
+
+.card__description {
+	font-size:   var(--text-sm);
+	color:       var(--color-text-secondary);
+	margin:      0;
+	line-height: var(--leading-relaxed);
+}
+
+.card__meta {
+	font-size: var(--text-xs);
+	color:     var(--color-text-secondary);
+}
+
+/* Container query — extra padding when card has room.       */
+/* Chapter 8 — Container Queries                            */
+@container (min-width: 380px) {
+	.card__header,
+	.card__body {
+		padding-inline: var(--space-8);
+	}
+
+	.card__footer {
+		padding-inline: var(--space-8);
+	}
+}
+
+/* ============================================================
+ *  BADGE COMPONENT
+ *
+ * Block:      .badge
+ * Modifiers:  --primary, --success, --warning, --error, --info, --neutral
+ *             --sm, --lg, --dot
+ *
+ * Chapter 1:  BEM, ::before pseudo-element for dot
+ * Chapter 3:  Colors, text-transform, letter-spacing
+ * Chapter 6:  border-radius: full for pill shape
+ * ============================================================ */
+
+.badge {
+	display:       inline-flex;
+	align-items:   center;
+	gap:           var(--space-1);
+	padding:       0.2em 0.65em;
+	font-size:     var(--text-xs);
+	font-weight:   var(--font-semibold);
+	line-height:   1;
+	white-space:   nowrap;
+	border-radius: var(--radius-full);
+	border:        1px solid transparent;
+	letter-spacing: 0.025em;
+	text-transform: uppercase;
+}
+
+/* Dot indicator via ::before pseudo-element — Chapter 6 */
+.badge--dot::before {
+	content:       "";
+	display:       block;
+	width:         0.45em;
+	height:        0.45em;
+	border-radius: var(--radius-full);
+	background:    currentColor;
+	flex-shrink:   0;
+}
+
+/* Color variants */
+.badge--primary {
+	background:   var(--color-brand-faint);
+	color:        var(--color-brand-dark);
+	border-color: color-mix(in srgb, var(--color-brand) 25%, transparent);
+}
+
+.badge--success {
+	background: var(--color-success-bg);
+	color:      var(--color-success-text);
+}
+
+.badge--warning {
+	background: var(--color-warning-bg);
+	color:      var(--color-warning-text);
+}
+
+.badge--error {
+	background: var(--color-error-bg);
+	color:      var(--color-error-text);
+}
+
+.badge--info {
+	background: var(--color-info-bg);
+	color:      var(--color-info-text);
+}
+
+.badge--neutral {
+	background:   var(--color-bg-subtle);
+	color:        var(--color-text-secondary);
+	border-color: var(--color-border);
+}
+
+/* Sizes */
+.badge--sm { font-size: 0.62rem; padding: 0.15em 0.5em; }
+.badge--lg { font-size: var(--text-sm); padding: 0.3em 0.8em; }
+
+/* ============================================================
+ *  INPUT COMPONENT
+ *
+ * Block:      .input-group
+ * Elements:   .input-label, .input-field, .input-hint, .input-wrapper
+ * Modifiers:  .input-field--error, --success, --textarea, --select,
+ *             --with-icon-left, --with-icon-right
+ *
+ * Chapter 1:  BEM, ::after on required label
+ * Chapter 2:  Box model — full-width block, padding
+ * Chapter 3:  Typography, colors
+ * Chapter 4:  Responsive form elements
+ * Chapter 6:  :focus, :hover, :disabled, :placeholder-shown transitions
+ * ============================================================ */
+
+.input-group {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-2);
+}
+
+.input-label {
+	font-size:   var(--text-sm);
+	font-weight: var(--font-medium);
+	color:       var(--color-text-primary);
+	cursor:      pointer;
+	transition:  color var(--transition-slow);
+}
+
+/* Append a required marker via pseudo-element — Chapter 6 ::after */
+.input-label--required::after {
+	content:     " *";
+	color:       var(--color-error);
+	font-weight: var(--font-bold);
+}
+
+/* Wrapper — used for icon positioning */
+/* Chapter 2 — position: relative container */
+.input-wrapper {
+	position:    relative;
+	display:     flex;
+	align-items: center;
+}
+
+.input-field {
+	display:      block;
+	width:        100%;
+	padding:      0.625rem var(--space-3);
+	font-size:    var(--text-sm);
+	line-height:  var(--leading-normal);
+	color:        var(--color-text-primary);
+	background:   var(--color-bg-surface);
+	border:       1px solid var(--color-border-strong);
+	border-radius: var(--radius-lg);
+	transition:
+		border-color     var(--transition-fast),
+		box-shadow       var(--transition-fast),
+		background-color var(--transition-slow),
+		color            var(--transition-slow);
+}
+
+/* Chapter 6 — ::placeholder pseudo-element */
+.input-field::placeholder {
+	color: var(--color-text-disabled);
+}
+
+.input-field:hover {
+	border-color: var(--color-border-strong);
+}
+
+/* Chapter 6 — :focus state with focus ring */
+.input-field:focus {
+	outline:      none;
+	border-color: var(--color-border-focus);
+	box-shadow:   0 0 0 3px var(--color-focus-ring);
+}
+
+/* States */
+.input-field--error { border-color: var(--color-error); }
+.input-field--error:focus {
+	border-color: var(--color-error);
+	box-shadow:   0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+.input-field--success { border-color: var(--color-success); }
+
+/* Chapter 6 — :disabled pseudo-class */
+.input-field:disabled {
+	background: var(--color-bg-subtle);
+	color:      var(--color-text-disabled);
+	cursor:     not-allowed;
+	border-color: var(--color-border);
+}
+
+/* Hint text */
+.input-hint           { font-size: var(--text-xs); color: var(--color-text-secondary); }
+.input-hint--error    { color: var(--color-error); }
+.input-hint--success  { color: var(--color-success); }
+
+/* Icon slots — Chapter 2 position: absolute */
+.input-field--with-icon-left  { padding-left:  2.5rem; }
+.input-field--with-icon-right { padding-right: 2.5rem; }
+
+.input-icon {
+	position:        absolute;
+	color:           var(--color-text-secondary);
+	pointer-events:  none;
+	display:         flex;
+	align-items:     center;
+}
+
+.input-icon--left  { left:  var(--space-3); }
+.input-icon--right { right: var(--space-3); }
+
+/* Textarea modifier */
+.input-field--textarea {
+	resize:     vertical;
+	min-height: 7rem;
+	padding-top: var(--space-3);
+}
+
+/* Select modifier — custom chevron via background-image */
+/* Chapter 6 — filters, background manipulations         */
+.input-field--select {
+	cursor:              pointer;
+	padding-right:       2.5rem;
+	background-image:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%2394a3b8' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 6 8 10 12 6'/%3E%3C/svg%3E");
+	background-repeat:   no-repeat;
+	background-position: right 0.75rem center;
+	background-size:     1rem;
+}
+
+/* ============================================================
+ *  ALERT COMPONENT
+ *
+ * Block:      .alert
+ * Elements:   .alert__icon, .alert__body, .alert__title,
+ *             .alert__message, .alert__dismiss
+ * Modifiers:  --info, --success, --warning, --error
+ *
+ * Chapter 3:  Semantic colors
+ * Chapter 5:  Flexbox for icon + content layout
+ * Chapter 6:  border-left   as a left-bar style element
+ * ============================================================ */
+
+.alert {
+	display:     flex;
+	gap:         var(--space-3);
+	padding:     var(--space-4) var(--space-5);
+	border-radius: var(--radius-lg);
+	border:      1px solid transparent;
+	font-size:   var(--text-sm);
+	line-height: var(--leading-relaxed);
+}
+
+.alert__icon {
+	flex-shrink: 0;
+	font-size:   1.1em;
+	margin-top:  0.05em;
+}
+
+.alert__body   { flex: 1; min-width: 0; }
+
+.alert__title {
+	font-weight:   var(--font-semibold);
+	margin-bottom: var(--space-1);
+}
+
+.alert__message { opacity: 0.9; }
+
+.alert__dismiss {
+	flex-shrink:  0;
+	color:        inherit;
+	opacity:      0.6;
+	padding:      0.2em;
+	border-radius: var(--radius-sm);
+	line-height:  1;
+	transition:
+		opacity          var(--transition-fast),
+		background-color var(--transition-fast);
+}
+
+.alert__dismiss:hover {
+	opacity:    1;
+	background: rgba(0, 0, 0, 0.08);
+}
+
+/* Variants */
+.alert--info {
+	background:   var(--color-info-bg);
+	border-color: var(--color-blue-400);
+	color:        var(--color-info-text);
+}
+
+.alert--success {
+	background:   var(--color-success-bg);
+	border-color: var(--color-green-600);
+	color:        var(--color-success-text);
+}
+
+.alert--warning {
+	background:   var(--color-warning-bg);
+	border-color: var(--color-yellow-600);
+	color:        var(--color-warning-text);
+}
+
+.alert--error {
+	background:   var(--color-error-bg);
+	border-color: var(--color-red-500);
+	color:        var(--color-error-text);
+}
+
+/* ============================================================
+ *  CHIP COMPONENT
+ *
+ * Chapter 1:  BEM, :hover, :focus-visible
+ * Chapter 6:  border-radius, transitions
+ * ============================================================ */
+
+.chip {
+	display:       inline-flex;
+	align-items:   center;
+	gap:           var(--space-2);
+	padding:       0.35em 0.75em;
+	font-size:     var(--text-sm);
+	font-weight:   var(--font-medium);
+	color:         var(--color-text-primary);
+	background:    var(--color-bg-subtle);
+	border:        1px solid var(--color-border);
+	border-radius: var(--radius-full);
+	cursor:        default;
+	user-select:   none;
+	transition:
+		background-color var(--transition-fast),
+		border-color     var(--transition-fast),
+		color            var(--transition-fast);
+}
+
+.chip--interactive { cursor: pointer; }
+
+.chip--interactive:hover {
+	background:   var(--color-bg-hover);
+	border-color: var(--color-border-strong);
+}
+
+.chip--interactive:focus-visible {
+	outline:        2px solid var(--color-border-focus);
+	outline-offset: 2px;
+}
+
+.chip--selected {
+	background:   var(--color-brand-faint);
+	border-color: var(--color-brand);
+	color:        var(--color-brand);
+}
+
+/* ============================================================
+ *  AVATAR COMPONENT
+ *
+ * Chapter 2:  border-radius, overflow: hidden
+ * Chapter 3:  linear-gradient background
+ * Chapter 6:  clip-path and border-radius effects
+ * ============================================================ */
+
+.avatar {
+	display:         inline-flex;
+	align-items:     center;
+	justify-content: center;
+	border-radius:   var(--radius-full);
+	overflow:        hidden;
+	width:           2.5rem;
+	height:          2.5rem;
+	flex-shrink:     0;
+	/* Chapter 3 — linear-gradient background */
+	background:      linear-gradient(135deg, var(--color-teal-400) 0%, var(--color-teal-700) 100%);
+	color:           white;
+	font-weight:     var(--font-semibold);
+	font-size:       var(--text-sm);
+	user-select:     none;
+}
+
+.avatar img {
+	width:      100%;
+	height:     100%;
+	object-fit: cover;
+}
+
+/* Size modifiers */
+.avatar--xs  { width: 1.5rem; height: 1.5rem; font-size: var(--text-xs); }
+.avatar--sm  { width: 2rem;   height: 2rem;   font-size: var(--text-xs); }
+.avatar--lg  { width: 3rem;   height: 3rem;   font-size: var(--text-lg); }
+.avatar--xl  { width: 4rem;   height: 4rem;   font-size: var(--text-xl); }
+.avatar--2xl { width: 5rem;   height: 5rem;   font-size: var(--text-2xl); }
+
+/* Avatar group — stacked avatars with overlap */
+/* Chapter 5 — flex-direction: row-reverse     */
+.avatar-group {
+	display:          flex;
+	flex-direction:   row-reverse;
+	justify-content:  flex-end;
+}
+
+.avatar-group .avatar {
+	border:       2px solid var(--color-bg-surface);
+	margin-left:  -0.75rem;
+	transition:   border-color var(--transition-slow);
+}
+
+.avatar-group .avatar:last-child {
+	margin-left: 0;
+}
+
+/* ============================================================
+ *  TOGGLE COMPONENT (used for theme switcher)
+ *
+ * Chapter 6:  ::before/::after simulation via inner element,
+ *             transitions, :hover
+ * Chapter 8:  CSS custom properties drive state change
+ * ============================================================ */
+
+.toggle {
+	display:     inline-flex;
+	align-items: center;
+	gap:         var(--space-2);
+	cursor:      pointer;
+	font-size:   var(--text-sm);
+	color:       var(--color-text-secondary);
+	user-select: none;
+	background:  none;
+	border:      none;
+	padding:     0;
+	transition:  color var(--transition-slow);
+}
+
+.toggle__track {
+	position:      relative;
+	width:         2.75rem;
+	height:        1.5rem;
+	background:    var(--color-bg-subtle);
+	border:        1px solid var(--color-border-strong);
+	border-radius: var(--radius-full);
+	flex-shrink:   0;
+	transition:
+		background-color var(--transition-base),
+		border-color     var(--transition-base);
+}
+
+.toggle__thumb {
+	position:      absolute;
+	top:           2px;
+	left:          2px;
+	width:         calc(1.5rem - 6px);
+	height:        calc(1.5rem - 6px);
+	background:    var(--color-text-secondary);
+	border-radius: var(--radius-full);
+	transition:
+		transform        var(--transition-base),
+		background-color var(--transition-base);
+}
+
+.toggle--active .toggle__track {
+	background:   var(--color-brand);
+	border-color: var(--color-brand);
+}
+
+.toggle--active .toggle__thumb {
+	transform:  translateX(1.25rem);
+	background: white;
+}
+
+/* ============================================================
+ *  PROGRESS BAR COMPONENT
+ *
+ * Chapter 3:  linear-gradient on the fill
+ * Chapter 5:  Flexbox for label row
+ * Chapter 6:  Transitions, border-radius
+ * Chapter 10: Width animated via IntersectionObserver in script.js
+ * ============================================================ */
+
+.progress {
+	display:        flex;
+	flex-direction: column;
+	gap:            var(--space-2);
+}
+
+.progress__header {
+	display:         flex;
+	justify-content: space-between;
+	align-items:     center;
+	font-size:       var(--text-sm);
+}
+
+.progress__label {
+	font-weight: var(--font-medium);
+	color:       var(--color-text-primary);
+}
+
+.progress__value {
+	color:       var(--color-text-secondary);
+	font-family: var(--font-mono);
+	font-size:   var(--text-xs);
+}
+
+.progress__track {
+	height:        0.5rem;
+	background:    var(--color-bg-subtle);
+	border-radius: var(--radius-full);
+	overflow:      hidden;
+	transition:    background-color var(--transition-slow);
+}
+
+/* Chapter 3 — linear-gradient Chapter 6 — transition */
+.progress__fill {
+	height:        100%;
+	background:    linear-gradient(90deg, var(--color-brand) 0%, var(--color-teal-500) 100%);
+	border-radius: var(--radius-full);
+	transition:    width var(--duration-500) var(--ease-out);
+}
+
+.progress--sm .progress__track { height: 0.35rem; }
+.progress--lg .progress__track { height: 0.75rem; }

@@ -81,8 +81,8 @@ from
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture"
 folder and subfolders.
 Based on this information create a mini-project
-"Animated card UI"
+"Complete design system implementation using Storybook"
 and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\mini-projects\animated-card-ui"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\mini-projects\complete-design-system-implementation-using-storybook"
 folder.
 This miniproject should be based on knowledge from module only.

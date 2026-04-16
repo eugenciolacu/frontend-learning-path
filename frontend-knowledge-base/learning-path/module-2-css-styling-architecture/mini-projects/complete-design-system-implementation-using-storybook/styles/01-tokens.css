@@ -1,0 +1,308 @@
+/* ============================================================
+ * ITCSS Layer 1 — Settings / Design Tokens
+ *
+ * Chapter 6:  CSS Custom Properties (variables, scope, fallbacks)
+ * Chapter 8:  Custom Properties Architecture and Theming
+ * Chapter 9:  Design Tokens and Component Library Architecture
+ *
+ * Token strategy — two tiers:
+ *   Tier 1 (Primitive):  --color-teal-600, --space-4
+ *   Tier 2 (Semantic):   --color-brand, --space-component-md
+ *
+ * Components reference semantic tokens only.
+ * Swapping a theme only requires redefining semantic tokens.
+ * ============================================================ */
+
+:root {
+
+	/* ======================================================
+	 * TIER 1 — PRIMITIVE TOKENS
+	 * ====================================================== */
+
+	/* ----- Color: Teal (brand scale) ----- */
+	--color-teal-50:  #f0fdfa;
+	--color-teal-100: #ccfbf1;
+	--color-teal-200: #99f6e4;
+	--color-teal-300: #5eead4;
+	--color-teal-400: #2dd4bf;
+	--color-teal-500: #14b8a6;
+	--color-teal-600: #0d9488;
+	--color-teal-700: #0f766e;
+	--color-teal-800: #115e59;
+	--color-teal-900: #134e4a;
+
+	/* ----- Color: Slate (neutral scale) ----- */
+	--color-slate-50:  #f8fafc;
+	--color-slate-100: #f1f5f9;
+	--color-slate-200: #e2e8f0;
+	--color-slate-300: #cbd5e1;
+	--color-slate-400: #94a3b8;
+	--color-slate-500: #64748b;
+	--color-slate-600: #475569;
+	--color-slate-700: #334155;
+	--color-slate-800: #1e293b;
+	--color-slate-900: #0f172a;
+
+	/* ----- Color: Blue (info) ----- */
+	--color-blue-100: #dbeafe;
+	--color-blue-400: #60a5fa;
+	--color-blue-600: #2563eb;
+	--color-blue-900: #1e3a8a;
+
+	/* ----- Color: Green (success) ----- */
+	--color-green-100: #dcfce7;
+	--color-green-600: #16a34a;
+	--color-green-700: #15803d;
+	--color-green-900: #14532d;
+
+	/* ----- Color: Yellow (warning) ----- */
+	--color-yellow-100: #fef9c3;
+	--color-yellow-600: #ca8a04;
+	--color-yellow-900: #713f12;
+
+	/* ----- Color: Red (error) ----- */
+	--color-red-100:  #fee2e2;
+	--color-red-500:  #ef4444;
+	--color-red-600:  #dc2626;
+	--color-red-700:  #b91c1c;
+	--color-red-900:  #7f1d1d;
+
+	/* ----- Color: Base ----- */
+	--color-white: #ffffff;
+	--color-black: #000000;
+
+	/* ----- Spacing scale (0.25rem / 4px increments) ----- */
+	/* Chapter 9 — shared spacing values as tokens */
+	--space-px: 1px;
+	--space-0:  0;
+	--space-1:  0.25rem;   /*  4px */
+	--space-2:  0.5rem;    /*  8px */
+	--space-3:  0.75rem;   /* 12px */
+	--space-4:  1rem;      /* 16px */
+	--space-5:  1.25rem;   /* 20px */
+	--space-6:  1.5rem;    /* 24px */
+	--space-8:  2rem;      /* 32px */
+	--space-10: 2.5rem;    /* 40px */
+	--space-12: 3rem;      /* 48px */
+	--space-16: 4rem;      /* 64px */
+	--space-20: 5rem;      /* 80px */
+	--space-24: 6rem;      /* 96px */
+
+	/* ----- Typography ----- */
+	/* Chapter 3 — font families, sizes, weights, line heights */
+	--font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+	--font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Mono', 'Consolas', monospace;
+
+	/* Type scale */
+	--text-xs:   0.75rem;   /* 12px */
+	--text-sm:   0.875rem;  /* 14px */
+	--text-base: 1rem;      /* 16px */
+	--text-lg:   1.125rem;  /* 18px */
+	--text-xl:   1.25rem;   /* 20px */
+	--text-2xl:  1.5rem;    /* 24px */
+	--text-3xl:  1.875rem;  /* 30px */
+	--text-4xl:  2.25rem;   /* 36px */
+	--text-5xl:  3rem;      /* 48px */
+
+	/* Font weights */
+	--font-regular:  400;
+	--font-medium:   500;
+	--font-semibold: 600;
+	--font-bold:     700;
+
+	/* Line heights */
+	--leading-none:    1;
+	--leading-tight:   1.25;
+	--leading-snug:    1.375;
+	--leading-normal:  1.5;
+	--leading-relaxed: 1.625;
+	--leading-loose:   2;
+
+	/* ----- Border radius ----- */
+	--radius-none: 0;
+	--radius-sm:   0.25rem;
+	--radius-md:   0.5rem;
+	--radius-lg:   0.75rem;
+	--radius-xl:   1rem;
+	--radius-2xl:  1.5rem;
+	--radius-full: 9999px;
+
+	/* ----- Shadows ----- */
+	/* Chapter 6 — box-shadow property */
+	--shadow-xs:  0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.10), 0 1px 2px rgba(0, 0, 0, 0.06);
+	--shadow-md:  0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.06);
+	--shadow-lg:  0 10px 15px rgba(0, 0, 0, 0.10), 0 4px 6px rgba(0, 0, 0, 0.05);
+	--shadow-xl:  0 20px 25px rgba(0, 0, 0, 0.10), 0 10px 10px rgba(0, 0, 0, 0.04);
+	--shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+	--shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+	--shadow-none:  none;
+
+	/* ----- Transitions ----- */
+	/* Chapter 6 — transition property, timing functions */
+	--duration-75:   75ms;
+	--duration-100:  100ms;
+	--duration-150:  150ms;
+	--duration-200:  200ms;
+	--duration-300:  300ms;
+	--duration-500:  500ms;
+
+	--ease-linear:  linear;
+	--ease-in:      cubic-bezier(0.4, 0, 1, 1);
+	--ease-out:     cubic-bezier(0, 0, 0.2, 1);
+	--ease-in-out:  cubic-bezier(0.4, 0, 0.2, 1);
+
+	/* ----- Z-index scale ----- */
+	/* Chapter 2 — z-index layering */
+	--z-base:     0;
+	--z-raised:   10;
+	--z-dropdown: 100;
+	--z-sticky:   200;
+	--z-overlay:  300;
+	--z-modal:    400;
+	--z-toast:    500;
+
+	/* ======================================================
+	 * TIER 2 — SEMANTIC TOKENS (Light theme default)
+	 * Chapter 8: Custom Properties Architecture
+	 * Chapter 9: Design tokens support theming and reuse
+	 * ====================================================== */
+
+	/* Brand */
+	--color-brand:       var(--color-teal-700);
+	--color-brand-hover: var(--color-teal-800);
+	--color-brand-faint: var(--color-teal-50);
+	--color-brand-dark:  var(--color-teal-900);
+
+	/* Feedback */
+	--color-success:      var(--color-green-600);
+	--color-success-bg:   var(--color-green-100);
+	--color-success-text: var(--color-green-900);
+
+	--color-warning:      var(--color-yellow-600);
+	--color-warning-bg:   var(--color-yellow-100);
+	--color-warning-text: var(--color-yellow-900);
+
+	--color-error:       var(--color-red-600);
+	--color-error-bg:    var(--color-red-100);
+	--color-error-text:  var(--color-red-900);
+
+	--color-info:       var(--color-blue-600);
+	--color-info-bg:    var(--color-blue-100);
+	--color-info-text:  var(--color-blue-900);
+
+	/* Backgrounds */
+	--color-bg-canvas:   var(--color-slate-50);
+	--color-bg-surface:  var(--color-white);
+	--color-bg-subtle:   var(--color-slate-100);
+	--color-bg-hover:    var(--color-slate-100);
+
+	/* Text */
+	--color-text-primary:   var(--color-slate-900);
+	--color-text-secondary: var(--color-slate-500);
+	--color-text-disabled:  var(--color-slate-400);
+	--color-text-inverse:   var(--color-white);
+	--color-text-heading:   var(--color-slate-900);
+	--color-text-link:      var(--color-teal-700);
+
+	/* Borders */
+	--color-border:       var(--color-slate-200);
+	--color-border-strong: var(--color-slate-300);
+	--color-border-focus:  var(--color-teal-600);
+
+	/* Code */
+	--color-code-bg:   var(--color-slate-100);
+	--color-code-text: var(--color-slate-800);
+
+	/* Catalog shell colors */
+	--color-sidebar-bg:       var(--color-slate-900);
+	--color-sidebar-text:     var(--color-slate-300);
+	--color-sidebar-active:   var(--color-white);
+	--color-sidebar-hover-bg: var(--color-slate-800);
+	--color-sidebar-section:  var(--color-slate-500);
+
+	--color-header-bg:  var(--color-white);
+	--color-canvas-bg:  var(--color-slate-50);
+	--color-canvas-border: var(--color-slate-200);
+
+	/* Focus ring (semi-transparent brand color) */
+	--color-focus-ring: rgba(13, 148, 136, 0.30);
+
+	/* Semantic spacing */
+	--space-component-xs: var(--space-2);
+	--space-component-sm: var(--space-3);
+	--space-component-md: var(--space-4);
+	--space-component-lg: var(--space-6);
+	--space-section:      var(--space-12);
+	--space-page:         var(--space-8);
+
+	/* Semantic transitions */
+	--transition-fast: var(--duration-150) var(--ease-out);
+	--transition-base: var(--duration-200) var(--ease-in-out);
+	--transition-slow: var(--duration-300) var(--ease-in-out);
+}
+
+/* ============================================================
+ * Dark Theme Override
+ *
+ * Chapter 6:  CSS variables — scope and inheritance
+ * Chapter 8:  Swapping themes via custom property redefinition
+ *
+ * Only semantic tokens change. Primitive tokens remain the same.
+ * All components automatically adapt because they reference
+ * semantic tokens rather than primitive values directly.
+ * ============================================================ */
+
+[data-theme="dark"] {
+
+	/* Backgrounds */
+	--color-bg-canvas:  var(--color-slate-900);
+	--color-bg-surface: var(--color-slate-800);
+	--color-bg-subtle:  var(--color-slate-700);
+	--color-bg-hover:   var(--color-slate-700);
+
+	/* Text */
+	--color-text-primary:   var(--color-slate-50);
+	--color-text-secondary: var(--color-slate-400);
+	--color-text-disabled:  var(--color-slate-600);
+	--color-text-inverse:   var(--color-slate-900);
+	--color-text-heading:   var(--color-white);
+	--color-text-link:      var(--color-teal-400);
+
+	/* Borders */
+	--color-border:        var(--color-slate-700);
+	--color-border-strong: var(--color-slate-600);
+	--color-border-focus:  var(--color-teal-500);
+
+	/* Code */
+	--color-code-bg:   var(--color-slate-900);
+	--color-code-text: var(--color-slate-200);
+
+	/* Brand */
+	--color-brand:       var(--color-teal-500);
+	--color-brand-hover: var(--color-teal-400);
+	--color-brand-faint: rgba(13, 148, 136, 0.15);
+	--color-brand-dark:  var(--color-teal-200);
+
+	/* Catalog shell */
+	--color-header-bg:     var(--color-slate-800);
+	--color-sidebar-hover-bg: var(--color-slate-700);
+	--color-canvas-bg:     var(--color-slate-900);
+	--color-canvas-border: var(--color-slate-700);
+
+	/* Focus ring */
+	--color-focus-ring: rgba(20, 184, 166, 0.35);
+
+	/* Feedback backgrounds — darken for dark mode */
+	--color-info-bg:    rgba(37, 99, 235, 0.15);
+	--color-info-text:  var(--color-blue-400);
+
+	--color-success-bg:   rgba(22, 163, 74, 0.15);
+	--color-success-text: var(--color-green-700);
+
+	--color-warning-bg:   rgba(202, 138, 4, 0.15);
+	--color-warning-text: var(--color-yellow-600);
+
+	--color-error-bg:   rgba(220, 38, 38, 0.15);
+	--color-error-text: var(--color-red-500);
+}

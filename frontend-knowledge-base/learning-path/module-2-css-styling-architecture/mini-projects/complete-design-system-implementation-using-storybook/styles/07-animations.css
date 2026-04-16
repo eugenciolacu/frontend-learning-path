@@ -1,0 +1,315 @@
+/* ============================================================
+ * ITCSS Layer 7 — Animations
+ *
+ * Chapter 6:  @keyframes, animation property, transitions
+ * Chapter 10: High-performance animations (FLIP technique,
+ *             hardware acceleration, compositor-safe properties)
+ *             View Transitions API
+ *             Scroll-driven animations
+ *             prefers-reduced-motion accessibility
+ *
+ * Performance rule: prefer animating transform and opacity.
+ * These properties are handled by the compositor and avoid
+ * triggering layout recalculation or repaint.
+ * ============================================================ */
+
+/* ============================================================
+ * KEYFRAME DEFINITIONS
+ * ============================================================ */
+
+/* Button loading spinner — Chapter 6 */
+@keyframes button-spin {
+	from { transform: rotate(0deg); }
+	to   { transform: rotate(360deg); }
+}
+
+/* Simple continuous spin (re-used for general spinners) */
+@keyframes spin {
+	to { transform: rotate(360deg); }
+}
+
+/* Fade in upwards — used for modal, toast, card reveal */
+@keyframes fade-in-up {
+	from {
+		opacity:   0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity:   1;
+		transform: translateY(0);
+	}
+}
+
+/* Fade in downwards — used for dropdowns, tooltips */
+@keyframes fade-in-down {
+	from {
+		opacity:   0;
+		transform: translateY(-8px);
+	}
+	to {
+		opacity:   1;
+		transform: translateY(0);
+	}
+}
+
+/* Scale in — used for popovers, badge appearance */
+@keyframes scale-in {
+	from {
+		opacity:   0;
+		transform: scale(0.94);
+	}
+	to {
+		opacity:   1;
+		transform: scale(1);
+	}
+}
+
+/* Slide in from left — used for sidebar on mobile */
+@keyframes slide-in-left {
+	from {
+		opacity:   0;
+		transform: translateX(-16px);
+	}
+	to {
+		opacity:   1;
+		transform: translateX(0);
+	}
+}
+
+/* Pulse — skeleton and loading states */
+@keyframes pulse {
+	0%, 100% { opacity: 1;   }
+	50%      { opacity: 0.4; }
+}
+
+/* Shimmer — skeleton loader wave effect */
+/* Chapter 10 — hardware-accelerated via transform          */
+@keyframes shimmer {
+	from { transform: translateX(-100%); }
+	to   { transform: translateX( 100%); }
+}
+
+/* Progress fill grow — triggers on scroll reveal */
+@keyframes progress-grow {
+	from { width: 0; }
+}
+
+/* Bounce — playful emphasis animation */
+@keyframes bounce {
+	0%, 100% { transform: translateY(0); }
+	50%      { transform: translateY(-6px); }
+}
+
+/* Fade out — used by View Transitions */
+@keyframes fade-out {
+	from { opacity: 1; }
+	to   { opacity: 0; }
+}
+
+/* ============================================================
+ * ANIMATION UTILITY CLASSES
+ * Chapter 6 — animation shorthand
+ * ============================================================ */
+
+.u-animate-fade-in-up {
+	animation: fade-in-up var(--duration-300) var(--ease-out) both;
+}
+
+.u-animate-fade-in-down {
+	animation: fade-in-down var(--duration-300) var(--ease-out) both;
+}
+
+.u-animate-scale-in {
+	animation: scale-in var(--duration-200) var(--ease-out) both;
+}
+
+.u-animate-spin {
+	animation: spin var(--duration-500) var(--ease-linear) infinite;
+}
+
+.u-animate-pulse {
+	animation: pulse 2s var(--ease-in-out) infinite;
+}
+
+.u-animate-bounce {
+	animation: bounce 1s var(--ease-in-out) infinite;
+}
+
+/* Stagger delay utilities — used for card grid reveals */
+/* Chapter 10 — staggered scroll entrance               */
+.u-delay-75  { animation-delay: 75ms;  }
+.u-delay-100 { animation-delay: 100ms; }
+.u-delay-150 { animation-delay: 150ms; }
+.u-delay-200 { animation-delay: 200ms; }
+.u-delay-300 { animation-delay: 300ms; }
+.u-delay-500 { animation-delay: 500ms; }
+
+/* ============================================================
+ * SKELETON LOADER
+ *
+ * Chapter 6:  ::before/::after pseudo-elements
+ * Chapter 10: Hardware-accelerated shimmer animation
+ *
+ * Uses the shimmer keyframe over a gradient background.
+ * transform is compositor-friendly (no layout cost).
+ * ============================================================ */
+
+.skeleton {
+	position:  relative;
+	overflow:  hidden;
+	background: var(--color-bg-subtle);
+	border-radius: var(--radius-md);
+}
+
+/* The shimmer wave runs via a positioned pseudo-element so
+ * the base element's background never changes — only the
+ * overlay moves. Chapter 10 — compositor-friendly animation. */
+.skeleton::after {
+	content:  "";
+	position: absolute;
+	inset:    0;
+	background: linear-gradient(
+		90deg,
+		transparent          0%,
+		rgba(255,255,255,0.25) 50%,
+		transparent          100%
+	);
+	animation: shimmer 1.6s var(--ease-in-out) infinite;
+}
+
+/* Preset skeleton shapes */
+.skeleton--text   { height: 1em; border-radius: var(--radius-sm); }
+.skeleton--avatar { border-radius: var(--radius-full); aspect-ratio: 1; }
+.skeleton--button { height: 2.5rem; width: 8rem; border-radius: var(--radius-lg); }
+.skeleton--card   { height: 200px; border-radius: var(--radius-xl); }
+
+/* ============================================================
+ * SCROLL-REVEAL PATTERN
+ *
+ * Chapter 10: Scroll-driven animations, IntersectionObserver
+ *
+ * Strategy:
+ *   1. Elements with .js-reveal start transparent and offset.
+ *   2. script.js uses IntersectionObserver to add .is-revealed
+ *      when the element enters the viewport.
+ *   3. If the browser supports @scroll-timeline / animation-timeline,
+ *      we upgrade to a native scroll-driven animation via @supports.
+ * ============================================================ */
+
+/* Default — transition-based reveal (all browsers) */
+.js-reveal {
+	opacity:    0;
+	transform:  translateY(16px);
+	transition:
+		opacity   var(--duration-500) var(--ease-out),
+		transform var(--duration-500) var(--ease-out);
+}
+
+.js-reveal.is-revealed {
+	opacity:   1;
+	transform: translateY(0);
+}
+
+/* Progressive enhancement — native scroll-driven animation.
+ * Chapter 10 — Scroll-driven animations (Chrome 115+)
+ * @supports ensures older browsers fall back gracefully. */
+@supports (animation-timeline: view()) {
+	.js-reveal {
+		animation:      fade-in-up linear both;
+		animation-timeline: view();
+		animation-range: entry 0% entry 40%;
+		/* Reset transition — not needed with native approach */
+		opacity:   initial;
+		transform: initial;
+		transition: none;
+	}
+
+	/* Prevent the IntersectionObserver from applying its class
+	 * when native scroll-driven animations are supported. */
+	.js-reveal.is-revealed {
+		opacity:   initial;
+		transform: initial;
+	}
+}
+
+/* ============================================================
+ * VIEW TRANSITIONS API
+ *
+ * Chapter 10: View Transitions API — cross-document and
+ * same-document transitions (chrome 111+)
+ *
+ * The transition is triggered in script.js via
+ * document.startViewTransition(). These rules define
+ * the enter and exit animations for the root snapshot.
+ * ============================================================ */
+
+@keyframes vt-fade-out {
+	from { opacity: 1; }
+	to   { opacity: 0; }
+}
+
+@keyframes vt-scale-in {
+	from { opacity: 0; transform: scale(0.98); }
+	to   { opacity: 1; transform: scale(1);    }
+}
+
+::view-transition-old(root) {
+	animation: var(--duration-200) var(--ease-in) both vt-fade-out;
+}
+
+::view-transition-new(root) {
+	animation: var(--duration-300) var(--ease-out) both vt-scale-in;
+}
+
+/* ============================================================
+ * REDUCED MOTION — FINAL OVERRIDE
+ *
+ * Chapter 10: Accessibility — respect OS reduced-motion preference
+ *
+ * This block mirrors the reset in 02-reset.css but is kept here
+ * to override any animation defined later in the cascade.
+ * Specific components may still show instantaneous visibility
+ * changes (opacity 0 → 1 without transition) if appropriate.
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+	.u-animate-fade-in-up,
+	.u-animate-fade-in-down,
+	.u-animate-scale-in,
+	.u-animate-bounce {
+		animation:  none;
+		opacity:    1;
+		transform:  none;
+	}
+
+	.js-reveal {
+		opacity:    1;
+		transform:  none;
+		transition: none;
+	}
+
+	.skeleton::after {
+		/* Swap shimmer for a slower pulse — still indicates loading
+		 * but without rapid lateral movement. */
+		animation: pulse 2s var(--ease-in-out) infinite;
+		background: rgba(255, 255, 255, 0.15);
+	}
+
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none;
+	}
+}
+
+/* ============================================================
+ * HARDWARE ACCELERATION HELPERS
+ *
+ * Chapter 10: will-change and hardware acceleration
+ *
+ * Use will-change only on elements that are ABOUT to animate.
+ * Do not apply it globally — it increases GPU memory usage.
+ * Apply these classes just before an animation starts and
+ * remove them immediately after.
+ * ============================================================ */
+
+.u-will-change-transform { will-change: transform; }
+.u-will-change-opacity   { will-change: opacity;   }
