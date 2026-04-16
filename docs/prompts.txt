@@ -81,8 +81,8 @@ from
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture"
 folder and subfolders.
 Based on this information create a mini-project
-"Responsive landing page"
+"Animated card UI"
 and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\mini-projects\responsive-landing-page"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\mini-projects\animated-card-ui"
 folder.
 This miniproject should be based on knowledge from module only.

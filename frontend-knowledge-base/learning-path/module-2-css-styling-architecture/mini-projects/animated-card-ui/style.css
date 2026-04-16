@@ -1,0 +1,1270 @@
+/* ================================================================
+   style.css — Animated Card UI
+   Module 2: CSS & Styling Architecture — Mini-Project
+
+   Organisation (follows ITCSS layer thinking from Chapter 9):
+     1. Custom Properties (design tokens)
+     2. Global Reset & Base
+     3. Accessibility utilities
+     4. Layout utilities (container)
+     5. Page Header
+     6. Section scaffold
+     7. Card Grid
+     8. Hover Effect Cards  (Section 1)
+     9. 3D Flip Cards       (Section 2)
+    10. Animated Stat Cards (Section 3)
+    11. Scroll-Reveal Cards (Section 4)
+    12. Skeleton Loading    (Section 5)
+    13. @keyframes
+    14. Accessibility — prefers-reduced-motion
+    15. Responsive adjustments
+    16. Page Footer
+   ================================================================ */
+
+
+/* ================================================================
+   1. CUSTOM PROPERTIES — DESIGN TOKENS
+   Chapter 6: CSS custom properties defined in :root are available
+              to every selector in the document (global scope).
+   Chapter 9: Centralising values here is the foundation of a
+              design-token architecture — change once, update everywhere.
+   ================================================================ */
+
+:root {
+	/* --- Colour palette ----------------------------------------- */
+
+	/* Primary: violet */
+	--color-primary:       #7c3aed;
+	--color-primary-dark:  #5b21b6;
+	--color-primary-light: #ede9fe;
+	--color-primary-glow:  rgba(124, 58, 237, 0.28);
+
+	/* Accent: cyan */
+	--color-cyan:       #06b6d4;
+	--color-cyan-light: #cffafe;
+	--color-cyan-glow:  rgba(6, 182, 212, 0.35);
+
+	/* Accent: emerald */
+	--color-emerald:       #10b981;
+	--color-emerald-light: #d1fae5;
+	--color-emerald-glow:  rgba(16, 185, 129, 0.35);
+
+	/* Accent: amber */
+	--color-amber:       #f59e0b;
+	--color-amber-light: #fef3c7;
+
+	/* Surfaces */
+	--color-surface:  #ffffff;
+	--color-bg:       #f5f3ff;   /* violet-50 — very subtle tint */
+	--color-bg-alt:   #eef2ff;   /* indigo-50 — alternating section */
+	--color-border:   rgba(124, 58, 237, 0.12);
+
+	/* Typography */
+	--color-text:        #1e1b4b;   /* indigo-950 — near-black with colour cast */
+	--color-text-muted:  #4f46e5;   /* indigo-600 */
+	--color-text-subtle: #94a3b8;   /* slate-400 */
+
+	/* --- Typography --------------------------------------------- */
+	--font-family: "Inter", system-ui, -apple-system, sans-serif;
+
+	/* --- Spacing scale ------------------------------------------ */
+	--space-xs:  0.25rem;
+	--space-sm:  0.5rem;
+	--space-md:  1rem;
+	--space-lg:  1.5rem;
+	--space-xl:  2rem;
+	--space-2xl: 3rem;
+	--space-3xl: 5rem;
+
+	/* --- Border radii ------------------------------------------- */
+	--radius-sm:   0.375rem;
+	--radius-md:   0.75rem;
+	--radius-lg:   1rem;
+	--radius-xl:   1.5rem;
+	--radius-full: 9999px;
+
+	/* --- Shadows ------------------------------------------------- */
+	/*
+	 * Chapter 6: box-shadow can stack multiple layers.
+	 * Using two layers creates a more natural looking lift.
+	 */
+	--shadow-sm:   0 1px 3px rgba(30, 27, 74, 0.06), 0 1px 2px rgba(30, 27, 74, 0.04);
+	--shadow-md:   0 4px 16px rgba(30, 27, 74, 0.08), 0 2px 6px rgba(30, 27, 74, 0.05);
+	--shadow-lg:   0 16px 40px rgba(30, 27, 74, 0.12), 0 4px 12px rgba(30, 27, 74, 0.06);
+	--shadow-lift: 0 24px 48px rgba(124, 58, 237, 0.22), 0 8px 16px rgba(124, 58, 237, 0.10);
+
+	/* --- Transitions --------------------------------------------- */
+	--transition-fast:   150ms ease;
+	--transition-base:   240ms ease;
+	--transition-slow:   420ms ease;
+	/*
+	 * Spring curve: overshoots slightly (bezier y > 1) and snaps back,
+	 * giving buttons and cards a more tactile, physical feel.
+	 */
+	--transition-spring: 360ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ================================================================
+   2. GLOBAL RESET & BASE STYLES
+   Chapter 2: box-sizing: border-box makes padding and border part
+              of the declared width/height, not additions to it.
+   Chapter 3: Font setup via font-family custom property.
+   ================================================================ */
+
+/*
+ * Chapter 2: Applying border-box globally including pseudo-elements
+ * eliminates the most common box-model arithmetic surprises.
+ */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+html {
+	/* Smooth scrolling for anchor links and skip-link jumps */
+	scroll-behavior: smooth;
+}
+
+body {
+	font-family: var(--font-family);
+	font-size: 1rem;
+	/*
+	 * Chapter 3: color and background-color set on body cascade
+	 * to all elements unless overridden.
+	 */
+	color: var(--color-text);
+	background-color: var(--color-bg);
+	line-height: 1.6;
+	-webkit-font-smoothing: antialiased;
+}
+
+img,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+
+/* ================================================================
+   3. ACCESSIBILITY UTILITIES
+   Chapter 6: :focus-visible — shows a keyboard focus ring only
+              when the browser decides the user is navigating by
+              keyboard, preventing rings on mouse clicks.
+   ================================================================ */
+
+/*
+ * Skip link is visually hidden until focused.
+ * position: absolute + top: -100% keeps it off-screen.
+ * On :focus it moves to top: 1rem, making it visible.
+ */
+.skip-link {
+	position: absolute;
+	top: -100%;
+	left: 1rem;
+	padding: 0.5rem 1rem;
+	background-color: var(--color-primary);
+	color: white;
+	font-weight: 600;
+	font-size: 0.875rem;
+	text-decoration: none;
+	border-radius: var(--radius-sm);
+	z-index: 9999;
+	transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+	top: 1rem;
+}
+
+
+/* ================================================================
+   4. LAYOUT UTILITIES
+   Chapter 2: container with max-width and centred inline margin.
+   Chapter 8: min(100% - 2rem, 72rem) is a modern CSS function
+              pattern: the container never exceeds 72rem and always
+              keeps 1rem of breathing room on each side.
+   ================================================================ */
+
+.container {
+	/*
+	 * Chapter 8: min() returns the smaller of two values.
+	 * This replaces the traditional max-width + padding-inline pattern
+	 * with a single concise declaration.
+	 */
+	width: min(100% - 2rem, 72rem);
+	margin-inline: auto;
+}
+
+
+/* ================================================================
+   5. PAGE HEADER
+   Chapter 3: radial-gradient background, linear-gradient text,
+              Google Fonts (Inter loaded via <link> in HTML head)
+   Chapter 6: ::before pseudo-element for decorative glow circle;
+              CSS custom properties from :root; pulse @keyframes
+   Chapter 8: clamp() for fluid heading and subtitle font sizes
+   ================================================================ */
+
+.page-header {
+	padding-block: var(--space-3xl) var(--space-2xl);
+	text-align: center;
+	/*
+	 * Chapter 2: position: relative creates a stacking context
+	 * so the ::before decoration stays inside the header.
+	 */
+	position: relative;
+	overflow: hidden;
+}
+
+/*
+ * Chapter 6: ::before generates a purely decorative element.
+ * content: "" is required for the pseudo-element to render.
+ * It is hidden from assistive technologies automatically.
+ */
+.page-header::before {
+	content: "";
+	position: absolute;
+	inset: -20%;
+	/*
+	 * Chapter 3: radial-gradient creates a soft circular wash of colour.
+	 * rgba() keeps the tint subtle — 8% opacity only.
+	 */
+	background: radial-gradient(ellipse at 50% 60%, rgba(124, 58, 237, 0.10) 0%, transparent 68%);
+	z-index: 0;
+	pointer-events: none;
+}
+
+.page-header .container {
+	position: relative;
+	z-index: 1;
+}
+
+.page-header__title {
+	/*
+	 * Chapter 8: clamp(min, preferred, max) produces fluid typography
+	 * that scales smoothly between viewport sizes without media queries.
+	 * min = 2rem (small screens), preferred = 5vw, max = 3.5rem.
+	 */
+	font-size: clamp(2rem, 5vw, 3.5rem);
+	font-weight: 800;
+	line-height: 1.1;
+	letter-spacing: -0.025em;
+	margin-block: var(--space-md);
+}
+
+/*
+ * Chapter 3 + 6: Text gradient technique.
+ * background-clip: text clips the gradient to the text shape.
+ * color: transparent makes the text itself see-through so the
+ * gradient behind it shows through.
+ */
+.text-gradient {
+	background-image: linear-gradient(135deg, var(--color-primary) 0%, var(--color-cyan) 100%);
+	background-clip: text;
+	-webkit-background-clip: text;
+	color: transparent;
+}
+
+.page-header__subtitle {
+	font-size: clamp(1rem, 2vw, 1.125rem);
+	color: var(--color-text-muted);
+	max-width: 50ch;
+	margin-inline: auto;
+	line-height: 1.75;
+}
+
+/* ----------------------------------------------------------------
+   Badge component
+   Chapter 6: ::before generates an animated dot indicator.
+              currentColor inherits the badge's own text colour.
+   ---------------------------------------------------------------- */
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--space-xs);
+	padding: 0.3rem 0.875rem;
+	background-color: var(--color-primary-light);
+	color: var(--color-primary-dark);
+	border-radius: var(--radius-full);
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+}
+
+/*
+ * Chapter 6: The ::before pseudo-element creates a dot.
+ * Its pulse animation draws attention to the badge without using
+ * extra HTML elements.
+ */
+.badge::before {
+	content: "";
+	display: inline-block;
+	width: 0.5rem;
+	height: 0.5rem;
+	border-radius: 50%;
+	background-color: currentColor;
+	animation: pulse 2s ease infinite;
+}
+
+
+/* ================================================================
+   6. SECTION SCAFFOLD
+   Chapter 4: responsive section padding via clamp()
+   Chapter 5: section__header centred with auto inline margin
+   ================================================================ */
+
+.section {
+	/*
+	 * Chapter 4: padding-block scales with the viewport width,
+	 * adapting layout rhythm across device sizes without breakpoints.
+	 */
+	padding-block: clamp(3rem, 8vw, 5rem);
+}
+
+.section--alt {
+	background-color: var(--color-bg-alt);
+}
+
+.section__header {
+	max-width: 52ch;
+	margin-inline: auto;
+	text-align: center;
+	margin-bottom: var(--space-2xl);
+}
+
+.section__label {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--color-primary);
+	margin-bottom: var(--space-sm);
+}
+
+.section__title {
+	font-size: clamp(1.5rem, 3vw, 2rem);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	line-height: 1.2;
+	margin-bottom: var(--space-md);
+}
+
+.section__desc {
+	color: var(--color-text-muted);
+	line-height: 1.75;
+}
+
+/* Inline code snippets inside section descriptions */
+.section__desc code {
+	font-family: "Fira Code", "Cascadia Code", ui-monospace, monospace;
+	font-size: 0.875em;
+	background-color: var(--color-primary-light);
+	color: var(--color-primary-dark);
+	padding: 0.1em 0.375em;
+	border-radius: 0.25rem;
+}
+
+
+/* ================================================================
+   7. CARD GRID
+   Chapter 5: CSS Grid with repeat(auto-fit, minmax()) so the grid
+              naturally reflows from 1 → n columns as space grows.
+   Chapter 4: minmax(min(100%, X), 1fr) ensures cards never overflow
+              on very narrow screens.
+   ================================================================ */
+
+/*
+ * Chapter 5: auto-fit collapses empty tracks; auto-fill keeps them.
+ * auto-fit is preferred for card grids where we want cards to stretch.
+ * minmax(min(100%, 16rem), 1fr) means each column is at least 16rem
+ * wide but never forces a card outside the grid on mobile.
+ */
+.card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+	gap: var(--space-lg);
+}
+
+.card-grid--flip {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.card-grid--stats {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+}
+
+.card-grid--reveal {
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+
+/* ================================================================
+   8. HOVER EFFECT CARDS (Section 1)
+   Chapter 2: position, overflow: hidden, z-index
+   Chapter 6: :hover, :focus-visible, ::before, transitions,
+              box-shadow, border-radius, backdrop-filter
+   Chapter 10: Only transform + opacity used for motion —
+               properties that avoid layout recalculation.
+   ================================================================ */
+
+.card {
+	background-color: var(--color-surface);
+	border-radius: var(--radius-lg);
+	padding: var(--space-xl);
+	border: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	/*
+	 * Chapter 10: Transition only compositor-friendly properties.
+	 * transform and opacity avoid layout; box-shadow avoids layout
+	 * but does trigger paint — acceptable for small elements.
+	 */
+	transition:
+		transform var(--transition-spring),
+		box-shadow var(--transition-base),
+		border-color var(--transition-base);
+	cursor: pointer;
+	position: relative;
+	overflow: hidden;
+}
+
+/*
+ * Chapter 6: :focus-visible shows the keyboard focus indicator only
+ * when the browser determines keyboard navigation is in use.
+ * Removes the outline for mouse users while keeping it for keyboard users.
+ */
+.card:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+.card__icon {
+	font-size: 1.5rem;
+	width: 3.25rem;
+	height: 3.25rem;
+	border-radius: var(--radius-md);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-bottom: var(--space-lg);
+	flex-shrink: 0;
+}
+
+.card__icon--purple  { background-color: var(--color-primary-light); color: var(--color-primary); }
+.card__icon--cyan    { background-color: var(--color-cyan-light);    color: var(--color-cyan); }
+.card__icon--emerald { background-color: var(--color-emerald-light); color: var(--color-emerald); }
+
+.card__title {
+	font-size: 1.125rem;
+	font-weight: 700;
+	line-height: 1.3;
+	margin-bottom: var(--space-sm);
+}
+
+.card__desc {
+	color: var(--color-text-muted);
+	font-size: 0.9375rem;
+	line-height: 1.65;
+	margin-bottom: var(--space-lg);
+}
+
+.card__desc code {
+	font-family: "Fira Code", "Cascadia Code", ui-monospace, monospace;
+	font-size: 0.875em;
+	background-color: var(--color-primary-light);
+	color: var(--color-primary-dark);
+	padding: 0.1em 0.35em;
+	border-radius: 0.25rem;
+}
+
+.card__tag {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	color: var(--color-primary);
+	background-color: var(--color-primary-light);
+	padding: 0.2em 0.65em;
+	border-radius: var(--radius-full);
+}
+
+/* ----------------------------------------------------------------
+   Card variant: Lift
+   Chapter 6 + 10: translateY and box-shadow change on hover.
+   translateY does not affect document layout; it only moves the
+   composited layer, so surrounding elements do not reflow.
+   ---------------------------------------------------------------- */
+
+.card--lift:hover,
+.card--lift:focus-visible {
+	transform: translateY(-8px);
+	box-shadow: var(--shadow-lift);
+	border-color: transparent;
+}
+
+/* ----------------------------------------------------------------
+   Card variant: Glow
+   Chapter 3: rgba() coloured shadow.
+   Chapter 6: box-shadow transition creates the glow on hover.
+   ---------------------------------------------------------------- */
+
+.card--glow:hover,
+.card--glow:focus-visible {
+	transform: translateY(-4px);
+	box-shadow:
+		0 0 0 1px var(--color-cyan),
+		0 0 32px 4px var(--color-cyan-glow),
+		var(--shadow-md);
+	border-color: var(--color-cyan);
+}
+
+/* ----------------------------------------------------------------
+   Card variant: Slide Reveal
+   Chapter 2: overflow: hidden on .card clips the reveal panel
+              when translateY(100%) pushes it below the bottom edge.
+   Chapter 6: The panel transitions from translateY(100%) to translateY(0).
+   Chapter 10: Only transform animated — no layout recalculation.
+   ---------------------------------------------------------------- */
+
+.card--reveal {
+	padding: 0;
+	min-height: 15rem;
+}
+
+/* Static background visible before the reveal panel slides up */
+.card__cover {
+	position: absolute;
+	inset: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 0;
+}
+
+.card__cover-bg {
+	position: absolute;
+	inset: 0;
+	/*
+	 * Chapter 3: Multi-stop linear-gradient spanning primary → purple → cyan.
+	 */
+	background-image: linear-gradient(135deg, var(--color-primary) 0%, #a855f7 50%, var(--color-cyan) 100%);
+}
+
+.card__cover-label {
+	position: relative;
+	z-index: 1;
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 0.875rem;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+}
+
+/*
+ * Chapter 2: position: absolute + inset: 0 makes the panel fill the card.
+ * It starts transformed below the visible area.
+ */
+.card__reveal-panel {
+	position: absolute;
+	inset: 0;
+	z-index: 1;
+	padding: var(--space-xl);
+	background-color: rgba(15, 5, 40, 0.92);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	gap: var(--space-sm);
+	/*
+	 * Chapter 6: translateY(100%) pushes the panel one full card-height
+	 * below its natural position, hiding it below the overflow boundary.
+	 */
+	transform: translateY(100%);
+	transition: transform var(--transition-slow) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card__title--inverted { color: white; }
+.card__desc--inverted  { color: rgba(255, 255, 255, 0.72); }
+.card__tag--light      { background-color: rgba(255, 255, 255, 0.15); color: white; }
+
+/* Slide the overlay panel into view when the card is hovered or focused */
+.card--reveal:hover .card__reveal-panel,
+.card--reveal:focus-visible .card__reveal-panel {
+	transform: translateY(0);
+}
+
+/* ----------------------------------------------------------------
+   Card variant: Gradient Border Trace
+   Chapter 6: ::before pseudo-element carries a gradient background
+              positioned 2 px outside all edges of the card.
+              Its opacity transitions from 0 to 1 on hover, making
+              the gradient appear as a glowing border.
+   Chapter 10: opacity — compositor-friendly.
+   ---------------------------------------------------------------- */
+
+.card--border-trace {
+	z-index: 0;
+}
+
+/*
+ * Chapter 6: ::before sits behind the card surface (z-index: -1).
+ * inset: -2px makes it 2 px larger on every side.
+ * border-radius: inherit copies the card's rounded corners.
+ */
+.card--border-trace::before {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border-radius: inherit;
+	background-image: linear-gradient(135deg, var(--color-emerald), var(--color-primary), var(--color-cyan));
+	z-index: -1;
+	opacity: 0;
+	transition: opacity var(--transition-base);
+}
+
+.card--border-trace:hover::before,
+.card--border-trace:focus-visible::before {
+	opacity: 1;
+}
+
+.card--border-trace:hover,
+.card--border-trace:focus-visible {
+	transform: translateY(-4px);
+	border-color: transparent;
+	box-shadow: var(--shadow-lg);
+}
+
+
+/* ================================================================
+   9. 3D FLIP CARDS (Section 2)
+   Chapter 2: position: absolute stacks front and back in same slot.
+   Chapter 6: 3D transforms — perspective(), transform-style,
+              rotateY(), backface-visibility; :hover, :focus-visible.
+   Chapter 10: rotateY() animated via transform only —
+               compositor-friendly, no layout recalculation.
+   ================================================================ */
+
+/*
+ * Chapter 6: perspective() on the parent element establishes the 3D
+ * viewing frustum for child elements. 1000px gives moderate depth.
+ */
+.flip-card {
+	perspective: 1000px;
+	height: 22rem;
+	cursor: pointer;
+}
+
+/*
+ * Chapter 6: transform-style: preserve-3d makes children participate
+ * in the parent's 3D space rather than flattening into 2D.
+ * Chapter 10: transition on transform only.
+ */
+.flip-card__inner {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	transform-style: preserve-3d;
+	transition: transform 600ms cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+/* Trigger the flip on hover and on keyboard focus */
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-visible .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner {
+	transform: rotateY(180deg);
+}
+
+.flip-card:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 4px;
+	border-radius: var(--radius-lg);
+}
+
+/*
+ * Chapter 2: Both faces are position: absolute, filling the card.
+ * Chapter 6: backface-visibility: hidden hides each face when it is
+ * rotated away from the viewer (facing the back).
+ */
+.flip-card__front,
+.flip-card__back {
+	position: absolute;
+	inset: 0;
+	border-radius: var(--radius-lg);
+	backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: var(--space-xl);
+	text-align: center;
+	gap: var(--space-sm);
+}
+
+/* --- Front face ------------------------------------------------ */
+.flip-card__front {
+	background-image: linear-gradient(145deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+	color: white;
+	box-shadow: var(--shadow-md);
+}
+
+.flip-card__front--cyan    { background-image: linear-gradient(145deg, var(--color-cyan)    0%, #0891b2 100%); }
+.flip-card__front--emerald { background-image: linear-gradient(145deg, var(--color-emerald) 0%, #059669 100%); }
+
+/* --- Back face ------------------------------------------------- */
+/*
+ * Chapter 6: The back face is pre-rotated 180deg.
+ * When the card flips 180deg, the back now faces the viewer.
+ */
+.flip-card__back {
+	background-color: var(--color-surface);
+	transform: rotateY(180deg);
+	box-shadow: var(--shadow-lg);
+	align-items: flex-start;
+	text-align: left;
+	border: 1px solid var(--color-border);
+}
+
+.flip-card__back--cyan    { border-top: 4px solid var(--color-cyan); }
+.flip-card__back--emerald { border-top: 4px solid var(--color-emerald); }
+
+/* --- Flip card sub-elements ------------------------------------ */
+
+.flip-card__tag {
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	background-color: rgba(255, 255, 255, 0.2);
+	color: white;
+	padding: 0.25rem 0.75rem;
+	border-radius: var(--radius-full);
+}
+
+.flip-card__icon {
+	font-size: 3rem;
+	line-height: 1;
+}
+
+.flip-card__title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: white;
+	line-height: 1.3;
+}
+
+.flip-card__hint {
+	font-size: 0.8125rem;
+	color: rgba(255, 255, 255, 0.55);
+}
+
+.flip-card__back-title {
+	font-size: 1rem;
+	font-weight: 700;
+	color: var(--color-text);
+	margin-bottom: var(--space-md);
+	padding-bottom: var(--space-sm);
+	border-bottom: 2px solid var(--color-primary-light);
+	width: 100%;
+}
+
+.flip-card__list {
+	list-style: none;
+	align-self: stretch;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+	flex: 1;
+}
+
+.flip-card__list li {
+	font-size: 0.9375rem;
+	color: var(--color-text-muted);
+	display: flex;
+	align-items: flex-start;
+	gap: var(--space-sm);
+}
+
+/*
+ * Chapter 6: ::before on each list item adds a checkmark
+ * using generated content. currentColor inherits from the parent.
+ */
+.flip-card__list li::before {
+	content: "✓";
+	font-weight: 700;
+	color: var(--color-primary);
+	flex-shrink: 0;
+	line-height: 1.6;
+}
+
+.flip-card__cta {
+	display: inline-block;
+	margin-top: var(--space-sm);
+	align-self: flex-start;
+	font-size: 0.875rem;
+	font-weight: 700;
+	color: var(--color-primary);
+	text-decoration: none;
+	padding: 0.5rem 1rem;
+	border: 2px solid var(--color-primary);
+	border-radius: var(--radius-full);
+	transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.flip-card__cta:hover {
+	background-color: var(--color-primary);
+	color: white;
+}
+
+.flip-card__cta:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+
+/* ================================================================
+   10. ANIMATED STAT / PROGRESS CARDS (Section 3)
+   Chapter 6: @keyframes card-entrance, animation-delay stagger,
+              animation-fill-mode: both.
+   Chapter 8: --bar-width custom property set inline from HTML;
+              clamp() for the large value display font size.
+   Chapter 10: progress bar uses transform: scaleX() —
+               compositor-friendly, never triggers layout.
+   ================================================================ */
+
+.stat-card {
+	background-color: var(--color-surface);
+	border-radius: var(--radius-lg);
+	padding: var(--space-xl);
+	border: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	/*
+	 * Chapter 6: animation shorthand includes fill-mode as the last keyword.
+	 * "both" applies the from state before the delay expires and keeps
+	 * the to state after the animation ends.
+	 */
+	animation: card-entrance 480ms ease both;
+}
+
+/* Staggered entrance: each card delays its animation by 80ms */
+.stat-card--1 { animation-delay:   0ms; }
+.stat-card--2 { animation-delay:  80ms; }
+.stat-card--3 { animation-delay: 160ms; }
+.stat-card--4 { animation-delay: 240ms; }
+
+.stat-card__header {
+	display: flex;
+	align-items: center;
+	gap: var(--space-md);
+	margin-bottom: var(--space-lg);
+}
+
+.stat-card__icon {
+	width: 3rem;
+	height: 3rem;
+	background-color: var(--color-primary-light);
+	border-radius: var(--radius-md);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	flex-shrink: 0;
+}
+
+.stat-card__title {
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.stat-card__subtitle {
+	font-size: 0.8125rem;
+	color: var(--color-text-subtle);
+	margin-top: 0.125rem;
+}
+
+.stat-card__value {
+	/*
+	 * Chapter 8: clamp() keeps the number readable without wrapping
+	 * on narrow cards or being tiny on wide ones.
+	 */
+	font-size: clamp(2rem, 4vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	color: var(--color-primary);
+	margin-bottom: var(--space-md);
+}
+
+.stat-card__bar-track {
+	height: 0.5rem;
+	background-color: var(--color-primary-light);
+	border-radius: var(--radius-full);
+	overflow: hidden;
+}
+
+/*
+ * Chapter 10: Animating transform: scaleX() instead of width.
+ * scaleX() scales the already-painted bar layer along the X axis.
+ * This stays on the compositor and avoids layout recalculation.
+ *
+ * transform-origin: left center — the bar grows left to right.
+ *
+ * Chapter 8: --bar-width is a CSS custom property set inline in HTML
+ * (e.g. style="--bar-width: 0.78"). The @keyframes animation reads
+ * it as the target scale value in the "to" state.
+ */
+.stat-card__bar {
+	height: 100%;
+	width: 100%;
+	border-radius: var(--radius-full);
+	background-image: linear-gradient(90deg, var(--color-primary) 0%, #a855f7 100%);
+	transform-origin: left center;
+	animation: bar-fill 1000ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Additional delay so the bar fills after the card has appeared */
+.stat-card--1 .stat-card__bar { animation-delay: 200ms; }
+.stat-card--2 .stat-card__bar { animation-delay: 280ms; }
+.stat-card--3 .stat-card__bar { animation-delay: 360ms; }
+.stat-card--4 .stat-card__bar { animation-delay: 440ms; }
+
+.stat-card__bar--cyan    { background-image: linear-gradient(90deg, var(--color-cyan)    0%, #0891b2 100%); }
+.stat-card__bar--emerald { background-image: linear-gradient(90deg, var(--color-emerald) 0%, #059669 100%); }
+.stat-card__bar--amber   { background-image: linear-gradient(90deg, var(--color-amber)   0%, #d97706 100%); }
+
+
+/* ================================================================
+   11. SCROLL-DRIVEN REVEAL CARDS (Section 4)
+   Chapter 10: animation-timeline: view() — the card's own entrance
+               into the viewport drives the animation progress.
+               animation-range: entry 0% entry 40% — the animation
+               completes in the first 40% of the entry range.
+               Wrapped in @supports for progressive enhancement.
+   Chapter 6:  @keyframes card-reveal; ::before for accent stripe.
+   Chapter 9:  BEM naming (.reveal-card, .reveal-card__accent).
+   ================================================================ */
+
+.reveal-card {
+	background-color: var(--color-surface);
+	border-radius: var(--radius-lg);
+	padding: var(--space-xl);
+	border: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	position: relative;
+	overflow: hidden;
+	transition: transform var(--transition-spring), box-shadow var(--transition-base);
+}
+
+.reveal-card:hover {
+	transform: translateY(-4px);
+	box-shadow: var(--shadow-lg);
+}
+
+.reveal-card:focus-visible {
+	outline: 3px solid var(--color-primary);
+	outline-offset: 3px;
+}
+
+/*
+ * Chapter 10: @supports feature query ensures scroll-driven animations
+ * are applied only in browsers that support the API (Chrome 115+).
+ * Browsers without support fall through to the JS fallback below.
+ */
+@supports (animation-timeline: view()) {
+	.reveal-card {
+		animation: card-reveal linear both;
+		animation-timeline: view();
+		/*
+		 * entry 0% — animation starts when the card's top edge enters
+		 * the bottom of the viewport.
+		 * entry 40% — animation is complete when 40% of the card
+		 * has entered the viewport.
+		 */
+		animation-range: entry 0% entry 40%;
+	}
+}
+
+/*
+ * Fallback for browsers without scroll-driven animation support.
+ * JavaScript (script.js) adds .is-visible when IntersectionObserver
+ * detects the card entering the viewport.
+ * Chapter 8: transition-delay uses calc() with --stagger custom property.
+ */
+@supports not (animation-timeline: view()) {
+	.reveal-card {
+		opacity: 0;
+		transform: translateY(2rem);
+		transition:
+			opacity 520ms ease,
+			transform 520ms ease;
+	}
+
+	.reveal-card.is-visible {
+		opacity: 1;
+		transform: translateY(0);
+		/*
+		 * Chapter 8: calc() with a unitless CSS custom property and a
+		 * time value produces a valid staggered delay per card.
+		 * --stagger: 0, 1, 2 … set inline in HTML.
+		 */
+		transition-delay: calc(var(--stagger, 0) * 80ms);
+	}
+}
+
+/* ----------------------------------------------------------------
+   Reveal card sub-elements
+   Chapter 6: ::before for the coloured left-edge accent stripe.
+   ---------------------------------------------------------------- */
+
+/*
+ * Chapter 6: A 4 px wide ::before strip is positioned flush to the
+ * left edge. Different gradient colours distinguish each chapter card.
+ */
+.reveal-card__accent {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 4px;
+	height: 100%;
+	border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+}
+
+.reveal-card__accent--1 { background-image: linear-gradient(180deg, var(--color-primary) 0%,  #a855f7 100%); }
+.reveal-card__accent--2 { background-image: linear-gradient(180deg, var(--color-cyan)    0%,  #0891b2 100%); }
+.reveal-card__accent--3 { background-image: linear-gradient(180deg, var(--color-emerald) 0%,  #059669 100%); }
+.reveal-card__accent--4 { background-image: linear-gradient(180deg, var(--color-amber)   0%,  #d97706 100%); }
+.reveal-card__accent--5 { background-image: linear-gradient(180deg, #f43f5e 0%,           #e11d48 100%); }
+.reveal-card__accent--6 { background-image: linear-gradient(180deg, #8b5cf6 0%, var(--color-primary-dark) 100%); }
+
+.reveal-card__chapter {
+	display: inline-block;
+	font-size: 0.75rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-primary);
+	margin-bottom: var(--space-sm);
+}
+
+.reveal-card__title {
+	font-size: 1.0625rem;
+	font-weight: 700;
+	line-height: 1.3;
+	margin-bottom: var(--space-sm);
+}
+
+.reveal-card__desc {
+	font-size: 0.9rem;
+	color: var(--color-text-muted);
+	line-height: 1.65;
+}
+
+
+/* ================================================================
+   12. SKELETON LOADING CARDS (Section 5)
+   Chapter 2: border-radius for rounded placeholder shapes.
+   Chapter 6: @keyframes shimmer animation looping forever.
+   Chapter 10: background-position animation — avoids layout,
+               acceptable trade-off for this established UX pattern.
+   ================================================================ */
+
+.skeleton-card {
+	background-color: var(--color-surface);
+	border-radius: var(--radius-lg);
+	padding: var(--space-xl);
+	border: 1px solid var(--color-border);
+	box-shadow: var(--shadow-sm);
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-lg);
+}
+
+/*
+ * Chapter 6 + 10: The shimmer moves a wide gradient left-to-right
+ * by animating background-position. background-size: 200% 100%
+ * makes the gradient twice the element width so the sweep is visible.
+ *
+ * Chapter 3: linear-gradient with two shades of violet creates a
+ * subtle branded skeleton instead of a generic grey.
+ */
+.skeleton {
+	background-image: linear-gradient(
+		90deg,
+		var(--color-primary-light) 25%,
+		#e9d5ff 50%,
+		var(--color-primary-light) 75%
+	);
+	background-size: 200% 100%;
+	border-radius: var(--radius-sm);
+	animation: shimmer 1.6s ease-in-out infinite;
+}
+
+.skeleton--avatar {
+	width: 3.5rem;
+	height: 3.5rem;
+	border-radius: 50%;
+	flex-shrink: 0;
+	align-self: flex-start;
+}
+
+.skeleton-card__body {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-sm);
+}
+
+.skeleton--title      { height: 1.125rem; width: 55%; }
+.skeleton--text       { height: 0.875rem; width: 100%; }
+.skeleton--text-short { width: 70%; }
+.skeleton--tag        { height: 1.25rem; width: 3.75rem; border-radius: var(--radius-full); margin-top: var(--space-sm); }
+
+
+/* ================================================================
+   13. @KEYFRAMES
+   Chapter 6: All @keyframes definitions.
+   Chapter 10: card-entrance and card-reveal use only transform +
+               opacity — compositor-friendly in most browsers.
+   ================================================================ */
+
+/*
+ * Chapter 6 + 10: Card entrance — fades and translates up.
+ * Used for stat cards on page load (with staggered animation-delay).
+ */
+@keyframes card-entrance {
+	from {
+		opacity: 0;
+		transform: translateY(1.5rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/*
+ * Chapter 10: Progress bar fill animation.
+ * scaleX() from 0 to --bar-width applies a transform
+ * to the already-painted bar layer — no layout recalculation.
+ */
+@keyframes bar-fill {
+	from {
+		transform: scaleX(0);
+	}
+	to {
+		transform: scaleX(var(--bar-width, 1));
+	}
+}
+
+/*
+ * Chapter 10: Scroll-driven reveal keyframes.
+ * Used with animation-timeline: view() in @supports block above.
+ */
+@keyframes card-reveal {
+	from {
+		opacity: 0;
+		transform: translateY(2rem);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+/*
+ * Chapter 6: Skeleton shimmer — shifts the gradient background
+ * from right (+200%) to left (-200%) creating a sweep effect.
+ */
+@keyframes shimmer {
+	from { background-position:  200% 0; }
+	to   { background-position: -200% 0; }
+}
+
+/*
+ * Chapter 6: Badge dot pulse — gently scales the dot down and
+ * fades it to signal an active/live state.
+ */
+@keyframes pulse {
+	0%, 100% { opacity: 1;   transform: scale(1);    }
+	50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+
+/* ================================================================
+   14. ACCESSIBILITY — PREFERS-REDUCED-MOTION
+   Chapter 10: Users can set "Reduce Motion" in OS accessibility
+               settings. This media query respects that preference
+               by making all transitions and animations instant.
+   ================================================================ */
+
+/*
+ * Chapter 10: Setting animation-duration and transition-duration to
+ * 0.01ms instead of 0 ensures animated states still apply (opacity,
+ * transform end values are reached) but changes happen instantly.
+ * !important overrides inline styles and shorthand declarations.
+ */
+@media (prefers-reduced-motion: reduce) {
+	*,
+	*::before,
+	*::after {
+		animation-duration:        0.01ms !important;
+		animation-iteration-count: 1      !important;
+		transition-duration:       0.01ms !important;
+	}
+
+	.flip-card__inner {
+		transition: none;
+	}
+
+	html {
+		scroll-behavior: auto;
+	}
+}
+
+
+/* ================================================================
+   15. RESPONSIVE ADJUSTMENTS
+   Chapter 4: Explicit breakpoints where the auto-fit grid alone
+              is not enough — e.g. forcing flip cards to one column
+              on narrow screens where a tall card is easier to use.
+   ================================================================ */
+
+/*
+ * Chapter 4: At 640px and below, stack flip cards to a single column.
+ * auto-fit already handles most responsive behaviour, but flip cards
+ * benefit from a lower height on very small screens.
+ */
+@media (max-width: 640px) {
+	.card-grid--flip {
+		grid-template-columns: 1fr;
+	}
+
+	.flip-card {
+		height: 20rem;
+	}
+}
+
+
+/* ================================================================
+   16. PAGE FOOTER
+   Chapter 5: Centred text using text-align (simpler than flex here,
+              since there is only one line of content).
+   Chapter 3: Muted colour for secondary chrome.
+   ================================================================ */
+
+.page-footer {
+	padding-block: var(--space-xl);
+	text-align: center;
+	border-top: 1px solid var(--color-border);
+	margin-top: var(--space-2xl);
+}
+
+.page-footer p {
+	font-size: 0.875rem;
+	color: var(--color-text-subtle);
+}

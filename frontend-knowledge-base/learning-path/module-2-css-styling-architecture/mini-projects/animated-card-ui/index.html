@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+	<!--
+		Chapter 4: Viewport meta tag — tells the mobile browser to use the
+		actual device width instead of simulating a wide desktop viewport.
+	-->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Animated Card UI — a CSS animation showcase from Module 2: CSS & Styling Architecture.">
+	<title>Animated Card UI – Module 2 Mini-Project</title>
+
+	<!--
+		Chapter 7: Loading a web font via Google Fonts CDN.
+		The preconnect hints let the browser open socket connections early,
+		reducing latency before the font file is requested.
+	-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+	<!--
+		Accessibility: skip link lets keyboard users jump past the navigation
+		and repeated page header directly to the main content area.
+	-->
+	<a class="skip-link" href="#main-content">Skip to main content</a>
+
+	<!-- ================================================================
+	     PAGE HEADER
+	     Chapter 3: text gradient, radial-gradient background decoration
+	     Chapter 6: ::before pseudo-element for decorative circle, CSS
+	                 custom properties, pulse animation on badge dot
+	     Chapter 8: clamp() for fluid heading and subtitle font sizes
+	     ================================================================ -->
+	<header class="page-header">
+		<div class="container">
+			<span class="badge">Module 2 · CSS &amp; Styling Architecture</span>
+
+			<h1 class="page-header__title">
+				Animated <span class="text-gradient">Card UI</span>
+			</h1>
+
+			<p class="page-header__subtitle">
+				A showcase of every animation and styling technique from the module —
+				from basic hover transitions to scroll-driven reveal effects.
+			</p>
+		</div>
+	</header>
+
+	<main id="main-content">
+
+		<!-- ================================================================
+		     SECTION 1 — HOVER INTERACTIONS
+		     Chapter 2: position, overflow: hidden, z-index
+		     Chapter 6: :hover, :focus-visible, ::before for decorative
+		                 border; transitions with cubic-bezier timing
+		     Chapter 10: only transform + opacity animated on hover —
+		                  compositor-friendly, no layout recalculation
+		     ================================================================ -->
+		<section class="section" aria-labelledby="heading-hover">
+			<div class="container">
+
+				<div class="section__header">
+					<span class="section__label">Chapter 6 + 10</span>
+					<h2 class="section__title" id="heading-hover">Hover Interactions</h2>
+					<p class="section__desc">
+						Each card uses only compositor-friendly <code>transform</code> and
+						<code>opacity</code> properties so hover interactions run without
+						triggering layout recalculation.
+					</p>
+				</div>
+
+				<div class="card-grid">
+
+					<!--
+						Lift Card: translateY(-8px) + deeper box-shadow on hover.
+						The shadow transitions from a neutral value to a coloured lift shadow.
+						Box-shadow does not trigger layout, making this relatively inexpensive.
+					-->
+					<article class="card card--lift" tabindex="0">
+						<div class="card__icon card__icon--purple" aria-hidden="true">↑</div>
+						<h3 class="card__title">Lift on Hover</h3>
+						<p class="card__desc">
+							<code>transform: translateY(-8px)</code> combined with an
+							enhanced <code>box-shadow</code> creates a clean lift effect
+							without touching layout properties.
+						</p>
+						<span class="card__tag">Ch. 6 + 10</span>
+					</article>
+
+					<!--
+						Glow Card: a coloured spread shadow fades in on hover.
+						Chapter 3: rgba() for the translucent glow colour.
+						Chapter 6: box-shadow transition.
+					-->
+					<article class="card card--glow" tabindex="0">
+						<div class="card__icon card__icon--cyan" aria-hidden="true">✦</div>
+						<h3 class="card__title">Glow on Hover</h3>
+						<p class="card__desc">
+							A large spread <code>box-shadow</code> using <code>rgba()</code>
+							colour fades in on hover, creating a soft ambient glow without
+							animating any painted pixel individually.
+						</p>
+						<span class="card__tag">Ch. 3 + 6</span>
+					</article>
+
+					<!--
+						Slide Reveal Card: an overlay panel is hidden below the card
+						with translateY(100%) and slides up on hover.
+						Chapter 2: position absolute, overflow hidden clips the panel.
+						Chapter 6: transition with a custom cubic-bezier ease-out curve.
+						Chapter 10: translateY only — no layout properties animated.
+					-->
+					<article class="card card--reveal" tabindex="0"
+						aria-label="Slide reveal card — hover or focus to reveal details">
+						<div class="card__cover" aria-hidden="true">
+							<div class="card__cover-bg"></div>
+							<span class="card__cover-label">Hover to reveal</span>
+						</div>
+						<div class="card__reveal-panel">
+							<h3 class="card__title card__title--inverted">Slide Reveal</h3>
+							<p class="card__desc card__desc--inverted">
+								The overlay starts at <code>translateY(100%)</code> and
+								transitions to <code>translateY(0)</code>. Pure CSS — no
+								JavaScript; <code>overflow: hidden</code> clips the panel.
+							</p>
+							<span class="card__tag card__tag--light">Ch. 2 + 6</span>
+						</div>
+					</article>
+
+					<!--
+						Border Trace Card: a ::before pseudo-element with a gradient
+						background sits just behind the card. It fades in on hover,
+						creating an animated glowing border effect.
+						Chapter 6: ::before, opacity transition.
+					-->
+					<article class="card card--border-trace" tabindex="0">
+						<div class="card__icon card__icon--emerald" aria-hidden="true">◈</div>
+						<h3 class="card__title">Gradient Border</h3>
+						<p class="card__desc">
+							A <code>::before</code> pseudo-element carries a gradient
+							background positioned just outside the card. Its
+							<code>opacity</code> transitions from 0 to 1 on hover.
+						</p>
+						<span class="card__tag">Ch. 6 (::before)</span>
+					</article>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     SECTION 2 — 3D FLIP CARDS
+		     Chapter 2: position: absolute to stack front/back in same slot
+		     Chapter 6: 3D transforms, backface-visibility, @keyframes
+		     Chapter 10: rotateY only — compositor-friendly, no layout
+		     ================================================================ -->
+		<section class="section section--alt" aria-labelledby="heading-flip">
+			<div class="container">
+
+				<div class="section__header">
+					<span class="section__label">Chapter 6 + 10</span>
+					<h2 class="section__title" id="heading-flip">3D Flip Cards</h2>
+					<p class="section__desc">
+						CSS 3D transforms — <code>perspective</code>,
+						<code>transform-style: preserve-3d</code>, <code>rotateY()</code>,
+						and <code>backface-visibility: hidden</code> — create a card flip
+						without any JavaScript.
+					</p>
+				</div>
+
+				<div class="card-grid card-grid--flip">
+
+					<!--
+						Flip card: Chapter 1 — CSS Selectors.
+						tabindex="0" and role="button" make the div keyboard-focusable.
+						JavaScript in script.js adds .is-flipped on Enter/Space.
+					-->
+					<div class="flip-card" tabindex="0" role="button"
+						aria-label="Chapter 1: CSS Selectors — hover or press Enter to flip">
+						<div class="flip-card__inner">
+							<div class="flip-card__front">
+								<span class="flip-card__tag">Chapter 1</span>
+								<div class="flip-card__icon" aria-hidden="true">⌯</div>
+								<h3 class="flip-card__title">CSS Selectors</h3>
+								<p class="flip-card__hint">Hover · or press Enter</p>
+							</div>
+							<div class="flip-card__back" aria-hidden="true">
+								<h3 class="flip-card__back-title">What you'll master</h3>
+								<ul class="flip-card__list">
+									<li>Combinators &amp; specificity</li>
+									<li>:nth-child, :is(), :not()</li>
+									<li>Attribute selectors</li>
+									<li>Pseudo-elements ::before/::after</li>
+								</ul>
+								<span class="flip-card__cta">Explore →</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Flip card: Chapter 5 — Flexbox & Grid -->
+					<div class="flip-card" tabindex="0" role="button"
+						aria-label="Chapter 5: Flexbox and Grid — hover or press Enter to flip">
+						<div class="flip-card__inner">
+							<div class="flip-card__front flip-card__front--cyan">
+								<span class="flip-card__tag">Chapter 5</span>
+								<div class="flip-card__icon" aria-hidden="true">⊞</div>
+								<h3 class="flip-card__title">Flexbox &amp; Grid</h3>
+								<p class="flip-card__hint">Hover · or press Enter</p>
+							</div>
+							<div class="flip-card__back flip-card__back--cyan" aria-hidden="true">
+								<h3 class="flip-card__back-title">Layout tools</h3>
+								<ul class="flip-card__list">
+									<li>flex-grow, shrink, basis</li>
+									<li>grid-template-areas</li>
+									<li>fr units &amp; auto-fit</li>
+									<li>gap, align, justify</li>
+								</ul>
+								<span class="flip-card__cta">Explore →</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Flip card: Chapter 6 — Advanced Styling -->
+					<div class="flip-card" tabindex="0" role="button"
+						aria-label="Chapter 6: Advanced Styling — hover or press Enter to flip">
+						<div class="flip-card__inner">
+							<div class="flip-card__front flip-card__front--emerald">
+								<span class="flip-card__tag">Chapter 6</span>
+								<div class="flip-card__icon" aria-hidden="true">✦</div>
+								<h3 class="flip-card__title">Advanced Styling</h3>
+								<p class="flip-card__hint">Hover · or press Enter</p>
+							</div>
+							<div class="flip-card__back flip-card__back--emerald" aria-hidden="true">
+								<h3 class="flip-card__back-title">Key techniques</h3>
+								<ul class="flip-card__list">
+									<li>Transitions &amp; @keyframes</li>
+									<li>CSS custom properties</li>
+									<li>box-shadow, filter</li>
+									<li>Pseudo-elements &amp; states</li>
+								</ul>
+								<span class="flip-card__cta">Explore →</span>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     SECTION 3 — ANIMATED PROGRESS CARDS
+		     Chapter 6: @keyframes animation, animation-delay, fill-mode
+		     Chapter 8: clamp() for the value display, CSS custom property
+		                 --bar-width passed inline from HTML
+		     Chapter 10: progress bar uses transform: scaleX() only —
+		                  compositor-friendly, no layout recalculation
+		     ================================================================ -->
+		<section class="section" aria-labelledby="heading-stats">
+			<div class="container">
+
+				<div class="section__header">
+					<span class="section__label">Chapter 6 + 8 + 10</span>
+					<h2 class="section__title" id="heading-stats">Animated Progress Cards</h2>
+					<p class="section__desc">
+						Progress bars animate using <code>transform: scaleX()</code>
+						with <code>transform-origin: left</code> — no layout properties.
+						Each card entrance uses a staggered <code>animation-delay</code>.
+						The bar width is passed as <code>--bar-width</code> via inline style.
+					</p>
+				</div>
+
+				<div class="card-grid card-grid--stats">
+
+					<!--
+						Each stat card uses:
+						- animation-delay on the card for entrance stagger (Ch. 6)
+						- a further delay on the bar so it fills after the card appears (Ch. 6)
+						- --bar-width as an inline custom property (Ch. 8)
+						- role="progressbar" with ARIA attributes for accessibility
+					-->
+					<article class="stat-card stat-card--1">
+						<div class="stat-card__header">
+							<span class="stat-card__icon" aria-hidden="true">🎨</span>
+							<div>
+								<h3 class="stat-card__title">CSS Mastery</h3>
+								<p class="stat-card__subtitle">Module 2 completion</p>
+							</div>
+						</div>
+						<div class="stat-card__value" aria-label="78 percent">78%</div>
+						<div class="stat-card__bar-track"
+							role="progressbar"
+							aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"
+							aria-label="CSS Mastery progress: 78%">
+							<div class="stat-card__bar" style="--bar-width: 0.78"></div>
+						</div>
+					</article>
+
+					<article class="stat-card stat-card--2">
+						<div class="stat-card__header">
+							<span class="stat-card__icon" aria-hidden="true">⚡</span>
+							<div>
+								<h3 class="stat-card__title">Performance</h3>
+								<p class="stat-card__subtitle">Animation score</p>
+							</div>
+						</div>
+						<div class="stat-card__value" aria-label="92 percent">92%</div>
+						<div class="stat-card__bar-track"
+							role="progressbar"
+							aria-valuenow="92" aria-valuemin="0" aria-valuemax="100"
+							aria-label="Performance score: 92%">
+							<div class="stat-card__bar stat-card__bar--cyan" style="--bar-width: 0.92"></div>
+						</div>
+					</article>
+
+					<article class="stat-card stat-card--3">
+						<div class="stat-card__header">
+							<span class="stat-card__icon" aria-hidden="true">📐</span>
+							<div>
+								<h3 class="stat-card__title">Layout Skills</h3>
+								<p class="stat-card__subtitle">Flexbox &amp; Grid</p>
+							</div>
+						</div>
+						<div class="stat-card__value" aria-label="65 percent">65%</div>
+						<div class="stat-card__bar-track"
+							role="progressbar"
+							aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"
+							aria-label="Layout skills progress: 65%">
+							<div class="stat-card__bar stat-card__bar--emerald" style="--bar-width: 0.65"></div>
+						</div>
+					</article>
+
+					<article class="stat-card stat-card--4">
+						<div class="stat-card__header">
+							<span class="stat-card__icon" aria-hidden="true">📱</span>
+							<div>
+								<h3 class="stat-card__title">Responsive Design</h3>
+								<p class="stat-card__subtitle">Chapter 4</p>
+							</div>
+						</div>
+						<div class="stat-card__value" aria-label="84 percent">84%</div>
+						<div class="stat-card__bar-track"
+							role="progressbar"
+							aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"
+							aria-label="Responsive design progress: 84%">
+							<div class="stat-card__bar stat-card__bar--amber" style="--bar-width: 0.84"></div>
+						</div>
+					</article>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     SECTION 4 — SCROLL-DRIVEN REVEAL
+		     Chapter 10: animation-timeline: view() with animation-range;
+		                  wrapped in @supports for progressive enhancement.
+		                  IntersectionObserver fallback in script.js.
+		     Chapter 6:  @keyframes card-reveal, ::before accent strip
+		     Chapter 9:  BEM naming (.reveal-card, .reveal-card__accent)
+		     Chapter 8:  --stagger custom property for JS fallback timing
+		     ================================================================ -->
+		<section class="section section--alt" aria-labelledby="heading-scroll">
+			<div class="container">
+
+				<div class="section__header">
+					<span class="section__label">Chapter 10</span>
+					<h2 class="section__title" id="heading-scroll">Scroll-Driven Reveal</h2>
+					<p class="section__desc">
+						Cards animate as they enter the viewport using the modern
+						<code>animation-timeline: view()</code> CSS API.
+						A <code>@supports</code> guard keeps it opt-in, and
+						<code>IntersectionObserver</code> in <code>script.js</code>
+						provides a fallback for older browsers.
+					</p>
+				</div>
+
+				<!--
+					--stagger is used by the IntersectionObserver fallback in script.js
+					to calculate a setTimeout delay per card (stagger × 80ms).
+				-->
+				<div class="card-grid card-grid--reveal">
+
+					<article class="reveal-card" style="--stagger: 0">
+						<div class="reveal-card__accent reveal-card__accent--1" aria-hidden="true"></div>
+						<span class="reveal-card__chapter">Ch. 1</span>
+						<h3 class="reveal-card__title">CSS Syntax &amp; Selectors</h3>
+						<p class="reveal-card__desc">
+							Selectors, specificity, combinators, pseudo-classes, pseudo-elements.
+						</p>
+					</article>
+
+					<article class="reveal-card" style="--stagger: 1">
+						<div class="reveal-card__accent reveal-card__accent--2" aria-hidden="true"></div>
+						<span class="reveal-card__chapter">Ch. 2</span>
+						<h3 class="reveal-card__title">Box Model &amp; Layout</h3>
+						<p class="reveal-card__desc">
+							Content, padding, border, margin, position, overflow, z-index.
+						</p>
+					</article>
+
+					<article class="reveal-card" style="--stagger: 2">
+						<div class="reveal-card__accent reveal-card__accent--3" aria-hidden="true"></div>
+						<span class="reveal-card__chapter">Ch. 3</span>
+						<h3 class="reveal-card__title">Typography &amp; Colors</h3>
+						<p class="reveal-card__desc">
+							Fonts, web typography, hex/rgb/hsl, gradients, backgrounds.
+						</p>
+					</article>
+
+					<article class="reveal-card" style="--stagger: 3">
+						<div class="reveal-card__accent reveal-card__accent--4" aria-hidden="true"></div>
+						<span class="reveal-card__chapter">Ch. 4</span>
+						<h3 class="reveal-card__title">Responsive Design</h3>
+						<p class="reveal-card__desc">
+							Media queries, mobile-first, viewport meta, fluid type.
+						</p>
+					</article>
+
+					<article class="reveal-card" style="--stagger: 4">
+						<div class="reveal-card__accent reveal-card__accent--5" aria-hidden="true"></div>
+						<span class="reveal-card__chapter">Ch. 5</span>
+						<h3 class="reveal-card__title">Flexbox &amp; Grid</h3>
+						<p class="reveal-card__desc">
+							Container layouts, fr units, auto-fit, gap, alignment axes.
+						</p>
+					</article>
+
+					<article class="reveal-card" style="--stagger: 5">
+						<div class="reveal-card__accent reveal-card__accent--6" aria-hidden="true"></div>
+						<span class="reveal-card__chapter">Ch. 6–10</span>
+						<h3 class="reveal-card__title">Advanced Styling</h3>
+						<p class="reveal-card__desc">
+							Transitions, keyframes, custom properties, BEM, FLIP, scroll-driven.
+						</p>
+					</article>
+
+				</div>
+			</div>
+		</section>
+
+		<!-- ================================================================
+		     SECTION 5 — SKELETON LOADING
+		     Chapter 2: border-radius for rounded placeholder shapes
+		     Chapter 6: @keyframes shimmer looping animation
+		     Chapter 10: background-position animation — avoids layout
+		     ================================================================ -->
+		<section class="section" aria-labelledby="heading-skeleton">
+			<div class="container">
+
+				<div class="section__header">
+					<span class="section__label">Chapter 6 + 10</span>
+					<h2 class="section__title" id="heading-skeleton">Skeleton Loading</h2>
+					<p class="section__desc">
+						Skeleton screens use a looping <code>@keyframes shimmer</code>
+						that animates <code>background-position</code> across a wide gradient.
+						This is a common real-world loading-state pattern used in dashboards
+						and feeds.
+					</p>
+				</div>
+
+				<div class="card-grid">
+
+					<!--
+						aria-busy="true" communicates to assistive tech that content
+						is still loading. aria-label describes the placeholder purpose.
+					-->
+					<div class="skeleton-card" aria-label="Loading card content" aria-busy="true">
+						<div class="skeleton skeleton--avatar"></div>
+						<div class="skeleton-card__body">
+							<div class="skeleton skeleton--title"></div>
+							<div class="skeleton skeleton--text"></div>
+							<div class="skeleton skeleton--text skeleton--text-short"></div>
+							<div class="skeleton skeleton--tag"></div>
+						</div>
+					</div>
+
+					<div class="skeleton-card" aria-label="Loading card content" aria-busy="true">
+						<div class="skeleton skeleton--avatar"></div>
+						<div class="skeleton-card__body">
+							<div class="skeleton skeleton--title"></div>
+							<div class="skeleton skeleton--text"></div>
+							<div class="skeleton skeleton--text skeleton--text-short"></div>
+							<div class="skeleton skeleton--tag"></div>
+						</div>
+					</div>
+
+					<div class="skeleton-card" aria-label="Loading card content" aria-busy="true">
+						<div class="skeleton skeleton--avatar"></div>
+						<div class="skeleton-card__body">
+							<div class="skeleton skeleton--title"></div>
+							<div class="skeleton skeleton--text"></div>
+							<div class="skeleton skeleton--text skeleton--text-short"></div>
+							<div class="skeleton skeleton--tag"></div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+
+	</main>
+
+	<!-- ================================================================
+	     PAGE FOOTER
+	     Chapter 5: text centered with flexbox
+	     ================================================================ -->
+	<footer class="page-footer">
+		<div class="container">
+			<p>Module 2: CSS &amp; Styling Architecture · Mini-Project: Animated Card UI</p>
+		</div>
+	</footer>
+
+	<!--
+		script.js provides two progressive enhancements:
+		1. IntersectionObserver fallback for scroll-driven reveal cards
+		   in browsers that do not support animation-timeline: view().
+		2. Keyboard support (Enter/Space) for flip cards.
+	-->
+	<script src="script.js"></script>
+
+</body>
+</html>
