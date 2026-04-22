@@ -6,7 +6,7 @@ topics.
 I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
 "frontend-knowledge-base\learning-path\module-1-html-web-standards\chapter-8-web-apis-modern-capabilities\theory.md"
 document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
-Plese use 
+Please use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
 Then add relevant examples to the topics into 
@@ -48,7 +48,7 @@ document that contains an overview and learning objectives of module chapters an
 and store it in 
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-1-html-web-standards\README.md"
 file.
-Plese use 
+Please use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "README.md" document ("Example README.md (Module)" part of the document).
 
@@ -62,7 +62,7 @@ topics.
 I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\chapter-10-animation-visual-performance\theory.md"
 document. If you think that is necessary to add extra information or details regarding the topics in order fully cover the chapter, please add them.
-Plese use 
+Please use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
 Then add relevant examples to the topics into 
@@ -86,3 +86,26 @@ and store it in
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\mini-projects\complete-design-system-implementation-using-storybook"
 folder.
 This miniproject should be based on knowledge from module only.
+
+
+
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find all chapters from the module
+"Module 2: CSS & Styling Architecture"
+then find all
+"theory.md" and "examples"
+from
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture"
+folder and subfolders.
+Based on this information create
+"README.md"
+document that contains an overview and learning objectives of module chapters and topics
+and store it in 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-2-css-styling-architecture\README.md"
+file.
+Please use 
+"frontend-learning-path\docs\repository-structure.md" 
+document structure for the "README.md" document ("Example README.md (Module)" part of the document).
+
+--------------------------------------------------
