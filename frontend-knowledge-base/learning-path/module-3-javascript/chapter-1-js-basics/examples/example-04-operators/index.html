@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 04 – Operators</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 780px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      button {
+        padding: 10px 20px;
+        margin: 6px 4px;
+        font-size: 0.92rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      #output {
+        margin-top: 20px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.92rem;
+        min-height: 120px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Example 04 – Operators</h1>
+    <p>Open <strong>DevTools Console</strong> (F12) alongside the on-page output.</p>
+
+    <button onclick="demoArithmetic()">Arithmetic</button>
+    <button onclick="demoAssignment()">Assignment</button>
+    <button onclick="demoComparison()">Comparison</button>
+    <button onclick="demoLogical()">Logical</button>
+    <button onclick="demoTernary()">Ternary</button>
+    <button onclick="demoOther()">Other Operators</button>
+    <button onclick="demoPrecedence()">Precedence</button>
+
+    <div id="output">Output will appear here…</div>
+
+    <script src="operators.js" defer></script>
+  </body>
+</html>

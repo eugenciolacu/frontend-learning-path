@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 01 – What is JavaScript?</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 700px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      button {
+        padding: 10px 20px;
+        margin: 6px 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      #output {
+        margin-top: 20px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.95rem;
+        min-height: 80px;
+        white-space: pre-wrap;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Example 01 – What is JavaScript?</h1>
+    <p>
+      This page demonstrates JavaScript running inside a browser. Open the
+      <strong>DevTools Console</strong> (F12 → Console) to see all output, or
+      click the buttons below to interact with the page.
+    </p>
+
+    <button onclick="showAlert()">Show Alert</button>
+    <button onclick="modifyDOM()">Modify the DOM</button>
+    <button onclick="runConsoleExamples()">Log to Console</button>
+    <button onclick="showEnvironmentInfo()">Environment Info</button>
+
+    <div id="output">Output will appear here…</div>
+
+    <!--
+      External script — the preferred way to include JavaScript.
+      'defer' ensures the script runs after the HTML is fully parsed.
+    -->
+    <script src="script.js" defer></script>
+  </body>
+</html>
