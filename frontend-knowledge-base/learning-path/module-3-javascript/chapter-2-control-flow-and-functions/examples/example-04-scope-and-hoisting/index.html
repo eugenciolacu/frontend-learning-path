@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 04 – Scope &amp; Hoisting</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      h2 { color: #1d4ed8; margin-top: 2rem; font-size: 1.1rem; }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+      button {
+        padding: 9px 18px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      #output {
+        margin-top: 24px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        min-height: 120px;
+        white-space: pre-wrap;
+      }
+      .warn { color: #facc15; }
+      .clear-btn { background: #6b7280; }
+      .clear-btn:hover { background: #4b5563; }
+    </style>
+  </head>
+  <body>
+    <h1>Example 04 – Scope &amp; Hoisting</h1>
+    <p>Explore global, function, and block scope, the scope chain, lexical scope, and how hoisting works for <code>var</code>, <code>let</code>, <code>const</code>, and function declarations.</p>
+
+    <h2>1. Global vs Function vs Block Scope</h2>
+    <div class="controls">
+      <button onclick="demoScope()">Run scope demo</button>
+    </div>
+
+    <h2>2. Scope Chain</h2>
+    <div class="controls">
+      <button onclick="demoScopeChain()">Run scope chain</button>
+    </div>
+
+    <h2>3. Lexical Scope</h2>
+    <div class="controls">
+      <button onclick="demoLexical()">Run lexical scope</button>
+    </div>
+
+    <h2>4. Hoisting — Function Declarations</h2>
+    <div class="controls">
+      <button onclick="demoFunctionHoisting()">Run hoisting demo</button>
+    </div>
+
+    <h2>5. Hoisting — var vs let / const</h2>
+    <div class="controls">
+      <button onclick="demoVarHoisting()">Run var hoisting</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="runAll()">▶ Run All Examples</button>
+      <button class="clear-btn" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div id="output">// Output will appear here…</div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

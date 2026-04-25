@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 01 – Conditionals</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      h2 { color: #1d4ed8; margin-top: 2rem; font-size: 1.1rem; }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+      button {
+        padding: 9px 18px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      input[type="number"], input[type="text"], select {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 160px;
+      }
+      #output {
+        margin-top: 24px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        min-height: 100px;
+        white-space: pre-wrap;
+      }
+      .clear-btn { background: #6b7280; }
+      .clear-btn:hover { background: #4b5563; }
+    </style>
+  </head>
+  <body>
+    <h1>Example 01 – Conditionals</h1>
+    <p>Interactive demos for <code>if / else if / else</code>, <code>switch</code>, the ternary operator, and short-circuit evaluation.</p>
+
+    <!-- Section 1: Temperature checker -->
+    <h2>1. if / else if / else — Temperature Checker</h2>
+    <div class="controls">
+      <input type="number" id="temp" value="22" min="-30" max="50" />
+      <button onclick="checkTemperature()">Check Temperature</button>
+    </div>
+
+    <!-- Section 2: Ternary operator -->
+    <h2>2. Ternary Operator — Age Check</h2>
+    <div class="controls">
+      <input type="number" id="age" value="20" min="0" max="120" />
+      <button onclick="checkAge()">Check Status</button>
+    </div>
+
+    <!-- Section 3: Switch — day type -->
+    <h2>3. switch — Day Type</h2>
+    <div class="controls">
+      <select id="day">
+        <option>Monday</option>
+        <option>Tuesday</option>
+        <option>Wednesday</option>
+        <option>Thursday</option>
+        <option>Friday</option>
+        <option>Saturday</option>
+        <option>Sunday</option>
+      </select>
+      <button onclick="checkDay()">Check Day</button>
+    </div>
+
+    <!-- Section 4: Short-circuit -->
+    <h2>4. Short-Circuit &amp;&amp; / || / ??</h2>
+    <div class="controls">
+      <input type="text" id="username" placeholder='Try "" or "Alice"' value="" />
+      <button onclick="checkUsername()">Check Username</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="runAllExamples()">▶ Run All Examples</button>
+      <button class="clear-btn" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div id="output">// Output will appear here…</div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

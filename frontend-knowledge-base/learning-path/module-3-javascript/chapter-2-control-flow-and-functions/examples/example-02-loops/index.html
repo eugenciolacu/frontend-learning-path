@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 02 – Loops</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      h2 { color: #1d4ed8; margin-top: 2rem; font-size: 1.1rem; }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+      button {
+        padding: 9px 18px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      input[type="number"] {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 100px;
+      }
+      #output {
+        margin-top: 24px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        min-height: 120px;
+        white-space: pre-wrap;
+      }
+      .clear-btn { background: #6b7280; }
+      .clear-btn:hover { background: #4b5563; }
+    </style>
+  </head>
+  <body>
+    <h1>Example 02 – Loops</h1>
+    <p>Interactive demos for <code>for</code>, <code>while</code>, <code>do...while</code>, <code>for...of</code>, <code>for...in</code>, and <code>break / continue</code>.</p>
+
+    <h2>1. for — Count to N</h2>
+    <div class="controls">
+      <input type="number" id="countTo" value="5" min="1" max="20" />
+      <button onclick="demoFor()">Run for loop</button>
+    </div>
+
+    <h2>2. while — Countdown</h2>
+    <div class="controls">
+      <input type="number" id="countDown" value="5" min="1" max="20" />
+      <button onclick="demoWhile()">Run while loop</button>
+    </div>
+
+    <h2>3. do...while — Always runs at least once</h2>
+    <div class="controls">
+      <button onclick="demoDoWhile()">Run do...while</button>
+    </div>
+
+    <h2>4. for...of — Array values</h2>
+    <div class="controls">
+      <button onclick="demoForOf()">Run for...of</button>
+    </div>
+
+    <h2>5. for...in — Object keys</h2>
+    <div class="controls">
+      <button onclick="demoForIn()">Run for...in</button>
+    </div>
+
+    <h2>6. break &amp; continue</h2>
+    <div class="controls">
+      <button onclick="demoBreakContinue()">Run break &amp; continue</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="runAllLoops()">▶ Run All Examples</button>
+      <button class="clear-btn" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div id="output">// Output will appear here…</div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

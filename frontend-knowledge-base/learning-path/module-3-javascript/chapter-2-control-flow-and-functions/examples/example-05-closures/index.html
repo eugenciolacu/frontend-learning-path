@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 05 – Closures</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 720px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      h2 { color: #1d4ed8; margin-top: 2rem; font-size: 1.1rem; }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; align-items: center; }
+      button {
+        padding: 9px 18px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      input[type="number"] {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 110px;
+      }
+      .counter-display {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2563eb;
+        min-width: 3rem;
+        text-align: center;
+      }
+      .bank-display {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #16a34a;
+        min-width: 10rem;
+      }
+      #output {
+        margin-top: 24px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.9rem;
+        min-height: 120px;
+        white-space: pre-wrap;
+      }
+      .clear-btn { background: #6b7280; }
+      .clear-btn:hover { background: #4b5563; }
+      .danger-btn { background: #dc2626; }
+      .danger-btn:hover { background: #b91c1c; }
+    </style>
+  </head>
+  <body>
+    <h1>Example 05 – Closures</h1>
+    <p>Closures let inner functions "remember" variables from their outer scope, even after the outer function has finished running. This enables data privacy, factories, and stateful logic.</p>
+
+    <!-- Live counter (closure-based state) -->
+    <h2>1. Closure Counter — Private State</h2>
+    <div class="controls">
+      <button onclick="decrement()">−</button>
+      <span class="counter-display" id="counterDisplay">0</span>
+      <button onclick="increment()">+</button>
+      <button onclick="resetCounter()">Reset</button>
+    </div>
+    <p><small>The counter value lives inside a closure — it cannot be accessed or modified from outside.</small></p>
+
+    <!-- Bank account -->
+    <h2>2. Closure Bank Account — Encapsulated Balance</h2>
+    <div class="controls">
+      <span class="bank-display" id="balanceDisplay">Balance: €100</span>
+    </div>
+    <div class="controls">
+      <input type="number" id="bankAmount" value="20" min="1" />
+      <button onclick="doDeposit()">Deposit</button>
+      <button class="danger-btn" onclick="doWithdraw()">Withdraw</button>
+    </div>
+
+    <!-- Factory functions -->
+    <h2>3. Closure Factory — Multiplier</h2>
+    <div class="controls">
+      <button onclick="demoFactory()">Run factory demo</button>
+    </div>
+
+    <!-- Classic var-in-loop bug -->
+    <h2>4. The Classic var-in-Loop Bug &amp; Fixes</h2>
+    <div class="controls">
+      <button onclick="demoLoopBug()">Show var bug</button>
+      <button onclick="demoLoopFix()">Show fix (let)</button>
+    </div>
+
+    <!-- IIFE -->
+    <h2>5. IIFE — Immediately Invoked Function Expression</h2>
+    <div class="controls">
+      <button onclick="demoIIFE()">Run IIFE demo</button>
+    </div>
+
+    <div class="controls">
+      <button onclick="runAll()">▶ Run All Examples</button>
+      <button class="clear-btn" onclick="clearOutput()">Clear Output</button>
+    </div>
+
+    <div id="output">// Output will appear here…</div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
