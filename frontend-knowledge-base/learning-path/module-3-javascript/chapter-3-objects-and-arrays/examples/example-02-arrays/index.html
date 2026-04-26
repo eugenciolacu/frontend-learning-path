@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 02 – Arrays</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 760px;
+        margin: 40px auto;
+        padding: 0 20px;
+        background: #f9f9f9;
+        color: #222;
+      }
+      h1 { color: #2563eb; }
+      h2 { color: #1d4ed8; margin-top: 2rem; font-size: 1.1rem; }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; align-items: center; }
+      button {
+        padding: 9px 18px;
+        font-size: 0.95rem;
+        cursor: pointer;
+        border: none;
+        border-radius: 6px;
+        background: #2563eb;
+        color: #fff;
+      }
+      button:hover { background: #1d4ed8; }
+      input[type="text"], input[type="number"] {
+        padding: 8px 12px;
+        font-size: 0.95rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 120px;
+      }
+      #output {
+        margin-top: 24px;
+        padding: 16px;
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 8px;
+        font-family: monospace;
+        font-size: 0.88rem;
+        min-height: 120px;
+        white-space: pre-wrap;
+      }
+      .clear-btn { background: #6b7280; }
+      .clear-btn:hover { background: #4b5563; }
+    </style>
+  </head>
+  <body>
+    <h1>Example 02 – Arrays</h1>
+    <p>Open DevTools (F12 → Console) to see all <code>console.log</code> output.</p>
+
+    <!-- 1. Creating Arrays -->
+    <h2>1. Creating Arrays</h2>
+    <div class="controls">
+      <button onclick="demoCreation()">Run demo</button>
+    </div>
+
+    <!-- 2. Accessing Elements -->
+    <h2>2. Accessing Elements &amp; <code>at()</code></h2>
+    <div class="controls">
+      <button onclick="demoAccess()">Run demo</button>
+    </div>
+
+    <!-- 3. push / pop / shift / unshift -->
+    <h2>3. push, pop, shift, unshift</h2>
+    <div class="controls">
+      <label>Value: <input type="text" id="pushVal" value="new item" /></label>
+      <button onclick="demoPushPop()">Push &amp; Pop</button>
+      <button onclick="demoShiftUnshift()">Shift &amp; Unshift</button>
+    </div>
+
+    <!-- 4. splice -->
+    <h2>4. splice (add / remove / replace)</h2>
+    <div class="controls">
+      <button onclick="demoSplice()">Run demo</button>
+    </div>
+
+    <!-- 5. sort & reverse -->
+    <h2>5. sort &amp; reverse</h2>
+    <div class="controls">
+      <button onclick="demoSort()">Run demo</button>
+    </div>
+
+    <!-- 6. Non-mutating: slice / concat / join / indexOf / includes -->
+    <h2>6. slice, concat, join, indexOf, includes</h2>
+    <div class="controls">
+      <button onclick="demoNonMutating()">Run demo</button>
+    </div>
+
+    <div class="controls" style="margin-top:16px">
+      <button class="clear-btn" onclick="clearOutput()">Clear output</button>
+    </div>
+
+    <div id="output">Click a button to run a demo…</div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
