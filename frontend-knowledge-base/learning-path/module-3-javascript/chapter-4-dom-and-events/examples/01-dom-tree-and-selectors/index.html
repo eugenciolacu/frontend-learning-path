@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 1 – DOM Tree & Selectors</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>DOM Tree &amp; Selectors</h1>
+    <p>Open the browser console (<kbd>F12</kbd>) to see the output of each selector.</p>
+
+    <nav id="main-nav">
+      <a href="#" class="nav-link active">Home</a>
+      <a href="#" class="nav-link">About</a>
+      <a href="#" class="nav-link">Contact</a>
+    </nav>
+
+    <section id="articles">
+      <article class="card featured" data-id="1">
+        <h2 class="card-title">Article One</h2>
+        <p class="card-body">This is the first article.</p>
+        <a href="https://example.com" class="card-link">Read more</a>
+      </article>
+
+      <article class="card" data-id="2">
+        <h2 class="card-title">Article Two</h2>
+        <p class="card-body">This is the second article.</p>
+        <a href="https://example.com" class="card-link">Read more</a>
+      </article>
+
+      <article class="card" data-id="3">
+        <h2 class="card-title">Article Three</h2>
+        <p class="card-body">This is the third article.</p>
+        <a href="https://example.com" class="card-link">Read more</a>
+      </article>
+    </section>
+
+    <div id="output">
+      <h3>Selector Results</h3>
+      <ul id="results-list"></ul>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

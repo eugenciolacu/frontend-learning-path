@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 3 – Creating, Inserting &amp; Removing Elements</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Creating, Inserting &amp; Removing Elements</h1>
+
+    <!-- ── Task list ──────────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Dynamic Task List</h2>
+
+      <div class="input-row">
+        <input type="text" id="task-input" placeholder="Enter a task…" />
+        <button id="btn-add">Add Task</button>
+        <button id="btn-add-fragment">Add 3 Tasks (Fragment)</button>
+        <button id="btn-clear-all">Clear All</button>
+      </div>
+
+      <ul id="task-list">
+        <li class="task-item" data-id="0">
+          <span>Sample task (remove me!)</span>
+          <button class="btn-remove" aria-label="Remove task">✕</button>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ── Insert positions demo ──────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>insertAdjacentElement Positions</h2>
+
+      <div id="insert-container" class="insert-container">
+        <div id="target-el" class="target">Target Element</div>
+      </div>
+
+      <div class="controls">
+        <button data-position="beforebegin">beforebegin</button>
+        <button data-position="afterbegin">afterbegin</button>
+        <button data-position="beforeend">beforeend</button>
+        <button data-position="afterend">afterend</button>
+        <button id="btn-reset-insert">Reset</button>
+      </div>
+    </section>
+
+    <!-- ── Clone demo ─────────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Cloning Elements</h2>
+
+      <div id="card-template" class="card">
+        <strong>Template Card</strong>
+        <p>This card will be cloned.</p>
+      </div>
+
+      <div id="clone-gallery" class="gallery"></div>
+
+      <div class="controls">
+        <button id="btn-clone">Clone Card</button>
+        <button id="btn-remove-last-clone">Remove Last Clone</button>
+      </div>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

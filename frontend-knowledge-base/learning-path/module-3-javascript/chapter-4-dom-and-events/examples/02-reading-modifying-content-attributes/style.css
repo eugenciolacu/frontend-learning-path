@@ -1,0 +1,84 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #222;
+}
+
+.demo-section {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.demo-section h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  color: #0070f3;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #0070f3;
+  border-radius: 4px;
+  background: #fff;
+  color: #0070f3;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+button:hover {
+  background: #0070f3;
+  color: #fff;
+}
+
+/* ── Style-box ─────────────────────────────────────────────────────────── */
+.box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 160px;
+  height: 80px;
+  border: 2px solid #aaa;
+  border-radius: 8px;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  transition: all 0.25s;
+}
+
+.box.highlight {
+  background: #fff3cd;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+/* ── Output panel ──────────────────────────────────────────────────────── */
+#output-section {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+}
+
+#output-section h3 {
+  color: #9cdcfe;
+  margin-top: 0;
+}
+
+#output {
+  font-family: monospace;
+  font-size: 0.85rem;
+  white-space: pre-wrap;
+  margin: 0;
+  line-height: 1.7;
+}

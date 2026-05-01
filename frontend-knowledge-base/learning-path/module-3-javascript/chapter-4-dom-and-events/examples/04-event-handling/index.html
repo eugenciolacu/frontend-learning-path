@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 4 – Event Handling</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Event Handling: addEventListener &amp; the Event Object</h1>
+
+    <!-- ── Click demo ─────────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Click Events</h2>
+      <button id="btn-click">Click Me</button>
+      <button id="btn-once">Click Once (once option)</button>
+      <button id="btn-add-listener">Attach Listener</button>
+      <button id="btn-remove-listener">Detach Listener</button>
+    </section>
+
+    <!-- ── Keyboard events ───────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Keyboard Events</h2>
+      <input type="text" id="key-input" placeholder="Type here to see events…" />
+    </section>
+
+    <!-- ── Mouse events ──────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Mouse Events</h2>
+      <div id="mouse-zone" class="mouse-zone">Move, click, or right-click here</div>
+    </section>
+
+    <!-- ── Event bubbling visualiser ─────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Event Bubbling &amp; stopPropagation</h2>
+      <p>Click anywhere in the nested boxes to see which handlers fire.</p>
+
+      <div id="outer" class="bubble-box outer-box">
+        Outer
+        <div id="middle" class="bubble-box middle-box">
+          Middle
+          <div id="inner" class="bubble-box inner-box">Inner</div>
+        </div>
+      </div>
+
+      <label>
+        <input type="checkbox" id="stop-propagation" />
+        Call stopPropagation() on the inner element
+      </label>
+    </section>
+
+    <!-- ── Log output ────────────────────────────────────────────────── -->
+    <section id="output-section">
+      <div class="output-header">
+        <h3>Event Log</h3>
+        <button id="btn-clear-log">Clear</button>
+      </div>
+      <ul id="event-log"></ul>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,190 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 820px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #222;
+}
+
+.subtitle {
+  color: #555;
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.demo-section {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.demo-section h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  color: #0070f3;
+}
+
+code {
+  background: #f1f5f9;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  font-size: 0.85em;
+}
+
+/* ── Toolbar ────────────────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+button {
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+#btn-add-product {
+  border: 1px solid #0070f3;
+  background: #0070f3;
+  color: #fff;
+}
+
+#btn-add-product:hover { background: #0058d0; border-color: #0058d0; }
+
+/* ── Product list ───────────────────────────────────────────────────────── */
+#product-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.product-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 0.75rem;
+  border-bottom: 1px solid #f0f0f0;
+  animation: slideIn 0.2s ease;
+}
+
+.product-item:last-child { border-bottom: none; }
+
+.product-name { font-weight: 500; }
+
+.product-actions { display: flex; gap: 0.4rem; }
+
+.btn-view   { border: 1px solid #0070f3; color: #0070f3; background: #fff; }
+.btn-edit   { border: 1px solid #f59e0b; color: #f59e0b; background: #fff; }
+.btn-delete { border: 1px solid #ef4444; color: #ef4444; background: #fff; }
+
+.btn-view:hover   { background: #0070f3; color: #fff; }
+.btn-edit:hover   { background: #f59e0b; color: #fff; }
+.btn-delete:hover { background: #ef4444; color: #fff; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Tabs ───────────────────────────────────────────────────────────────── */
+#tabs {
+  display: flex;
+  border-bottom: 2px solid #e2e8f0;
+  gap: 0.25rem;
+}
+
+.tab {
+  border: 1px solid transparent;
+  border-bottom: none;
+  background: none;
+  color: #555;
+  padding: 0.5rem 1rem;
+  border-radius: 4px 4px 0 0;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background 0.15s;
+}
+
+.tab:hover { background: #f8fafc; }
+
+.tab.active {
+  background: #fff;
+  color: #0070f3;
+  border-color: #e2e8f0;
+  border-bottom-color: #fff;
+  margin-bottom: -2px;
+  font-weight: 600;
+}
+
+.tab-panel {
+  display: none;
+  padding: 1rem;
+  border: 1px solid #e2e8f0;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+}
+
+.tab-panel.active { display: block; }
+
+/* ── Log ────────────────────────────────────────────────────────────────── */
+#log-section {
+  background: #1e1e1e;
+  color: #d4d4d4;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+}
+
+.log-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.log-header h3 { color: #9cdcfe; margin: 0; }
+
+#btn-clear-log {
+  border: 1px solid #ef4444;
+  background: none;
+  color: #ef4444;
+  font-size: 0.75rem;
+}
+
+#btn-clear-log:hover { background: #ef4444; color: #fff; }
+
+#action-log {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-family: monospace;
+  font-size: 0.8rem;
+  max-height: 200px;
+  overflow-y: auto;
+  line-height: 1.8;
+}
+
+#action-log li { border-bottom: 1px solid #2d2d2d; }
+#action-log li.view   { color: #9cdcfe; }
+#action-log li.edit   { color: #ffd700; }
+#action-log li.delete { color: #f88070; }
+#action-log li.add    { color: #b5cea8; }
+#action-log li.tab    { color: #c586c0; }

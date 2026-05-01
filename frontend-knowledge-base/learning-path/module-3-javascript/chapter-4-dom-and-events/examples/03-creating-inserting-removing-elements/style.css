@@ -1,0 +1,170 @@
+body {
+  font-family: system-ui, sans-serif;
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  color: #222;
+}
+
+.demo-section {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.demo-section h2 {
+  margin-top: 0;
+  font-size: 1rem;
+  color: #0070f3;
+}
+
+/* ── Input row ─────────────────────────────────────────────────────────── */
+.input-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  min-width: 180px;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  border-color: #0070f3;
+  box-shadow: 0 0 0 2px #bfdbfe;
+}
+
+/* ── Buttons ────────────────────────────────────────────────────────────── */
+button {
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #0070f3;
+  border-radius: 4px;
+  background: #fff;
+  color: #0070f3;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+button:hover {
+  background: #0070f3;
+  color: #fff;
+}
+
+button[data-position] {
+  border-color: #7c3aed;
+  color: #7c3aed;
+}
+
+button[data-position]:hover {
+  background: #7c3aed;
+  color: #fff;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* ── Task list ──────────────────────────────────────────────────────────── */
+#task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid #eee;
+  animation: fadeIn 0.2s ease;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+.btn-remove {
+  border: none;
+  background: none;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.1rem 0.4rem;
+}
+
+.btn-remove:hover {
+  background: #fee2e2;
+  border-radius: 4px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Insert container ───────────────────────────────────────────────────── */
+.insert-container {
+  min-height: 60px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: flex-start;
+}
+
+.target {
+  background: #0070f3;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.inserted {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.inserted[data-pos="beforebegin"] { background: #fde68a; color: #78350f; }
+.inserted[data-pos="afterbegin"]  { background: #bbf7d0; color: #14532d; }
+.inserted[data-pos="beforeend"]   { background: #ddd6fe; color: #4c1d95; }
+.inserted[data-pos="afterend"]    { background: #fecaca; color: #7f1d1d; }
+
+/* ── Clone gallery ──────────────────────────────────────────────────────── */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+}
+
+.gallery .card {
+  flex: 0 0 160px;
+  margin-bottom: 0;
+  background: #f8fafc;
+}

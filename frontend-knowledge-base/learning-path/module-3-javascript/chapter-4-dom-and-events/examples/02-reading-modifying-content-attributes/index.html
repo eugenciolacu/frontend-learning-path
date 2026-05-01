@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 2 – Reading &amp; Modifying Content and Attributes</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Reading &amp; Modifying Content and Attributes</h1>
+
+    <!-- ── Content demo ────────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Text Content &amp; HTML</h2>
+
+      <p id="greeting">Hello, <strong>World</strong>!</p>
+
+      <div class="controls">
+        <button id="btn-read-text">Read textContent</button>
+        <button id="btn-read-html">Read innerHTML</button>
+        <button id="btn-set-text">Set textContent</button>
+        <button id="btn-set-html">Set innerHTML</button>
+        <button id="btn-reset-content">Reset</button>
+      </div>
+    </section>
+
+    <!-- ── Attributes demo ─────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Attributes &amp; Data Attributes</h2>
+
+      <img
+        id="demo-img"
+        src="https://via.placeholder.com/200x100?text=Original"
+        alt="Placeholder image"
+        data-category="nature"
+        data-rating="4"
+      />
+
+      <div class="controls">
+        <button id="btn-read-attr">Read attributes</button>
+        <button id="btn-change-src">Change src</button>
+        <button id="btn-change-alt">Change alt</button>
+        <button id="btn-toggle-attr">Toggle data-featured</button>
+      </div>
+    </section>
+
+    <!-- ── ClassList demo ──────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>classList &amp; Inline Styles</h2>
+
+      <div id="style-box" class="box">Style Me!</div>
+
+      <div class="controls">
+        <button id="btn-add-class">Add .highlight</button>
+        <button id="btn-remove-class">Remove .highlight</button>
+        <button id="btn-toggle-class">Toggle .highlight</button>
+        <button id="btn-add-inline">Set inline color</button>
+        <button id="btn-clear-inline">Clear inline color</button>
+      </div>
+    </section>
+
+    <!-- ── Output ──────────────────────────────────────────────────────── -->
+    <section id="output-section">
+      <h3>Console Output</h3>
+      <pre id="output"></pre>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

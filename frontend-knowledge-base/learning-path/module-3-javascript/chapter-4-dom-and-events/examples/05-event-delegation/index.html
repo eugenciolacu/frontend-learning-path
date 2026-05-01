@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 5 – Event Delegation</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Event Delegation</h1>
+    <p class="subtitle">
+      One listener on a parent handles events from all current <em>and future</em>
+      child elements — no re-attaching needed.
+    </p>
+
+    <!-- ── Product list ──────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Product List (single listener on <code>&lt;ul&gt;</code>)</h2>
+
+      <div class="toolbar">
+        <input type="text" id="new-product-input" placeholder="New product name…" />
+        <button id="btn-add-product">Add Product</button>
+      </div>
+
+      <ul id="product-list">
+        <li class="product-item" data-product-id="1">
+          <span class="product-name">Apple</span>
+          <div class="product-actions">
+            <button class="btn-view"   data-action="view">   View   </button>
+            <button class="btn-edit"   data-action="edit">   Edit   </button>
+            <button class="btn-delete" data-action="delete"> Delete </button>
+          </div>
+        </li>
+        <li class="product-item" data-product-id="2">
+          <span class="product-name">Banana</span>
+          <div class="product-actions">
+            <button class="btn-view"   data-action="view">   View   </button>
+            <button class="btn-edit"   data-action="edit">   Edit   </button>
+            <button class="btn-delete" data-action="delete"> Delete </button>
+          </div>
+        </li>
+        <li class="product-item" data-product-id="3">
+          <span class="product-name">Cherry</span>
+          <div class="product-actions">
+            <button class="btn-view"   data-action="view">   View   </button>
+            <button class="btn-edit"   data-action="edit">   Edit   </button>
+            <button class="btn-delete" data-action="delete"> Delete </button>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ── Sortable tabs ─────────────────────────────────────────────── -->
+    <section class="demo-section">
+      <h2>Tab Strip (delegated on <code>#tabs</code>)</h2>
+
+      <div id="tabs" role="tablist">
+        <button class="tab active" data-tab="overview">Overview</button>
+        <button class="tab"        data-tab="details">Details</button>
+        <button class="tab"        data-tab="reviews">Reviews</button>
+      </div>
+
+      <div id="tab-content">
+        <div class="tab-panel active" data-panel="overview">
+          <p>Overview panel content.</p>
+        </div>
+        <div class="tab-panel" data-panel="details">
+          <p>Details panel content.</p>
+        </div>
+        <div class="tab-panel" data-panel="reviews">
+          <p>Reviews panel content.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Action log ─────────────────────────────────────────────────── -->
+    <section id="log-section">
+      <div class="log-header">
+        <h3>Action Log</h3>
+        <button id="btn-clear-log">Clear</button>
+      </div>
+      <ul id="action-log"></ul>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>

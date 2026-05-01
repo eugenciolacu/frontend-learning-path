@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example 6 – Forms &amp; Input Events</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Forms &amp; Input Events</h1>
+
+    <!-- ── Registration form ────────────────────────────────────────── -->
+    <form id="registration-form" novalidate autocomplete="off">
+      <h2>Registration Form</h2>
+
+      <!-- Username -->
+      <div class="field">
+        <label for="username">Username <span class="required">*</span></label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          minlength="3"
+          maxlength="20"
+          placeholder="3–20 characters"
+          required
+        />
+        <span class="char-count" id="username-count">0 / 20</span>
+        <span class="error-msg" id="username-error"></span>
+      </div>
+
+      <!-- Email -->
+      <div class="field">
+        <label for="email">Email <span class="required">*</span></label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        <span class="error-msg" id="email-error"></span>
+      </div>
+
+      <!-- Password -->
+      <div class="field">
+        <label for="password">Password <span class="required">*</span></label>
+        <input type="password" id="password" name="password" minlength="8" required />
+        <span class="error-msg" id="password-error"></span>
+        <div class="strength-bar" id="strength-bar">
+          <div class="strength-fill" id="strength-fill"></div>
+        </div>
+        <span class="hint" id="strength-label"></span>
+      </div>
+
+      <!-- Role (select) -->
+      <div class="field">
+        <label for="role">Role</label>
+        <select id="role" name="role">
+          <option value="">— Select a role —</option>
+          <option value="student">Student</option>
+          <option value="developer">Developer</option>
+          <option value="designer">Designer</option>
+          <option value="manager">Manager</option>
+        </select>
+      </div>
+
+      <!-- Skills (multi-select) -->
+      <div class="field">
+        <label for="skills">Skills (hold Ctrl/Cmd to select multiple)</label>
+        <select id="skills" name="skills" multiple size="4">
+          <option value="html">HTML</option>
+          <option value="css">CSS</option>
+          <option value="javascript">JavaScript</option>
+          <option value="typescript">TypeScript</option>
+          <option value="react">React</option>
+        </select>
+      </div>
+
+      <!-- Subscribe (checkbox) -->
+      <div class="field field--inline">
+        <input type="checkbox" id="subscribe" name="subscribe" value="yes" />
+        <label for="subscribe">Subscribe to newsletter</label>
+      </div>
+
+      <!-- Bio (textarea) -->
+      <div class="field">
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="bio" rows="3" maxlength="200" placeholder="Tell us about yourself…"></textarea>
+        <span class="char-count" id="bio-count">0 / 200</span>
+      </div>
+
+      <!-- Actions -->
+      <div class="form-actions">
+        <button type="submit" id="btn-submit">Register</button>
+        <button type="reset"  id="btn-reset">Reset</button>
+      </div>
+    </form>
+
+    <!-- ── Submitted data preview ────────────────────────────────────── -->
+    <section id="preview-section" hidden>
+      <h2>Submitted Data (FormData)</h2>
+      <pre id="preview-output"></pre>
+    </section>
+
+    <script src="script.js"></script>
+  </body>
+</html>
