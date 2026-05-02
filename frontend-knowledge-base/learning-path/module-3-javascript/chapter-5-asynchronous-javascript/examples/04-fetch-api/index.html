@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>04 – Fetch API</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #f5f5f5;
+        color: #222;
+      }
+      h1 { color: #333; }
+      h2 { margin-top: 2rem; color: #555; font-size: 1.1rem; }
+      .output {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 6px;
+        padding: 1rem;
+        min-height: 3rem;
+        font-family: monospace;
+        white-space: pre-wrap;
+        font-size: 0.85rem;
+        max-height: 280px;
+        overflow-y: auto;
+      }
+      .log-entry { margin: 2px 0; }
+      .log-entry.error { color: #f48771; }
+      .log-entry.warn  { color: #dcdcaa; }
+      .log-entry.info  { color: #9cdcfe; }
+      .log-entry.ok    { color: #4ec9b0; }
+      button {
+        margin: 0.4rem 0.4rem 0 0;
+        padding: 0.5rem 1.25rem;
+        background: #0078d4;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      button:hover { background: #005ea2; }
+      button:disabled { background: #777; cursor: default; }
+      .section { margin-bottom: 2.5rem; }
+      label { display: block; margin-top: 0.5rem; font-size: 0.9rem; }
+      input[type="number"], input[type="text"] {
+        padding: 0.4rem 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        width: 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Fetch API</h1>
+    <p>
+      Uses <a href="https://jsonplaceholder.typicode.com" target="_blank" rel="noopener">JSONPlaceholder</a>
+      — a free fake REST API for practice. Requires an internet connection.
+    </p>
+
+    <!-- ── 1. GET ── -->
+    <div class="section">
+      <h2>1. GET request — fetch a post by ID</h2>
+      <label>
+        Post ID (1–100):
+        <input type="number" id="get-id" value="1" min="1" max="100" />
+      </label>
+      <div class="output" id="out-get"></div>
+      <button onclick="runGet()">GET /posts/{id}</button>
+      <button onclick="runGetBad()">GET non-existent (404)</button>
+    </div>
+
+    <!-- ── 2. POST ── -->
+    <div class="section">
+      <h2>2. POST request — create a new post</h2>
+      <div class="output" id="out-post"></div>
+      <button onclick="runPost()">POST /posts</button>
+    </div>
+
+    <!-- ── 3. PUT / DELETE ── -->
+    <div class="section">
+      <h2>3. PUT and DELETE requests</h2>
+      <div class="output" id="out-putdelete"></div>
+      <button onclick="runPut()">PUT /posts/1</button>
+      <button onclick="runDelete()">DELETE /posts/1</button>
+    </div>
+
+    <!-- ── 4. Query params ── -->
+    <div class="section">
+      <h2>4. Query parameters — filter posts by userId</h2>
+      <label>
+        userId (1–10):
+        <input type="number" id="uid" value="1" min="1" max="10" />
+      </label>
+      <div class="output" id="out-params"></div>
+      <button onclick="runParams()">GET /posts?userId=…</button>
+    </div>
+
+    <!-- ── 5. Response.ok check ── -->
+    <div class="section">
+      <h2>5. HTTP errors — why you must check response.ok</h2>
+      <div class="output" id="out-ok"></div>
+      <button onclick="runOkCheck(true)">Fetch existing (200)</button>
+      <button onclick="runOkCheck(false)">Fetch non-existent (404)</button>
+    </div>
+
+    <!-- ── 6. AbortController ── -->
+    <div class="section">
+      <h2>6. Cancelling a request with AbortController</h2>
+      <div class="output" id="out-abort"></div>
+      <button id="btn-fetch" onclick="startAbortable()">Start request</button>
+      <button id="btn-abort" onclick="cancelRequest()" disabled>Cancel</button>
+    </div>
+
+    <script>
+      // ─── Utilities ────────────────────────────────────────────────────
+      function log(id, msg, type = '') {
+        const el = document.getElementById(id);
+        const div = document.createElement('div');
+        div.className = 'log-entry ' + type;
+        div.textContent = msg;
+        el.appendChild(div);
+        el.scrollTop = el.scrollHeight;
+      }
+      function clear(id) { document.getElementById(id).innerHTML = ''; }
+
+      const BASE = 'https://jsonplaceholder.typicode.com';
+
+      // ─── 1. GET ───────────────────────────────────────────────────────
+      async function runGet() {
+        clear('out-get');
+        const id = document.getElementById('get-id').value;
+        log('out-get', `→ GET ${BASE}/posts/${id}`);
+
+        try {
+          const response = await fetch(`${BASE}/posts/${id}`);
+
+          // Always check response.ok — fetch only rejects on network failure
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          }
+
+          const post = await response.json();
+          log('out-get', `✓ Status: ${response.status}`, 'ok');
+          log('out-get', `  id:     ${post.id}`);
+          log('out-get', `  userId: ${post.userId}`);
+          log('out-get', `  title:  ${post.title}`);
+          log('out-get', `  body:   ${post.body.slice(0, 80)}…`);
+        } catch (error) {
+          log('out-get', '✗ ' + error.message, 'error');
+        }
+      }
+
+      async function runGetBad() {
+        clear('out-get');
+        log('out-get', `→ GET ${BASE}/posts/99999 (does not exist)`);
+        try {
+          const response = await fetch(`${BASE}/posts/99999`);
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          }
+          const data = await response.json();
+          log('out-get', JSON.stringify(data), 'ok');
+        } catch (error) {
+          log('out-get', '✗ ' + error.message, 'error');
+        }
+      }
+
+      // ─── 2. POST ──────────────────────────────────────────────────────
+      async function runPost() {
+        clear('out-post');
+
+        const newPost = {
+          title: 'Learning Fetch API',
+          body: 'The Fetch API is a modern replacement for XMLHttpRequest.',
+          userId: 1,
+        };
+
+        log('out-post', `→ POST ${BASE}/posts`);
+        log('out-post', `  body: ${JSON.stringify(newPost)}`);
+
+        try {
+          const response = await fetch(`${BASE}/posts`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',   // tell the server what we're sending
+            },
+            body: JSON.stringify(newPost),           // serialise the object to a JSON string
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status} ${response.statusText}`);
+          }
+
+          const created = await response.json();
+          log('out-post', `✓ Status: ${response.status} Created`, 'ok');
+          log('out-post', `  New post id: ${created.id}`);
+          log('out-post', `  title: ${created.title}`);
+          log('out-post', '  (JSONPlaceholder always returns id=101 for new posts)');
+        } catch (error) {
+          log('out-post', '✗ ' + error.message, 'error');
+        }
+      }
+
+      // ─── 3. PUT / DELETE ─────────────────────────────────────────────
+      async function runPut() {
+        clear('out-putdelete');
+        const updated = { id: 1, title: 'Updated Title', body: 'Updated body', userId: 1 };
+        log('out-putdelete', `→ PUT ${BASE}/posts/1`);
+
+        try {
+          const response = await fetch(`${BASE}/posts/1`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updated),
+          });
+
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const data = await response.json();
+          log('out-putdelete', `✓ Status: ${response.status}`, 'ok');
+          log('out-putdelete', `  title: ${data.title}`);
+        } catch (error) {
+          log('out-putdelete', '✗ ' + error.message, 'error');
+        }
+      }
+
+      async function runDelete() {
+        clear('out-putdelete');
+        log('out-putdelete', `→ DELETE ${BASE}/posts/1`);
+
+        try {
+          const response = await fetch(`${BASE}/posts/1`, {
+            method: 'DELETE',
+          });
+
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          // JSONPlaceholder returns an empty object {} with status 200
+          log('out-putdelete', `✓ Status: ${response.status} — post deleted`, 'ok');
+        } catch (error) {
+          log('out-putdelete', '✗ ' + error.message, 'error');
+        }
+      }
+
+      // ─── 4. Query parameters ─────────────────────────────────────────
+      async function runParams() {
+        clear('out-params');
+        const userId = document.getElementById('uid').value;
+
+        // Use the URL constructor to safely append query parameters
+        const url = new URL(`${BASE}/posts`);
+        url.searchParams.set('userId', userId);
+
+        log('out-params', `→ GET ${url.toString()}`);
+
+        try {
+          const response = await fetch(url.toString());
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const posts = await response.json();
+          log('out-params', `✓ Got ${posts.length} posts for userId=${userId}`, 'ok');
+          posts.slice(0, 3).forEach(p =>
+            log('out-params', `  [${p.id}] ${p.title.slice(0, 50)}`)
+          );
+          if (posts.length > 3) log('out-params', `  … and ${posts.length - 3} more`);
+        } catch (error) {
+          log('out-params', '✗ ' + error.message, 'error');
+        }
+      }
+
+      // ─── 5. response.ok check ────────────────────────────────────────
+      /**
+       * KEY INSIGHT: fetch() only rejects on NETWORK errors (DNS, offline, etc.).
+       * HTTP 4xx/5xx responses still RESOLVE — you must check response.ok yourself.
+       */
+      async function runOkCheck(existing) {
+        clear('out-ok');
+        const url = existing ? `${BASE}/posts/1` : `${BASE}/posts/99999`;
+        log('out-ok', `→ GET ${url}`);
+
+        // ❌ WRONG: not checking response.ok
+        const rawResponse = await fetch(url);
+        log('out-ok', `  response.ok = ${rawResponse.ok}`, rawResponse.ok ? 'ok' : 'warn');
+        log('out-ok', `  response.status = ${rawResponse.status}`, rawResponse.ok ? 'ok' : 'warn');
+
+        if (!rawResponse.ok) {
+          log('out-ok', '  ⚠ Without checking .ok, we would try to parse an error as data!', 'warn');
+          log('out-ok', '  ✓ Always throw (or return) when !response.ok', 'info');
+        } else {
+          const data = await rawResponse.json();
+          log('out-ok', `  ✓ Received: "${data.title}"`, 'ok');
+        }
+      }
+
+      // ─── 6. AbortController ──────────────────────────────────────────
+      let currentController = null;
+
+      async function startAbortable() {
+        clear('out-abort');
+        document.getElementById('btn-fetch').disabled = true;
+        document.getElementById('btn-abort').disabled = false;
+
+        // Create a new controller for this request
+        currentController = new AbortController();
+        const { signal } = currentController;
+
+        log('out-abort', '→ Starting slow request… (click Cancel within 3s)');
+
+        try {
+          // We use a 3-second delay URL via a trick: request many posts with a delay param
+          // JSONPlaceholder doesn't support artificial delays, so we simulate with a race
+          const slowRequest = new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('(simulated slow response)')), 4000)
+          );
+          const realRequest = fetch(`${BASE}/posts/1`, { signal });
+
+          // Race the real request against a simulated slow response
+          const response = await Promise.race([realRequest, slowRequest]);
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+          const data = await response.json();
+          log('out-abort', `✓ Completed: "${data.title}"`, 'ok');
+        } catch (error) {
+          if (error.name === 'AbortError') {
+            log('out-abort', '⚑ Request was cancelled by AbortController', 'warn');
+          } else {
+            log('out-abort', '✗ ' + error.message, 'error');
+          }
+        } finally {
+          document.getElementById('btn-fetch').disabled = false;
+          document.getElementById('btn-abort').disabled = true;
+          currentController = null;
+        }
+      }
+
+      function cancelRequest() {
+        if (currentController) {
+          currentController.abort();   // triggers the AbortError in the await above
+          log('out-abort', '⚑ abort() called on the controller', 'warn');
+        }
+      }
+    </script>
+  </body>
+</html>

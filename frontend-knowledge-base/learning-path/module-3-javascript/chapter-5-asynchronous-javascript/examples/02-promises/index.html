@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>02 – Promises</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 760px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #f5f5f5;
+        color: #222;
+      }
+      h1 { color: #333; }
+      h2 { margin-top: 2rem; color: #555; font-size: 1.1rem; }
+      .output {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 6px;
+        padding: 1rem;
+        min-height: 3rem;
+        font-family: monospace;
+        white-space: pre-wrap;
+        font-size: 0.9rem;
+      }
+      .log-entry { margin: 2px 0; }
+      .log-entry.error { color: #f48771; }
+      .log-entry.warn  { color: #dcdcaa; }
+      .log-entry.info  { color: #9cdcfe; }
+      .log-entry.ok    { color: #4ec9b0; }
+      button {
+        margin: 0.4rem 0.4rem 0 0;
+        padding: 0.5rem 1.25rem;
+        background: #0078d4;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.95rem;
+      }
+      button:hover { background: #005ea2; }
+      .section { margin-bottom: 2.5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Promises</h1>
+    <p>Each section demonstrates a different aspect of the Promise API. Click "Run" to execute and observe the output.</p>
+
+    <!-- ── 1. Creating & consuming ── -->
+    <div class="section">
+      <h2>1. Creating and consuming a Promise</h2>
+      <div class="output" id="out-create"></div>
+      <button onclick="runCreate(true)">Run (resolve)</button>
+      <button onclick="runCreate(false)">Run (reject)</button>
+    </div>
+
+    <!-- ── 2. Chaining ── -->
+    <div class="section">
+      <h2>2. Promise chaining — flat instead of nested</h2>
+      <div class="output" id="out-chain"></div>
+      <button onclick="runChain()">Run</button>
+    </div>
+
+    <!-- ── 3. Error propagation ── -->
+    <div class="section">
+      <h2>3. Error propagation and recovery</h2>
+      <div class="output" id="out-error"></div>
+      <button onclick="runErrorProp()">Run</button>
+    </div>
+
+    <!-- ── 4. .finally() ── -->
+    <div class="section">
+      <h2>4. .finally() — always runs</h2>
+      <div class="output" id="out-finally"></div>
+      <button onclick="runFinally(true)">Run (success)</button>
+      <button onclick="runFinally(false)">Run (failure)</button>
+    </div>
+
+    <!-- ── 5. Promise.all ── -->
+    <div class="section">
+      <h2>5. Promise.all — run concurrently, wait for all</h2>
+      <div class="output" id="out-all"></div>
+      <button onclick="runAll(false)">Run (all succeed)</button>
+      <button onclick="runAll(true)">Run (one fails)</button>
+    </div>
+
+    <!-- ── 6. Promise.allSettled ── -->
+    <div class="section">
+      <h2>6. Promise.allSettled — never short-circuits</h2>
+      <div class="output" id="out-allsettled"></div>
+      <button onclick="runAllSettled()">Run</button>
+    </div>
+
+    <!-- ── 7. Promise.race ── -->
+    <div class="section">
+      <h2>7. Promise.race — first to settle wins</h2>
+      <div class="output" id="out-race"></div>
+      <button onclick="runRace()">Run</button>
+    </div>
+
+    <script>
+      // ─── Utilities ────────────────────────────────────────────────────
+      function log(id, msg, type = '') {
+        const el = document.getElementById(id);
+        const div = document.createElement('div');
+        div.className = 'log-entry ' + type;
+        div.textContent = msg;
+        el.appendChild(div);
+      }
+      function clear(id) { document.getElementById(id).innerHTML = ''; }
+
+      /**
+       * delay — returns a Promise that resolves (or rejects) after `ms`.
+       * Used throughout to simulate async work.
+       */
+      function delay(ms, value, shouldReject = false) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (shouldReject) {
+              reject(new Error(value));
+            } else {
+              resolve(value);
+            }
+          }, ms);
+        });
+      }
+
+      // ─── 1. Create and consume ────────────────────────────────────────
+      function runCreate(shouldSucceed) {
+        clear('out-create');
+        log('out-create', `Creating a Promise that will ${shouldSucceed ? 'resolve' : 'reject'}…`);
+
+        const promise = new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (shouldSucceed) {
+              resolve('Operation succeeded! 🎉');
+            } else {
+              reject(new Error('Something went wrong.'));
+            }
+          }, 700);
+        });
+
+        // .then() handles fulfillment, .catch() handles rejection
+        promise
+          .then(value => log('out-create', '✓ Resolved: ' + value, 'ok'))
+          .catch(err  => log('out-create', '✗ Rejected: ' + err.message, 'error'));
+
+        log('out-create', '(Promise is pending… result appears in ~700ms)');
+      }
+
+      // ─── 2. Chaining ──────────────────────────────────────────────────
+      /**
+       * Each .then() returns a NEW Promise.
+       * Return a value → next .then() receives that value.
+       * Return a Promise → chain waits for it to settle.
+       */
+      function runChain() {
+        clear('out-chain');
+        log('out-chain', 'Starting chain…');
+
+        delay(300, 1)
+          .then(num => {
+            log('out-chain', `Step 1 → got ${num}, doubling it`);
+            return num * 2; // return a plain value
+          })
+          .then(num => {
+            log('out-chain', `Step 2 → got ${num}, adding 10 (async)`);
+            return delay(300, num + 10); // return a Promise
+          })
+          .then(num => {
+            log('out-chain', `Step 3 → got ${num}, converting to string`);
+            return `Final value: ${num}`;
+          })
+          .then(str => {
+            log('out-chain', '✓ ' + str, 'ok');
+          })
+          .catch(err => log('out-chain', '✗ ' + err.message, 'error'));
+      }
+
+      // ─── 3. Error propagation ─────────────────────────────────────────
+      /**
+       * An error in any step propagates to the nearest .catch().
+       * After .catch() returns a value, the chain continues.
+       */
+      function runErrorProp() {
+        clear('out-error');
+
+        Promise.resolve('start')
+          .then(val => {
+            log('out-error', 'Step 1 – ok: ' + val);
+            return val;
+          })
+          .then(val => {
+            log('out-error', 'Step 2 – about to throw…');
+            throw new Error('Step 2 exploded!');
+          })
+          .then(val => {
+            // This step is SKIPPED because step 2 threw
+            log('out-error', 'Step 3 – (this should not appear)', 'warn');
+          })
+          .catch(err => {
+            log('out-error', '✗ Caught in .catch(): ' + err.message, 'error');
+            return 'recovered value'; // resume the chain
+          })
+          .then(val => {
+            log('out-error', '✓ Chain resumed after .catch() — got: ' + val, 'ok');
+          });
+      }
+
+      // ─── 4. .finally() ───────────────────────────────────────────────
+      function runFinally(shouldSucceed) {
+        clear('out-finally');
+        let isLoading = true;
+        log('out-finally', '⏳ Loading… (isLoading = true)');
+
+        delay(700, 'data loaded', !shouldSucceed)
+          .then(val  => log('out-finally', '✓ ' + val, 'ok'))
+          .catch(err => log('out-finally', '✗ ' + err.message, 'error'))
+          .finally(() => {
+            isLoading = false;
+            log('out-finally', `✓ .finally() ran — isLoading = ${isLoading}`, 'info');
+          });
+      }
+
+      // ─── 5. Promise.all ───────────────────────────────────────────────
+      function runAll(oneFails) {
+        clear('out-all');
+        const start = Date.now();
+
+        const p1 = delay(300, 'users');
+        const p2 = delay(500, oneFails ? 'orders ERROR' : 'orders', oneFails);
+        const p3 = delay(400, 'products');
+
+        log('out-all', 'Kicked off 3 requests concurrently…');
+
+        Promise.all([p1, p2, p3])
+          .then(([users, orders, products]) => {
+            const elapsed = Date.now() - start;
+            log('out-all', `✓ All resolved in ${elapsed}ms:`, 'ok');
+            log('out-all', `  • ${users}`, 'ok');
+            log('out-all', `  • ${orders}`, 'ok');
+            log('out-all', `  • ${products}`, 'ok');
+          })
+          .catch(err => {
+            const elapsed = Date.now() - start;
+            log('out-all', `✗ Failed after ${elapsed}ms: ` + err.message, 'error');
+            log('out-all', '  (Promise.all short-circuited on the first rejection)', 'warn');
+          });
+      }
+
+      // ─── 6. Promise.allSettled ────────────────────────────────────────
+      function runAllSettled() {
+        clear('out-allsettled');
+
+        const p1 = delay(300, 'users');
+        const p2 = delay(200, 'NETWORK ERROR', true);  // this one fails
+        const p3 = delay(400, 'products');
+
+        Promise.allSettled([p1, p2, p3])
+          .then(results => {
+            log('out-allsettled', 'All 3 settled (allSettled never short-circuits):');
+            results.forEach((result, i) => {
+              if (result.status === 'fulfilled') {
+                log('out-allsettled', `  [${i + 1}] fulfilled → ${result.value}`, 'ok');
+              } else {
+                log('out-allsettled', `  [${i + 1}] rejected  → ${result.reason.message}`, 'error');
+              }
+            });
+          });
+      }
+
+      // ─── 7. Promise.race ─────────────────────────────────────────────
+      function runRace() {
+        clear('out-race');
+
+        // Simulate 3 "mirrors" with different latencies
+        const mirror1 = delay(800, 'Mirror 1 (800ms)');
+        const mirror2 = delay(300, 'Mirror 2 (300ms)');  // wins
+        const mirror3 = delay(600, 'Mirror 3 (600ms)');
+
+        log('out-race', 'Racing 3 mirrors: 800ms, 300ms, 600ms…');
+
+        Promise.race([mirror1, mirror2, mirror3])
+          .then(winner => log('out-race', '🏆 Winner: ' + winner, 'ok'))
+          .catch(err   => log('out-race', '✗ ' + err.message, 'error'));
+      }
+    </script>
+  </body>
+</html>

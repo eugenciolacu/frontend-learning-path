@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>05 – Working with APIs</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 860px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #f0f2f5;
+        color: #222;
+      }
+      h1 { color: #222; margin-bottom: 0.25rem; }
+      .subtitle { color: #666; font-size: 0.9rem; margin-bottom: 2rem; }
+      h2 { margin-top: 2rem; color: #444; font-size: 1.05rem; border-bottom: 1px solid #ddd; padding-bottom: 0.4rem; }
+
+      /* ─── Card grid ─────────────────────────────────────────────────── */
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+      .card {
+        background: #fff;
+        border-radius: 8px;
+        padding: 1rem;
+        box-shadow: 0 1px 4px rgba(0,0,0,.1);
+      }
+      .card img {
+        width: 100%;
+        border-radius: 4px;
+        margin-bottom: 0.5rem;
+        aspect-ratio: 1;
+        object-fit: cover;
+        background: #eee;
+      }
+      .card h3 { font-size: 0.95rem; margin: 0 0 0.25rem; }
+      .card p  { font-size: 0.8rem; color: #666; margin: 0; }
+
+      /* ─── Status / log ──────────────────────────────────────────────── */
+      .status {
+        padding: 0.75rem 1rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        margin-top: 0.75rem;
+        display: none;
+      }
+      .status.loading { background: #e0f0ff; color: #0066cc; display: block; }
+      .status.error   { background: #fdecea; color: #c0392b; display: block; }
+      .status.success { background: #eafaf1; color: #1e8449; display: block; }
+
+      /* ─── Console log panel ─────────────────────────────────────────── */
+      .output {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 6px;
+        padding: 1rem;
+        min-height: 3rem;
+        max-height: 260px;
+        overflow-y: auto;
+        font-family: monospace;
+        white-space: pre-wrap;
+        font-size: 0.85rem;
+        margin-top: 0.75rem;
+      }
+      .log-entry { margin: 2px 0; }
+      .log-entry.error { color: #f48771; }
+      .log-entry.warn  { color: #dcdcaa; }
+      .log-entry.info  { color: #9cdcfe; }
+      .log-entry.ok    { color: #4ec9b0; }
+
+      /* ─── Controls ──────────────────────────────────────────────────── */
+      button {
+        margin: 0.4rem 0.4rem 0 0;
+        padding: 0.5rem 1.25rem;
+        background: #0078d4;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
+      button:hover { background: #005ea2; }
+      button:disabled { background: #999; cursor: default; }
+      .section { margin-bottom: 3rem; }
+      input[type="text"], input[type="number"] {
+        padding: 0.4rem 0.6rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 0.9rem;
+      }
+      .row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem; }
+
+      /* ─── CORS explainer ────────────────────────────────────────────── */
+      .cors-box {
+        background: #fff8e1;
+        border-left: 4px solid #f9a825;
+        padding: 1rem 1.25rem;
+        border-radius: 0 6px 6px 0;
+        font-size: 0.88rem;
+        margin-top: 1rem;
+        line-height: 1.6;
+      }
+      code {
+        background: #f0f0f0;
+        padding: 0.1em 0.35em;
+        border-radius: 3px;
+        font-family: monospace;
+        font-size: 0.9em;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Working with APIs</h1>
+    <p class="subtitle">
+      Practical patterns: robust error handling, loading state, CORS, retry logic.
+      Uses public APIs — requires an internet connection.
+    </p>
+
+    <!-- ── 1. Robust error handling helper ── -->
+    <div class="section">
+      <h2>1. Robust apiFetch helper — loading / data / error state</h2>
+      <p style="font-size:0.9rem">Fetches posts from JSONPlaceholder with a proper loading indicator, error state, and HTTP error detection.</p>
+      <button onclick="loadPosts()">Load posts</button>
+      <button onclick="loadPostsFail()">Simulate server error</button>
+      <div class="status" id="posts-status"></div>
+      <div id="posts-cards" class="card-grid"></div>
+    </div>
+
+    <!-- ── 2. Real public API — PokeAPI ── -->
+    <div class="section">
+      <h2>2. Real public API — PokeAPI</h2>
+      <div class="row">
+        <input type="text" id="poke-name" placeholder="e.g. pikachu" value="pikachu" />
+        <button onclick="loadPokemon()">Search Pokémon</button>
+      </div>
+      <div class="status" id="poke-status"></div>
+      <div id="poke-result" class="card-grid"></div>
+    </div>
+
+    <!-- ── 3. Retry with exponential back-off ── -->
+    <div class="section">
+      <h2>3. Retry with exponential back-off</h2>
+      <p style="font-size:0.9rem">Simulates a flaky endpoint that fails the first two attempts, then succeeds on the third.</p>
+      <button onclick="runRetry()">Run flaky request</button>
+      <div class="output" id="out-retry"></div>
+    </div>
+
+    <!-- ── 4. CORS explainer ── -->
+    <div class="section">
+      <h2>4. CORS — what it is and how to deal with it</h2>
+      <div class="cors-box">
+        <strong>Cross-Origin Resource Sharing (CORS)</strong> is a browser security policy that
+        blocks requests to a different origin (protocol + domain + port) unless the server explicitly
+        allows it via response headers.
+        <br /><br />
+        <strong>Signs you have a CORS problem:</strong><br />
+        <code>Access to fetch at 'https://other-api.com/data' from origin 'https://myapp.com'
+has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header…</code>
+        <br /><br />
+        <strong>CORS only applies in browsers.</strong> Server-to-server requests (Node.js, Python,
+        etc.) are never subject to CORS.<br /><br />
+        <strong>Solutions:</strong>
+        <ul style="margin:0.5rem 0 0; padding-left:1.25rem">
+          <li><strong>If you own the API:</strong> Add <code>Access-Control-Allow-Origin</code> response headers.</li>
+          <li><strong>If you don't:</strong> Route requests through your own backend proxy.</li>
+          <li><strong>During development:</strong> Use Vite's <code>server.proxy</code> or webpack's <code>devServer.proxy</code>.</li>
+          <li><strong>Using public APIs:</strong> Choose ones that already include CORS headers (PokeAPI, JSONPlaceholder, Open-Meteo…).</li>
+        </ul>
+      </div>
+      <button onclick="demoCORS()">Demo CORS-friendly request</button>
+      <div class="output" id="out-cors"></div>
+    </div>
+
+    <script>
+      // ═══════════════════════════════════════════════════════════════════
+      // apiFetch — production-quality fetch wrapper
+      // ═══════════════════════════════════════════════════════════════════
+
+      /**
+       * Custom error class that carries the HTTP status and parsed body.
+       * Lets callers distinguish 401 / 403 / 404 / 500 etc.
+       */
+      class APIError extends Error {
+        constructor(message, status, data) {
+          super(message);
+          this.name = 'APIError';
+          this.status = status;
+          this.data = data;
+        }
+      }
+
+      /**
+       * A robust fetch wrapper that:
+       *  1. Catches network errors (offline, DNS failure)
+       *  2. Throws APIError for non-2xx HTTP responses
+       *  3. Handles 204 No Content gracefully
+       */
+      async function apiFetch(url, options = {}) {
+        let response;
+        try {
+          response = await fetch(url, options);
+        } catch (networkError) {
+          throw new Error(`Network error: ${networkError.message}`);
+        }
+
+        if (!response.ok) {
+          let body = null;
+          try { body = await response.json(); } catch { /* no body */ }
+          throw new APIError(
+            `HTTP ${response.status}: ${response.statusText}`,
+            response.status,
+            body
+          );
+        }
+
+        if (response.status === 204) return null;   // No Content
+        return response.json();
+      }
+
+      // ─── Utilities ────────────────────────────────────────────────────
+      function log(id, msg, type = '') {
+        const el = document.getElementById(id);
+        const div = document.createElement('div');
+        div.className = 'log-entry ' + type;
+        div.textContent = msg;
+        el.appendChild(div);
+        el.scrollTop = el.scrollHeight;
+      }
+      function clearLog(id) { document.getElementById(id).innerHTML = ''; }
+
+      function setStatus(id, msg, type) {
+        const el = document.getElementById(id);
+        el.textContent = msg;
+        el.className = 'status ' + type;
+      }
+
+      // ═══════════════════════════════════════════════════════════════════
+      // Section 1 — Loading / data / error state
+      // ═══════════════════════════════════════════════════════════════════
+
+      async function loadPosts() {
+        document.getElementById('posts-cards').innerHTML = '';
+        setStatus('posts-status', '⏳ Loading posts…', 'loading');
+
+        try {
+          // Limit to 6 posts for the demo
+          const posts = await apiFetch('https://jsonplaceholder.typicode.com/posts?_limit=6');
+          setStatus('posts-status', `✓ Loaded ${posts.length} posts`, 'success');
+          renderPostCards(posts);
+        } catch (error) {
+          setStatus('posts-status', `✗ ${error.message}`, 'error');
+        }
+      }
+
+      async function loadPostsFail() {
+        document.getElementById('posts-cards').innerHTML = '';
+        setStatus('posts-status', '⏳ Requesting bad endpoint…', 'loading');
+
+        try {
+          // This endpoint does not exist → 404
+          await apiFetch('https://jsonplaceholder.typicode.com/nonexistent');
+        } catch (error) {
+          if (error instanceof APIError) {
+            setStatus('posts-status', `✗ APIError (${error.status}): ${error.message}`, 'error');
+          } else {
+            setStatus('posts-status', `✗ Network error: ${error.message}`, 'error');
+          }
+        }
+      }
+
+      function renderPostCards(posts) {
+        const grid = document.getElementById('posts-cards');
+        grid.innerHTML = posts.map(post => `
+          <div class="card">
+            <h3>${escapeHtml(post.title)}</h3>
+            <p>${escapeHtml(post.body.slice(0, 80))}…</p>
+          </div>
+        `).join('');
+      }
+
+      // ═══════════════════════════════════════════════════════════════════
+      // Section 2 — PokeAPI
+      // ═══════════════════════════════════════════════════════════════════
+
+      async function loadPokemon() {
+        const name = document.getElementById('poke-name').value.trim().toLowerCase();
+        document.getElementById('poke-result').innerHTML = '';
+
+        if (!name) {
+          setStatus('poke-status', '⚠ Please enter a Pokémon name', 'error');
+          return;
+        }
+
+        setStatus('poke-status', `⏳ Searching for "${name}"…`, 'loading');
+
+        try {
+          const pokemon = await apiFetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+          setStatus('poke-status', `✓ Found: ${pokemon.name}`, 'success');
+          renderPokemon(pokemon);
+        } catch (error) {
+          if (error instanceof APIError && error.status === 404) {
+            setStatus('poke-status', `✗ Pokémon "${name}" not found (404)`, 'error');
+          } else {
+            setStatus('poke-status', `✗ ${error.message}`, 'error');
+          }
+        }
+      }
+
+      function renderPokemon(p) {
+        const grid = document.getElementById('poke-result');
+        const sprite = p.sprites.other?.['official-artwork']?.front_default
+                      || p.sprites.front_default;
+        const types = p.types.map(t => t.type.name).join(', ');
+        const stats = p.stats.map(s => `${s.stat.name}: ${s.base_stat}`).join(' | ');
+
+        grid.innerHTML = `
+          <div class="card">
+            <img src="${escapeHtml(sprite || '')}" alt="${escapeHtml(p.name)}" loading="lazy" />
+            <h3>#${p.id} – ${escapeHtml(p.name)}</h3>
+            <p>Type: ${escapeHtml(types)}</p>
+            <p style="margin-top:0.25rem;font-size:0.75rem">${escapeHtml(stats)}</p>
+          </div>
+        `;
+      }
+
+      // ═══════════════════════════════════════════════════════════════════
+      // Section 3 — Retry with exponential back-off
+      // ═══════════════════════════════════════════════════════════════════
+
+      let attemptCount = 0;
+
+      /** Simulates a flaky endpoint: fails on the first two calls, succeeds on the third. */
+      async function flakyEndpoint() {
+        attemptCount++;
+        await new Promise(r => setTimeout(r, 300)); // simulate latency
+        if (attemptCount <= 2) {
+          throw new APIError('503 Service Unavailable', 503, null);
+        }
+        return { message: 'Success on attempt ' + attemptCount };
+      }
+
+      async function fetchWithRetry(fetchFn, retries = 4) {
+        for (let attempt = 1; attempt <= retries; attempt++) {
+          try {
+            return await fetchFn();
+          } catch (error) {
+            const isLast = attempt === retries;
+            const isRetryable = error instanceof APIError && error.status >= 500;
+
+            if (isLast || !isRetryable) throw error;
+
+            const backoff = 2 ** attempt * 200; // 400ms, 800ms, 1600ms…
+            log('out-retry', `  attempt ${attempt} failed (${error.message}) — retrying in ${backoff}ms…`, 'warn');
+            await new Promise(r => setTimeout(r, backoff));
+          }
+        }
+      }
+
+      async function runRetry() {
+        clearLog('out-retry');
+        attemptCount = 0; // reset the flaky counter
+        log('out-retry', 'Starting request to flaky endpoint…');
+
+        try {
+          const result = await fetchWithRetry(flakyEndpoint);
+          log('out-retry', '✓ ' + result.message, 'ok');
+        } catch (error) {
+          log('out-retry', '✗ All retries exhausted: ' + error.message, 'error');
+        }
+      }
+
+      // ═══════════════════════════════════════════════════════════════════
+      // Section 4 — CORS demo
+      // ═══════════════════════════════════════════════════════════════════
+
+      async function demoCORS() {
+        clearLog('out-cors');
+        const url = 'https://restcountries.com/v3.1/name/portugal?fields=name,capital,population,flags';
+
+        log('out-cors', `→ GET ${url}`);
+        log('out-cors', '  This API includes Access-Control-Allow-Origin: * headers → CORS OK', 'info');
+
+        try {
+          const [country] = await apiFetch(url);
+          log('out-cors', `✓ Name:       ${country.name.common}`, 'ok');
+          log('out-cors', `  Capital:    ${country.capital?.[0] ?? 'N/A'}`);
+          log('out-cors', `  Population: ${country.population.toLocaleString()}`);
+          log('out-cors', `  Flag:       ${country.flags?.emoji ?? ''}`);
+        } catch (error) {
+          log('out-cors', '✗ ' + error.message, 'error');
+        }
+      }
+
+      // ─── Security helper ─────────────────────────────────────────────
+      /**
+       * Escape user-supplied / API-supplied strings before inserting into innerHTML.
+       * Prevents XSS when rendering data from external sources.
+       */
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;');
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>01 – Callbacks</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        max-width: 720px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        background: #f5f5f5;
+        color: #222;
+      }
+      h1 { color: #333; }
+      h2 { margin-top: 2rem; color: #555; font-size: 1.1rem; }
+      .output {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        border-radius: 6px;
+        padding: 1rem;
+        min-height: 3rem;
+        font-family: monospace;
+        white-space: pre-wrap;
+        font-size: 0.9rem;
+      }
+      .log-entry { margin: 2px 0; }
+      .log-entry.error { color: #f48771; }
+      .log-entry.warn  { color: #dcdcaa; }
+      .log-entry.info  { color: #9cdcfe; }
+      button {
+        margin-top: 0.75rem;
+        padding: 0.5rem 1.25rem;
+        background: #0078d4;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.95rem;
+      }
+      button:hover { background: #005ea2; }
+      .section { margin-bottom: 2.5rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Callbacks</h1>
+    <p>Open the browser DevTools console alongside the output panels below to observe execution order.</p>
+
+    <!-- ── Section 1: Basic callback ── -->
+    <div class="section">
+      <h2>1. Basic synchronous callback</h2>
+      <div class="output" id="out-basic"></div>
+      <button onclick="runBasic()">Run</button>
+    </div>
+
+    <!-- ── Section 2: Async callback (setTimeout) ── -->
+    <div class="section">
+      <h2>2. Async callback with setTimeout</h2>
+      <div class="output" id="out-async"></div>
+      <button onclick="runAsync()">Run</button>
+    </div>
+
+    <!-- ── Section 3: Error-first callback ── -->
+    <div class="section">
+      <h2>3. Error-first (Node-style) callback</h2>
+      <div class="output" id="out-errorfirst"></div>
+      <button onclick="runErrorFirst()">Run (success)</button>
+      <button onclick="runErrorFirstFail()">Run (failure)</button>
+    </div>
+
+    <!-- ── Section 4: Callback hell ── -->
+    <div class="section">
+      <h2>4. Callback hell — simulated chained requests</h2>
+      <div class="output" id="out-hell"></div>
+      <button onclick="runCallbackHell()">Run</button>
+    </div>
+
+    <script>
+      // ─── Utility: log to an output panel ──────────────────────────────
+      function log(outputId, message, type = '') {
+        const out = document.getElementById(outputId);
+        const line = document.createElement('div');
+        line.className = 'log-entry ' + type;
+        line.textContent = message;
+        out.appendChild(line);
+      }
+      function clearOutput(outputId) {
+        document.getElementById(outputId).innerHTML = '';
+      }
+
+      // ─── 1. Basic synchronous callback ────────────────────────────────
+      /**
+       * greet accepts a name and a callback.
+       * It calls the callback after logging the greeting.
+       */
+      function greet(name, callback) {
+        log('out-basic', `Hello, ${name}!`);
+        callback(); // invoke the callback
+      }
+
+      function sayGoodbye() {
+        log('out-basic', 'Goodbye! (callback executed)');
+      }
+
+      function runBasic() {
+        clearOutput('out-basic');
+        log('out-basic', '→ Calling greet("Alice", sayGoodbye)');
+        greet('Alice', sayGoodbye);
+        log('out-basic', '→ greet() returned — script continues synchronously');
+      }
+
+      // ─── 2. Async callback with setTimeout ────────────────────────────
+      /**
+       * setTimeout schedules a callback on the macrotask queue.
+       * The script continues synchronously; the callback runs later.
+       */
+      function runAsync() {
+        clearOutput('out-async');
+        log('out-async', '1. Before setTimeout');
+
+        setTimeout(function () {
+          // This runs ~2 seconds later — after the call stack is clear
+          log('out-async', '3. Inside setTimeout callback (runs after ~2s)', 'info');
+        }, 2000);
+
+        log('out-async', '2. After setTimeout — code here runs immediately');
+        log('out-async', '   (Notice: line 3 will appear ~2s from now)');
+      }
+
+      // ─── 3. Error-first callback ───────────────────────────────────────
+      /**
+       * Convention: first parameter is an Error (or null), second is the data.
+       * The caller must always check the error before using the data.
+       */
+      function simulateFileRead(path, callback) {
+        setTimeout(function () {
+          if (!path || path.trim() === '') {
+            callback(new Error('Path must not be empty'));
+            return;
+          }
+          callback(null, `Contents of "${path}"`); // null = no error
+        }, 800);
+      }
+
+      function runErrorFirst() {
+        clearOutput('out-errorfirst');
+        log('out-errorfirst', 'Reading file…');
+        simulateFileRead('./data.txt', function (err, data) {
+          if (err) {
+            log('out-errorfirst', '✗ Error: ' + err.message, 'error');
+            return;
+          }
+          log('out-errorfirst', '✓ Success: ' + data, 'info');
+        });
+      }
+
+      function runErrorFirstFail() {
+        clearOutput('out-errorfirst');
+        log('out-errorfirst', 'Reading file with empty path…');
+        simulateFileRead('', function (err, data) {
+          if (err) {
+            log('out-errorfirst', '✗ Error: ' + err.message, 'error');
+            return;
+          }
+          log('out-errorfirst', '✓ Success: ' + data, 'info');
+        });
+      }
+
+      // ─── 4. Callback hell ─────────────────────────────────────────────
+      /**
+       * Each fake "API call" depends on the result of the previous one.
+       * Notice how deeply the code nests — this is the pyramid of doom.
+       * Promises and async/await solve this problem (see later examples).
+       */
+      function fakeApiCall(label, delay, callback) {
+        setTimeout(function () {
+          callback(null, { id: Math.floor(Math.random() * 1000), name: label });
+        }, delay);
+      }
+
+      function runCallbackHell() {
+        clearOutput('out-hell');
+        log('out-hell', 'Starting chained requests…');
+
+        // Step 1: get user
+        fakeApiCall('User', 400, function (err, user) {
+          if (err) { log('out-hell', '✗ ' + err.message, 'error'); return; }
+          log('out-hell', `✓ Got user: ${user.name} (id=${user.id})`);
+
+          // Step 2: get orders for that user (depends on user.id)
+          fakeApiCall('Orders', 400, function (err, orders) {
+            if (err) { log('out-hell', '✗ ' + err.message, 'error'); return; }
+            log('out-hell', `✓ Got orders: ${orders.name} (id=${orders.id})`);
+
+            // Step 3: get first order details (depends on orders)
+            fakeApiCall('OrderDetails', 400, function (err, details) {
+              if (err) { log('out-hell', '✗ ' + err.message, 'error'); return; }
+              log('out-hell', `✓ Got details: ${details.name} (id=${details.id})`);
+
+              // Step 4: get product (depends on details)
+              fakeApiCall('Product', 400, function (err, product) {
+                if (err) { log('out-hell', '✗ ' + err.message, 'error'); return; }
+                log('out-hell', `✓ Final product: ${product.name} (id=${product.id})`);
+                log('out-hell', '⚠ Notice how many levels deep we are! → Use Promises instead.', 'warn');
+              });
+            });
+          });
+        });
+      }
+    </script>
+  </body>
+</html>
