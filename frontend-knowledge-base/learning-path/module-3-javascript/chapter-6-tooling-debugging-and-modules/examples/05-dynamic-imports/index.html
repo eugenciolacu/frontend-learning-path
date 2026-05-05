@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Imports Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 750px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+    }
+
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    p { color: #a6adc8; line-height: 1.6; }
+
+    code {
+      background: #313244;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.9em;
+    }
+
+    .card {
+      background: #313244;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 1rem 0;
+    }
+
+    .output-box {
+      background: #181825;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-family: monospace;
+      font-size: 13px;
+      margin-top: 12px;
+      min-height: 40px;
+      white-space: pre-wrap;
+      color: #a6e3a1;
+    }
+
+    button {
+      padding: 10px 18px;
+      background: #89b4fa;
+      color: #1e1e2e;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 4px 4px 4px 0;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #74c7ec; }
+    button:disabled { background: #585b70; cursor: not-allowed; }
+
+    select {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #585b70;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    .tip {
+      border-left: 4px solid #f9e2af;
+      background: #2a2a3e;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 1rem 0;
+      color: #f9e2af;
+    }
+
+    .network-hint {
+      font-size: 12px;
+      color: #6c7086;
+      margin-top: 6px;
+    }
+
+    #chart-container {
+      border: 2px dashed #585b70;
+      border-radius: 8px;
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #6c7086;
+      margin-top: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dynamic Imports Demo</h1>
+
+  <p>
+    Dynamic <code>import()</code> loads modules on demand (lazily) instead of
+    at startup. This improves initial page load time by only loading code when
+    it is actually needed.
+  </p>
+
+  <div class="tip">
+    <strong>Note:</strong> Serve this folder over HTTP to use ES Modules.
+    Use <code>npx serve .</code> or VS Code's Live Server extension.
+    Watch the <strong>Network tab</strong> in DevTools to see modules load on demand.
+  </div>
+
+  <!-- Scenario 1: Load on button click -->
+  <h2>Scenario 1: Load a Feature on Button Click</h2>
+  <div class="card">
+    <p>
+      The <code>heavy-chart.js</code> module is NOT loaded at startup.
+      It is only fetched from the server when you click the button.
+      Check the <strong>Network tab</strong> — the file won't appear until you click.
+    </p>
+    <button id="load-chart-btn" onclick="loadChartFeature()">
+      Load Chart Feature
+    </button>
+    <p class="network-hint">Watch DevTools → Network tab for the request to heavy-chart.js</p>
+    <div id="chart-container">Chart will render here after loading...</div>
+    <div id="chart-output" class="output-box" style="display:none;"></div>
+  </div>
+
+  <!-- Scenario 2: Conditional loading -->
+  <h2>Scenario 2: Conditional Module Loading</h2>
+  <div class="card">
+    <p>
+      Select a theme. The corresponding theme module is loaded on demand.
+      Each theme is a separate module file — only the selected one loads.
+    </p>
+    <select id="theme-select">
+      <option value="default">Default Theme</option>
+      <option value="dark">Dark Theme</option>
+      <option value="high-contrast">High Contrast Theme</option>
+    </select>
+    <button onclick="applyTheme()">Apply Theme</button>
+    <div id="theme-output" class="output-box">Select a theme and click Apply...</div>
+  </div>
+
+  <!-- Scenario 3: Route-based lazy loading -->
+  <h2>Scenario 3: Simulated Routing (Code Splitting)</h2>
+  <div class="card">
+    <p>
+      Each "page" is a separate module. Only the current page's module is loaded.
+      This is the pattern used by React Router, Vue Router, etc.
+    </p>
+    <button onclick="navigateTo('home')">Home</button>
+    <button onclick="navigateTo('about')">About</button>
+    <button onclick="navigateTo('contact')">Contact</button>
+    <div id="route-output" class="output-box">Click a page to load it...</div>
+  </div>
+
+  <!-- Scenario 4: import() with .then() -->
+  <h2>Scenario 4: Using import() with Promise.then()</h2>
+  <div class="card">
+    <p>
+      Dynamic <code>import()</code> returns a Promise, so you can use
+      <code>.then()</code> instead of <code>await</code>.
+    </p>
+    <button onclick="runPromiseStyle()">Load with .then()</button>
+    <div id="promise-output" class="output-box">Click to load...</div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

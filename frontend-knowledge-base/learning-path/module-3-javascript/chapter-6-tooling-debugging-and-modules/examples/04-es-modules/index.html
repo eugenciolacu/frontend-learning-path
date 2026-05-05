@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ES Modules Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 750px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+    }
+
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    p { color: #a6adc8; line-height: 1.6; }
+
+    code {
+      background: #313244;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .output-box {
+      background: #181825;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-family: monospace;
+      font-size: 14px;
+      margin-top: 12px;
+      min-height: 40px;
+      white-space: pre-wrap;
+      color: #a6e3a1;
+    }
+
+    button {
+      padding: 10px 18px;
+      background: #89b4fa;
+      color: #1e1e2e;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 4px 0;
+    }
+
+    button:hover { background: #74c7ec; }
+
+    .tip {
+      border-left: 4px solid #f9e2af;
+      background: #2a2a3e;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 1rem 0;
+      color: #f9e2af;
+    }
+  </style>
+</head>
+<body>
+  <h1>ES Modules Demo</h1>
+
+  <div class="tip">
+    <strong>Important:</strong> This page must be served over HTTP (not opened as
+    <code>file://</code>) because ES Modules require CORS. Use a local dev server:
+    <code>npx serve .</code> or VS Code's Live Server extension.
+  </div>
+
+  <h2>Named Imports from math.js</h2>
+  <p>
+    Imports <code>add</code>, <code>subtract</code>, <code>multiply</code>,
+    and <code>PI</code> from <code>modules/math.js</code>.
+  </p>
+  <button onclick="runMathDemo()">Run Math Demo</button>
+  <div id="math-output" class="output-box">Click the button...</div>
+
+  <h2>Default Import from Logger</h2>
+  <p>
+    Imports the default export (<code>Logger</code> class) from
+    <code>modules/logger.js</code>, plus the named export <code>LOG_LEVEL</code>.
+  </p>
+  <button onclick="runLoggerDemo()">Run Logger Demo</button>
+  <div id="logger-output" class="output-box">Click the button...</div>
+
+  <h2>Namespace Import (import *)</h2>
+  <p>
+    Imports everything from <code>modules/validators.js</code> under a single
+    <code>Validators</code> namespace object.
+  </p>
+  <button onclick="runValidatorDemo()">Run Validators Demo</button>
+  <div id="validator-output" class="output-box">Click the button...</div>
+
+  <h2>Barrel File (Re-exports via index.js)</h2>
+  <p>
+    Imports from a single <code>modules/index.js</code> file that re-exports
+    everything from multiple modules.
+  </p>
+  <button onclick="runBarrelDemo()">Run Barrel Import Demo</button>
+  <div id="barrel-output" class="output-box">Click the button...</div>
+
+  <!--
+    type="module" is required to use import/export syntax.
+    It also:
+      - Makes the script deferred by default
+      - Runs in strict mode
+      - Scopes variables to the module (not global)
+  -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

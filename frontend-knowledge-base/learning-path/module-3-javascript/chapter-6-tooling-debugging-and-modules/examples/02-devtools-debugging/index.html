@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Debugging with DevTools</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+    }
+
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+
+    p { color: #a6adc8; line-height: 1.6; }
+
+    .card {
+      background: #313244;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 1rem 0;
+    }
+
+    input[type="number"] {
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: 1px solid #585b70;
+      background: #1e1e2e;
+      color: #cdd6f4;
+      font-size: 14px;
+      width: 100px;
+      margin-right: 8px;
+    }
+
+    button {
+      padding: 10px 18px;
+      background: #89b4fa;
+      color: #1e1e2e;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    button:hover { background: #74c7ec; }
+
+    #output {
+      margin-top: 16px;
+      padding: 14px;
+      background: #181825;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 14px;
+      min-height: 40px;
+      color: #a6e3a1;
+    }
+
+    .tip {
+      border-left: 4px solid #f9e2af;
+      background: #2a2a3e;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 1rem 0;
+      color: #f9e2af;
+    }
+
+    .buggy { color: #f38ba8; }
+    .fixed { color: #a6e3a1; }
+  </style>
+</head>
+<body>
+  <h1>Debugging with Browser DevTools</h1>
+
+  <p>
+    This example demonstrates practical debugging scenarios. Open
+    <strong>DevTools → Sources</strong> and set breakpoints in
+    <code>debugging-demo.js</code> to pause execution and inspect state.
+  </p>
+
+  <!-- Scenario 1: Buggy cart total -->
+  <h2>Scenario 1: Shopping Cart Total Bug</h2>
+  <div class="card">
+    <p>
+      The cart total calculation has a bug. Set a breakpoint in
+      <code>calculateTotal()</code> to find it.
+    </p>
+    <button onclick="runCartDemo()">Run Cart Total</button>
+    <div id="cart-output" class="output" style="margin-top:12px; padding:10px; background:#181825; border-radius:6px; font-family:monospace;"></div>
+  </div>
+
+  <!-- Scenario 2: debugger statement -->
+  <h2>Scenario 2: Using the <code>debugger</code> Statement</h2>
+  <div class="card">
+    <p>
+      Click the button below. If DevTools is open, execution will pause
+      inside the loop at the <code>debugger</code> line. Inspect
+      <code>i</code> and <code>sum</code> in the Scope panel.
+    </p>
+    <button onclick="runDebuggerDemo()">Run with debugger</button>
+    <div id="debugger-output" style="margin-top:12px; padding:10px; background:#181825; border-radius:6px; font-family:monospace; color:#a6e3a1;"></div>
+  </div>
+
+  <!-- Scenario 3: Async debugging -->
+  <h2>Scenario 3: Async / Fetch Debugging</h2>
+  <div class="card">
+    <p>
+      Simulates a failed API call. Open the <strong>Network</strong> tab to see
+      the request, and the <strong>Console</strong> to see the error.
+    </p>
+    <button onclick="runAsyncDemo()">Fetch Data</button>
+    <div id="async-output" style="margin-top:12px; padding:10px; background:#181825; border-radius:6px; font-family:monospace;"></div>
+  </div>
+
+  <!-- Scenario 4: Performance timing -->
+  <h2>Scenario 4: Measuring Performance</h2>
+  <div class="card">
+    <p>
+      Uses <code>console.time()</code> and the
+      <code>Performance</code> API to measure how long sorting 500,000 items takes.
+    </p>
+    <button onclick="runPerfDemo()">Run Performance Test</button>
+    <div id="perf-output" style="margin-top:12px; padding:10px; background:#181825; border-radius:6px; font-family:monospace;"></div>
+  </div>
+
+  <div class="tip">
+    <strong>Tip:</strong> Open DevTools → Sources, navigate to
+    <code>debugging-demo.js</code>, and click on any line number to set a
+    breakpoint before clicking the buttons.
+  </div>
+
+  <script src="debugging-demo.js"></script>
+</body>
+</html>

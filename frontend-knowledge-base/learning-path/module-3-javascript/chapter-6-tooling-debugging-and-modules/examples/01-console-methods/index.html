@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Console Methods Demo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background: #1e1e2e;
+      color: #cdd6f4;
+    }
+
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+
+    p {
+      color: #a6adc8;
+      line-height: 1.6;
+    }
+
+    .tip {
+      background: #313244;
+      border-left: 4px solid #a6e3a1;
+      padding: 12px 16px;
+      border-radius: 4px;
+      margin: 1rem 0;
+    }
+
+    button {
+      display: inline-block;
+      margin: 6px 4px;
+      padding: 10px 18px;
+      background: #89b4fa;
+      color: #1e1e2e;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    button:hover { background: #74c7ec; }
+  </style>
+</head>
+<body>
+  <h1>Console Methods Demo</h1>
+  <p>Open <strong>DevTools (F12) → Console</strong> and click each button to see the output.</p>
+
+  <h2>Basic Logging</h2>
+  <button onclick="demoLog()">console.log()</button>
+  <button onclick="demoWarn()">console.warn()</button>
+  <button onclick="demoError()">console.error()</button>
+
+  <h2>Tabular Data</h2>
+  <button onclick="demoTable()">console.table()</button>
+
+  <h2>Grouping</h2>
+  <button onclick="demoGroup()">console.group()</button>
+  <button onclick="demoGroupCollapsed()">console.groupCollapsed()</button>
+
+  <h2>Timing</h2>
+  <button onclick="demoTime()">console.time()</button>
+
+  <h2>Counting</h2>
+  <button onclick="demoCount()">console.count()</button>
+
+  <h2>Assertions</h2>
+  <button onclick="demoAssert()">console.assert()</button>
+
+  <h2>Stack Trace</h2>
+  <button onclick="demoTrace()">console.trace()</button>
+
+  <h2>DOM Inspection</h2>
+  <button onclick="demoDir()">console.dir()</button>
+
+  <h2>Styled Output</h2>
+  <button onclick="demoStyled()">Styled console.log()</button>
+
+  <div class="tip">
+    <strong>Tip:</strong> All examples print output to the DevTools Console. Nothing will appear on the page itself.
+  </div>
+
+  <script src="console-demo.js"></script>
+</body>
+</html>
