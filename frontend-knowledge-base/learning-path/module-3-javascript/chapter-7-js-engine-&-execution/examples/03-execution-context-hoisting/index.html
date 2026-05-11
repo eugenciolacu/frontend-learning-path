@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Execution Context & Hoisting</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Execution Context & Hoisting</h1>
+      <p>Explore how JavaScript processes code during the Creation Phase (hoisting) before executing it.</p>
+    </header>
+
+    <main>
+      <!-- Section 1: EC Lifecycle -->
+      <section>
+        <h2>Execution Context Lifecycle</h2>
+        <div class="ec-diagram">
+          <div class="ec-box">
+            <div class="ec-title">Global Execution Context</div>
+            <div class="ec-phases">
+              <div class="phase phase-create">
+                <span class="phase-label">Creation Phase</span>
+                <ul>
+                  <li>Set up scope chain</li>
+                  <li>Hoist <code>var</code> → <code>undefined</code></li>
+                  <li>Hoist function declarations (full body)</li>
+                  <li>Bind <code>this</code> → <code>window</code></li>
+                </ul>
+              </div>
+              <div class="phase phase-exec">
+                <span class="phase-label">Execution Phase</span>
+                <ul>
+                  <li>Run code line by line</li>
+                  <li>Assign values to variables</li>
+                  <li>Call functions → new Function EC created</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section 2: Hoisting Interactive -->
+      <section>
+        <h2>Hoisting Explorer</h2>
+        <p>Click each example to run it and see the output.</p>
+
+        <div class="examples-grid">
+
+          <!-- var hoisting -->
+          <div class="example-card">
+            <div class="example-header">
+              <span class="tag tag-var">var</span>
+              <h3>var Hoisting</h3>
+            </div>
+            <pre class="code-block">console.log(x); // ???
+var x = 10;
+console.log(x); // ???</pre>
+            <div class="explanation">
+              <p><strong>Creation Phase:</strong> <code>var x</code> is hoisted and initialized to <code>undefined</code>.</p>
+              <p><strong>Execution Phase:</strong> First log runs → <code>undefined</code>. Then assignment → <code>x = 10</code>. Second log → <code>10</code>.</p>
+            </div>
+            <button class="btn" data-example="var-hoisting">Run ▶</button>
+            <div class="output" id="out-var-hoisting"></div>
+          </div>
+
+          <!-- let/const TDZ -->
+          <div class="example-card">
+            <div class="example-header">
+              <span class="tag tag-let">let/const</span>
+              <h3>Temporal Dead Zone</h3>
+            </div>
+            <pre class="code-block">try {
+  console.log(y); // ???
+} catch (e) {
+  console.log(e.message);
+}
+let y = 20;
+console.log(y); // ???</pre>
+            <div class="explanation">
+              <p><code>let</code>/<code>const</code> are hoisted but NOT initialized. Accessing them before declaration is a <code>ReferenceError</code> — the TDZ (Temporal Dead Zone).</p>
+            </div>
+            <button class="btn" data-example="let-tdz">Run ▶</button>
+            <div class="output" id="out-let-tdz"></div>
+          </div>
+
+          <!-- function declaration hoisting -->
+          <div class="example-card">
+            <div class="example-header">
+              <span class="tag tag-fn">function</span>
+              <h3>Function Declaration Hoisting</h3>
+            </div>
+            <pre class="code-block">// Called BEFORE declaration — works!
+sayHello();
+
+function sayHello() {
+  console.log("Hello, World!");
+}
+
+// Still works after too
+sayHello();</pre>
+            <div class="explanation">
+              <p>Entire function declarations (name + body) are hoisted during the Creation Phase. The function is fully available before its definition in source code.</p>
+            </div>
+            <button class="btn" data-example="fn-decl-hoisting">Run ▶</button>
+            <div class="output" id="out-fn-decl-hoisting"></div>
+          </div>
+
+          <!-- function expression hoisting -->
+          <div class="example-card">
+            <div class="example-header">
+              <span class="tag tag-expr">expression</span>
+              <h3>Function Expression Hoisting</h3>
+            </div>
+            <pre class="code-block">try {
+  greet(); // ???
+} catch (e) {
+  console.log(e.constructor.name + ': ' + e.message);
+}
+var greet = function () {
+  console.log("Hi!");
+};
+greet(); // ???</pre>
+            <div class="explanation">
+              <p>Only <code>var greet</code> is hoisted (as <code>undefined</code>). The function body is NOT hoisted. Calling <code>undefined()</code> throws a <code>TypeError</code>.</p>
+            </div>
+            <button class="btn" data-example="fn-expr-hoisting">Run ▶</button>
+            <div class="output" id="out-fn-expr-hoisting"></div>
+          </div>
+
+          <!-- const function (arrow) hoisting -->
+          <div class="example-card">
+            <div class="example-header">
+              <span class="tag tag-arrow">arrow</span>
+              <h3>Arrow Function Hoisting</h3>
+            </div>
+            <pre class="code-block">try {
+  sayBye(); // ???
+} catch (e) {
+  console.log(e.constructor.name + ': ' + e.message);
+}
+const sayBye = () => {
+  console.log("Bye!");
+};
+sayBye(); // ???</pre>
+            <div class="explanation">
+              <p>Arrow functions assigned to <code>const</code> are in the TDZ. Accessing before declaration → <code>ReferenceError</code>.</p>
+            </div>
+            <button class="btn" data-example="arrow-hoisting">Run ▶</button>
+            <div class="output" id="out-arrow-hoisting"></div>
+          </div>
+
+          <!-- var inside block -->
+          <div class="example-card">
+            <div class="example-header">
+              <span class="tag tag-var">var</span>
+              <h3>var Leaks Out of Blocks</h3>
+            </div>
+            <pre class="code-block">if (true) {
+  var leaked = "I escaped the block!";
+  let blocked = "I stay in the block";
+}
+console.log(leaked);  // ???
+try {
+  console.log(blocked); // ???
+} catch (e) {
+  console.log(e.message);
+}</pre>
+            <div class="explanation">
+              <p><code>var</code> is function-scoped, not block-scoped. It leaks out of <code>if</code>, <code>for</code>, and <code>while</code> blocks. <code>let</code>/<code>const</code> are block-scoped.</p>
+            </div>
+            <button class="btn" data-example="var-block-leak">Run ▶</button>
+            <div class="output" id="out-var-block-leak"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Section 3: Hoisting in Loops -->
+      <section>
+        <h2>Classic Hoisting Gotcha: var in Loops</h2>
+        <div class="code-compare">
+          <div>
+            <h3>❌ var in loop — broken closure</h3>
+            <pre class="code-block bad">const fnsVar = [];
+for (var i = 0; i &lt; 3; i++) {
+  fnsVar.push(function () {
+    return i; // 'i' is shared — all see final value!
+  });
+}
+// All return 3, not 0, 1, 2!
+fnsVar.map(fn => fn()); // [3, 3, 3]</pre>
+            <button class="btn btn-danger" id="btn-var-loop">Run ▶</button>
+            <div class="output" id="out-var-loop"></div>
+          </div>
+          <div>
+            <h3>✅ let in loop — correct closure</h3>
+            <pre class="code-block good">const fnsLet = [];
+for (let j = 0; j &lt; 3; j++) {
+  fnsLet.push(function () {
+    return j; // each iteration gets its own 'j'!
+  });
+}
+// Correctly returns 0, 1, 2
+fnsLet.map(fn => fn()); // [0, 1, 2]</pre>
+            <button class="btn" id="btn-let-loop">Run ▶</button>
+            <div class="output" id="out-let-loop"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="hoisting.js"></script>
+  </body>
+</html>

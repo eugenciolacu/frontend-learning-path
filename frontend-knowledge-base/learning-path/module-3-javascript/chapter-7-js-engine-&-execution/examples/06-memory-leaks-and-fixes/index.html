@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Management & Memory Leaks</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Memory Management &amp; Memory Leaks</h1>
+      <p>Learn the JavaScript garbage collection model and how to identify and fix the most common memory leaks.</p>
+    </header>
+
+    <main>
+
+      <!-- GC Overview -->
+      <section>
+        <h2>How Garbage Collection Works</h2>
+        <div class="gc-diagram">
+          <div class="gc-step">
+            <div class="gc-icon">🌱</div>
+            <div class="gc-label">GC Roots</div>
+            <div class="gc-desc">window, current stack, registers</div>
+          </div>
+          <div class="gc-arrow">→</div>
+          <div class="gc-step gc-mark">
+            <div class="gc-icon">🔍</div>
+            <div class="gc-label">Mark Phase</div>
+            <div class="gc-desc">Traverse all reachable object references. Mark as "alive".</div>
+          </div>
+          <div class="gc-arrow">→</div>
+          <div class="gc-step gc-sweep">
+            <div class="gc-icon">🗑️</div>
+            <div class="gc-label">Sweep Phase</div>
+            <div class="gc-desc">Free all memory NOT marked as reachable.</div>
+          </div>
+        </div>
+
+        <div class="gc-explainer">
+          <div class="gc-reachable">
+            <strong>✅ Reachable (stays in memory):</strong>
+            <code>let obj = { name: "Alice" };</code>
+            <span>— 'obj' variable references the heap object → reachable</span>
+          </div>
+          <div class="gc-unreachable">
+            <strong>❌ Unreachable (eligible for GC):</strong>
+            <code>obj = null;</code>
+            <span>— reference removed → object cannot be reached from roots → freed</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Memory Leaks -->
+      <section>
+        <h2>Common Memory Leaks</h2>
+        <div class="leaks-grid">
+
+          <!-- Leak 1: Global variables -->
+          <div class="leak-card">
+            <div class="leak-header">
+              <span class="leak-number">01</span>
+              <h3>Accidental Global Variables</h3>
+            </div>
+            <div class="code-compare">
+              <div>
+                <div class="compare-label bad-label">❌ Leaks</div>
+                <pre class="code-block bad">function createLeak() {
+  // Missing let/const/var!
+  leakyVar = "I am global now";
+}
+createLeak();
+// leakyVar is on window forever</pre>
+              </div>
+              <div>
+                <div class="compare-label good-label">✅ Fixed</div>
+                <pre class="code-block good">function noLeak() {
+  const localVar = "properly scoped";
+  // Also: use "use strict" to catch
+  // accidental globals as errors
+}
+noLeak();</pre>
+              </div>
+            </div>
+            <button class="btn" id="btn-demo-global">Demonstrate ▶</button>
+            <div class="output" id="out-global"></div>
+          </div>
+
+          <!-- Leak 2: Event Listeners -->
+          <div class="leak-card">
+            <div class="leak-header">
+              <span class="leak-number">02</span>
+              <h3>Forgotten Event Listeners</h3>
+            </div>
+            <div class="code-compare">
+              <div>
+                <div class="compare-label bad-label">❌ Leaks</div>
+                <pre class="code-block bad">const btn = document.querySelector("button");
+const handler = () => doWork();
+
+btn.addEventListener("click", handler);
+
+// Remove button from DOM but DON'T
+// remove listener → listener + its
+// closure scope stays in memory!
+btn.remove();</pre>
+              </div>
+              <div>
+                <div class="compare-label good-label">✅ Fixed</div>
+                <pre class="code-block good">const btn = document.querySelector("button");
+const handler = () => doWork();
+
+btn.addEventListener("click", handler);
+
+// Remove listener BEFORE removing element
+btn.removeEventListener("click", handler);
+btn.remove();
+
+// Or use AbortController:
+const ac = new AbortController();
+btn.addEventListener("click", handler,
+  { signal: ac.signal });
+ac.abort(); // removes all at once</pre>
+              </div>
+            </div>
+            <button class="btn" id="btn-demo-listener">Demo: Add/Remove Listener ▶</button>
+            <div class="output" id="out-listener"></div>
+            <div class="listener-counter" id="listener-counter">Listener calls: 0</div>
+            <div style="display:flex;gap:0.5rem;margin-top:0.5rem;">
+              <button class="btn btn-sm" id="btn-add-listener">Add Listener</button>
+              <button class="btn btn-sm btn-danger" id="btn-forget-listener">Remove Element (Leak)</button>
+              <button class="btn btn-sm btn-secondary" id="btn-fix-listener">Remove Element (Fixed)</button>
+            </div>
+          </div>
+
+          <!-- Leak 3: Closures -->
+          <div class="leak-card">
+            <div class="leak-header">
+              <span class="leak-number">03</span>
+              <h3>Closures Holding Large Scopes</h3>
+            </div>
+            <div class="code-compare">
+              <div>
+                <div class="compare-label bad-label">❌ Leaks</div>
+                <pre class="code-block bad">function createLeak() {
+  // 1 million items allocated
+  const largeData = new Array(1_000_000)
+    .fill("data");
+
+  // inner only uses largeData[0],
+  // but holds reference to ALL of it!
+  return function inner() {
+    return largeData[0];
+  };
+}
+
+const query = createLeak();
+// largeData (1M items) is never freed
+// as long as 'query' exists!</pre>
+              </div>
+              <div>
+                <div class="compare-label good-label">✅ Fixed</div>
+                <pre class="code-block good">function createFixed() {
+  const largeData = new Array(1_000_000)
+    .fill("data");
+
+  // Extract only what you need
+  const firstItem = largeData[0];
+  // largeData can now be GC'd after
+  // createFixed() returns!
+
+  return function inner() {
+    return firstItem; // only a string
+  };
+}
+
+const query = createFixed();</pre>
+              </div>
+            </div>
+            <button class="btn" id="btn-demo-closure">Compare Memory Usage ▶</button>
+            <div class="output" id="out-closure"></div>
+          </div>
+
+          <!-- Leak 4: Timers -->
+          <div class="leak-card">
+            <div class="leak-header">
+              <span class="leak-number">04</span>
+              <h3>Timers Not Cleared</h3>
+            </div>
+            <div class="code-compare">
+              <div>
+                <div class="compare-label bad-label">❌ Leaks</div>
+                <pre class="code-block bad">function startComponent() {
+  const heavyData = new Array(100_000)
+    .fill("payload");
+
+  // This interval runs forever!
+  // heavyData is held by the closure
+  setInterval(() => {
+    process(heavyData);
+  }, 1000);
+  // No way to stop it or free memory
+}</pre>
+              </div>
+              <div>
+                <div class="compare-label good-label">✅ Fixed</div>
+                <pre class="code-block good">function startComponent() {
+  const heavyData = new Array(100_000)
+    .fill("payload");
+
+  const id = setInterval(() => {
+    process(heavyData);
+  }, 1000);
+
+  // Return cleanup function
+  return function cleanup() {
+    clearInterval(id); // ✅
+    // heavyData can now be GC'd
+  };
+}
+
+const stop = startComponent();
+// When done:
+stop();</pre>
+              </div>
+            </div>
+            <button class="btn" id="btn-demo-timer">Demo Interval ▶</button>
+            <button class="btn btn-danger" id="btn-stop-timer" disabled>Stop Interval</button>
+            <div class="output" id="out-timer"></div>
+          </div>
+
+          <!-- Leak 5: Detached DOM -->
+          <div class="leak-card">
+            <div class="leak-header">
+              <span class="leak-number">05</span>
+              <h3>Detached DOM Nodes</h3>
+            </div>
+            <div class="code-compare">
+              <div>
+                <div class="compare-label bad-label">❌ Leaks</div>
+                <pre class="code-block bad">let savedRef;
+
+function createAndSave() {
+  const div = document.createElement("div");
+  document.body.appendChild(div);
+  savedRef = div; // hold a reference
+
+  // Remove from DOM...
+  div.remove();
+  // ...but 'savedRef' still points to it!
+  // Div is detached — not in DOM,
+  // but not GC'd either. Memory leak!
+}</pre>
+              </div>
+              <div>
+                <div class="compare-label good-label">✅ Fixed</div>
+                <pre class="code-block good">let savedRef;
+
+function createAndSave() {
+  const div = document.createElement("div");
+  document.body.appendChild(div);
+  savedRef = div;
+
+  div.remove();
+
+  // Nullify the reference — now GC can
+  // collect the detached DOM node
+  savedRef = null; // ✅
+}
+
+// Or use WeakRef to not prevent GC:
+const weakRef = new WeakRef(div);
+const el = weakRef.deref(); // may be undefined</pre>
+              </div>
+            </div>
+            <button class="btn" id="btn-demo-dom">Demo Detached DOM ▶</button>
+            <div class="output" id="out-dom"></div>
+          </div>
+
+          <!-- Leak 6: Cache without eviction -->
+          <div class="leak-card">
+            <div class="leak-header">
+              <span class="leak-number">06</span>
+              <h3>Unbounded Cache / Map</h3>
+            </div>
+            <div class="code-compare">
+              <div>
+                <div class="compare-label bad-label">❌ Leaks</div>
+                <pre class="code-block bad">const cache = new Map();
+
+function processUser(user) {
+  if (!cache.has(user.id)) {
+    cache.set(user.id, expensiveOp(user));
+  }
+  return cache.get(user.id);
+}
+// Map grows forever, no eviction policy!
+// Even if 'user' objects are gone,
+// cache holds them alive by user.id key</pre>
+              </div>
+              <div>
+                <div class="compare-label good-label">✅ Fixed</div>
+                <pre class="code-block good">// Option 1: WeakMap — GC-friendly
+// (keys must be objects; auto-evicted)
+const weakCache = new WeakMap();
+
+function processUser(user) {
+  if (!weakCache.has(user)) {
+    weakCache.set(user, expensiveOp(user));
+  }
+  return weakCache.get(user);
+}
+// When 'user' object has no other refs,
+// WeakMap entry is automatically GC'd ✅
+
+// Option 2: LRU Cache with size limit
+// (evicts oldest entries when full)</pre>
+              </div>
+            </div>
+            <button class="btn" id="btn-demo-cache">Demo Map vs WeakMap ▶</button>
+            <div class="output" id="out-cache"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- DevTools Tips -->
+      <section>
+        <h2>Detecting Memory Leaks with DevTools</h2>
+        <div class="devtools-tips">
+          <div class="tip">
+            <div class="tip-title">📸 Heap Snapshot</div>
+            <p>DevTools → Memory → Take Snapshot. Compare two snapshots before and after a suspected leak. Look for objects that grow between snapshots.</p>
+          </div>
+          <div class="tip">
+            <div class="tip-title">📈 Allocation Timeline</div>
+            <p>DevTools → Memory → Allocation instrumentation on timeline. Records allocations over time — helps find what's being allocated and never freed.</p>
+          </div>
+          <div class="tip">
+            <div class="tip-title">📊 Performance Monitor</div>
+            <p>DevTools → More Tools → Performance Monitor. Watch JS Heap Size in real time. A heap that only grows and never shrinks indicates a leak.</p>
+          </div>
+          <div class="tip">
+            <div class="tip-title">🔍 Node.js: process.memoryUsage()</div>
+            <pre class="code-block" style="margin-top: 0.5rem; font-size:0.78rem;">console.log(process.memoryUsage());
+// { rss, heapTotal, heapUsed, external }</pre>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <script src="memory-leaks.js"></script>
+  </body>
+</html>

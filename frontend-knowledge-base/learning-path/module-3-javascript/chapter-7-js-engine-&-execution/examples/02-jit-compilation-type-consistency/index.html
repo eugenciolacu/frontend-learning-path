@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JIT Compilation & Type Consistency</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>JIT Compilation & Type Consistency</h1>
+      <p>See how V8's JIT compiler optimizes type-consistent code and deoptimizes when types change.</p>
+    </header>
+
+    <main>
+      <section class="explainer">
+        <h2>How V8 Decides to Optimize</h2>
+        <div class="cards">
+          <div class="card">
+            <span class="badge badge-blue">Step 1</span>
+            <strong>Parsing</strong>
+            <p>Source code → Abstract Syntax Tree (AST)</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-yellow">Step 2</span>
+            <strong>Ignition (Bytecode)</strong>
+            <p>AST → bytecode, executed immediately. Fast startup.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-green">Step 3</span>
+            <strong>TurboFan (JIT)</strong>
+            <p>"Hot" functions compiled to optimized machine code. Assumes consistent types.</p>
+          </div>
+          <div class="card">
+            <span class="badge badge-red">Deopt</span>
+            <strong>Deoptimization</strong>
+            <p>Type assumption violated → falls back to bytecode. Performance drops.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="benchmark-section">
+        <h2>Performance Benchmark</h2>
+        <p>Run two versions of a function: one with consistent types (optimizable) and one with mixed types (deoptimized).</p>
+
+        <div class="bench-controls">
+          <label for="iterations">Iterations:</label>
+          <input type="number" id="iterations" value="5000000" min="100000" step="100000" />
+          <button id="btn-run" class="btn">Run Benchmark</button>
+        </div>
+
+        <div class="results" id="results" hidden>
+          <div class="result-card" id="result-consistent">
+            <div class="result-label">✅ Type-Consistent</div>
+            <div class="result-time" id="time-consistent">— ms</div>
+            <div class="result-desc">Always numbers → V8 optimizes</div>
+          </div>
+          <div class="result-card" id="result-mixed">
+            <div class="result-label">⚠️ Type-Mixed</div>
+            <div class="result-time" id="time-mixed">— ms</div>
+            <div class="result-desc">Numbers + strings → V8 deoptimizes</div>
+          </div>
+          <div class="result-card winner" id="result-winner">
+            <div class="result-label">🏆 Speedup</div>
+            <div class="result-time" id="speedup">—×</div>
+            <div class="result-desc">Consistent is this much faster</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="code-section">
+        <h2>Code Examples</h2>
+        <div class="code-grid">
+          <div>
+            <h3>✅ Optimizable — Type-Consistent</h3>
+            <pre class="code-block good">// V8 sees 'number + number' every time.
+// After warming up, TurboFan compiles this
+// to highly optimized native machine code.
+
+function addNumbers(a, b) {
+  return a + b;
+}
+
+for (let i = 0; i &lt; 5_000_000; i++) {
+  addNumbers(i, i + 1); // always numbers ✅
+}</pre>
+          </div>
+          <div>
+            <h3>⚠️ Deoptimizable — Mixed Types</h3>
+            <pre class="code-block bad">// V8 optimizes for numbers first,
+// then hits a string → deoptimizes!
+// Bails out back to interpreted bytecode.
+
+function addAny(a, b) {
+  return a + b;
+}
+
+for (let i = 0; i &lt; 4_999_999; i++) {
+  addAny(i, i + 1);       // numbers...
+}
+addAny("hello", " world"); // string! 💥 deopt</pre>
+          </div>
+        </div>
+
+        <div class="code-grid" style="margin-top: 1.5rem;">
+          <div>
+            <h3>✅ Object Shape Consistency</h3>
+            <pre class="code-block good">// V8 creates a "hidden class" for objects
+// with the same shape. Consistent shapes
+// allow V8 to use fast property access.
+
+function createUser(name, age) {
+  return { name, age }; // always same shape ✅
+}
+
+// V8 generates the same hidden class each time
+const u1 = createUser("Alice", 30);
+const u2 = createUser("Bob", 25);</pre>
+          </div>
+          <div>
+            <h3>⚠️ Object Shape Inconsistency</h3>
+            <pre class="code-block bad">// Different property order = different
+// hidden classes = slower property access
+
+const obj1 = { x: 1, y: 2 };
+const obj2 = { y: 2, x: 1 }; // different hidden class!
+
+// Also bad: adding properties dynamically
+const obj3 = {};
+obj3.x = 1;  // hidden class change
+obj3.y = 2;  // hidden class change again</pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="tips-section">
+        <h2>Best Practices for JIT-Friendly Code</h2>
+        <ul class="tips">
+          <li>✅ Keep function argument types consistent across all call sites</li>
+          <li>✅ Initialize all object properties in the constructor (same order, same shape)</li>
+          <li>✅ Avoid deleting object properties (<code>delete obj.prop</code> changes hidden class)</li>
+          <li>✅ Prefer typed arrays (<code>Int32Array</code>, <code>Float64Array</code>) for numeric data</li>
+          <li>⚠️ Avoid <code>arguments</code> object in hot functions — use rest parameters instead</li>
+          <li>⚠️ Avoid <code>try/catch</code> in very hot inner loops — move them outside</li>
+          <li>⚠️ Avoid <code>eval()</code> — prevents many optimizations</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="jit-demo.js"></script>
+  </body>
+</html>

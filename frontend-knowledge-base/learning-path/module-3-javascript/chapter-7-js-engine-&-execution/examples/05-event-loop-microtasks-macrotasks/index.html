@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Loop: Microtasks & Macrotasks</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Event Loop: Microtasks &amp; Macrotasks</h1>
+      <p>Visualize how the event loop orchestrates synchronous code, microtasks, and macrotasks.</p>
+    </header>
+
+    <main>
+
+      <!-- Architecture overview -->
+      <section class="architecture">
+        <h2>The Concurrency Model</h2>
+        <div class="arch-grid">
+          <div class="arch-box box-stack">
+            <div class="box-title">Call Stack</div>
+            <div class="box-desc">Synchronous code executes here. Single-threaded LIFO.</div>
+            <div class="queue-items" id="arch-stack">
+              <span class="queue-item-empty">empty</span>
+            </div>
+          </div>
+          <div class="arch-box box-micro">
+            <div class="box-title">Microtask Queue</div>
+            <div class="box-desc">Promise.then, queueMicrotask</div>
+            <div class="box-priority">⬆ HIGH PRIORITY — drained completely first</div>
+            <div class="queue-items" id="arch-micro">
+              <span class="queue-item-empty">empty</span>
+            </div>
+          </div>
+          <div class="arch-box box-macro">
+            <div class="box-title">Macrotask Queue</div>
+            <div class="box-desc">setTimeout, setInterval, I/O events</div>
+            <div class="box-priority">⬇ LOWER PRIORITY — one per cycle</div>
+            <div class="queue-items" id="arch-macro">
+              <span class="queue-item-empty">empty</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Scenario runner -->
+      <section>
+        <h2>Execution Order Scenarios</h2>
+        <div class="scenario-controls">
+          <button class="btn" data-scenario="basic">1. Basic Order</button>
+          <button class="btn" data-scenario="nested-micro">2. Nested Microtasks</button>
+          <button class="btn" data-scenario="async-await">3. async/await</button>
+          <button class="btn" data-scenario="multi-timers">4. Multiple Timers</button>
+          <button class="btn btn-secondary" id="btn-clear">Clear</button>
+        </div>
+
+        <div class="scenario-area">
+          <div class="code-panel">
+            <h3>Code</h3>
+            <pre class="code-block" id="scenario-code">// Select a scenario above</pre>
+          </div>
+          <div class="log-panel">
+            <h3>Execution Log <span class="log-hint">(in order)</span></h3>
+            <div id="exec-log" class="exec-log">
+              <div class="log-placeholder">Output will appear here...</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="expected-panel" id="expected-panel" hidden>
+          <h3>Expected Output</h3>
+          <pre id="expected-output" class="code-block"></pre>
+        </div>
+      </section>
+
+      <!-- Comparison table -->
+      <section>
+        <h2>Microtasks vs Macrotasks — Quick Reference</h2>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Microtasks</th>
+              <th>Macrotasks</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Examples</strong></td>
+              <td><code>Promise.then/catch/finally</code>, <code>queueMicrotask()</code>, <code>MutationObserver</code></td>
+              <td><code>setTimeout</code>, <code>setInterval</code>, <code>setImmediate</code>, I/O, UI events</td>
+            </tr>
+            <tr>
+              <td><strong>Priority</strong></td>
+              <td class="good">Higher</td>
+              <td class="warn">Lower</td>
+            </tr>
+            <tr>
+              <td><strong>How many per cycle?</strong></td>
+              <td class="good">ALL — entire queue drained</td>
+              <td class="warn">ONE per event loop cycle</td>
+            </tr>
+            <tr>
+              <td><strong>Runs before render?</strong></td>
+              <td class="good">Yes</td>
+              <td class="warn">No (macrotask → render → next macrotask)</td>
+            </tr>
+            <tr>
+              <td><strong>Risk</strong></td>
+              <td class="bad">Infinite microtasks = starvation</td>
+              <td>Long macrotasks block UI</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Blocking vs non-blocking -->
+      <section>
+        <h2>Blocking vs Non-Blocking Code</h2>
+        <div class="blocking-demo">
+          <button class="btn btn-danger" id="btn-block">Block Main Thread (2s)</button>
+          <button class="btn" id="btn-nonblock">Non-Blocking (chunked)</button>
+          <div class="blocking-status" id="blocking-status">
+            The UI counter below should keep updating. If it freezes, the main thread is blocked.
+          </div>
+          <div class="counter-display" id="counter-display">0</div>
+        </div>
+      </section>
+
+    </main>
+
+    <script src="event-loop.js"></script>
+  </body>
+</html>

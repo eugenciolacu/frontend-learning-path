@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Scope Chain & Lexical Scoping</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Scope Chain & Lexical Scoping</h1>
+      <p>Understand how JavaScript resolves variable lookups by traversing the scope chain outward.</p>
+    </header>
+
+    <main>
+      <!-- Scope chain diagram -->
+      <section>
+        <h2>The Scope Chain</h2>
+        <div class="chain-diagram">
+          <div class="scope-level scope-inner">
+            <div class="scope-title">inner() scope</div>
+            <code>city = "Lisbon"</code>
+            <div class="lookup-arrow">↑ not found? look up ↑</div>
+          </div>
+          <div class="scope-level scope-outer">
+            <div class="scope-title">outer() scope</div>
+            <code>country = "Portugal"</code>
+            <div class="lookup-arrow">↑ not found? look up ↑</div>
+          </div>
+          <div class="scope-level scope-global">
+            <div class="scope-title">Global scope</div>
+            <code>planet = "Earth"</code>
+            <div class="lookup-arrow">↑ not found? → ReferenceError</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive scope explorer -->
+      <section>
+        <h2>Interactive Scope Examples</h2>
+        <div class="examples-grid">
+
+          <div class="example-card">
+            <h3>1. Basic Scope Chain Traversal</h3>
+            <pre class="code-block">const planet = "Earth";     // global
+
+function outer() {
+  const country = "Portugal"; // outer scope
+
+  function inner() {
+    const city = "Lisbon";   // inner scope
+    // Can access ALL outer scopes:
+    console.log(city);    // own scope
+    console.log(country); // outer scope
+    console.log(planet);  // global scope
+  }
+
+  inner();
+  // console.log(city); // ❌ ReferenceError
+}
+outer();</pre>
+            <button class="btn" id="btn-basic-chain">Run ▶</button>
+            <div class="output" id="out-basic-chain"></div>
+          </div>
+
+          <div class="example-card">
+            <h3>2. Lexical Scoping — Scope Follows Code Position</h3>
+            <pre class="code-block">const x = "global";
+
+function outer() {
+  const x = "outer";
+
+  function inner() {
+    // Scope chain: inner → outer → global
+    // Finds 'x' in outer first
+    console.log(x); // "outer"
+  }
+
+  return inner; // return the function
+}
+
+const fn = outer();
+fn(); // still logs "outer", not "global"!
+// Scope was set at DEFINITION time, not call time</pre>
+            <button class="btn" id="btn-lexical">Run ▶</button>
+            <div class="output" id="out-lexical"></div>
+          </div>
+
+          <div class="example-card">
+            <h3>3. Variable Shadowing</h3>
+            <pre class="code-block">const name = "Global Alice";
+
+function greet() {
+  const name = "Local Bob"; // shadows global 'name'
+  console.log(name); // "Local Bob" — inner shadows outer
+}
+
+greet();
+console.log(name); // "Global Alice" — outer unchanged</pre>
+            <button class="btn" id="btn-shadow">Run ▶</button>
+            <div class="output" id="out-shadow"></div>
+          </div>
+
+          <div class="example-card">
+            <h3>4. Closure — Scope Chain Preserved After Return</h3>
+            <pre class="code-block">function makeCounter(start = 0) {
+  let count = start; // in makeCounter's scope
+
+  return {
+    increment() { count++; },
+    decrement() { count--; },
+    value()     { return count; }
+  };
+  // The returned object closes over 'count'
+}
+
+const counter = makeCounter(10);
+counter.increment();
+counter.increment();
+counter.decrement();
+console.log(counter.value()); // 11</pre>
+            <button class="btn" id="btn-closure">Run ▶</button>
+            <div class="output" id="out-closure"></div>
+          </div>
+
+          <div class="example-card">
+            <h3>5. Block Scope vs Function Scope</h3>
+            <pre class="code-block">function scopeDemo() {
+  var funcScoped = "function scope";
+  let blockScoped = "outer block";
+
+  {
+    var funcScoped2 = "still function scope!";
+    let blockScoped = "inner block shadows";
+    const alsoBlock = "block";
+    console.log(blockScoped); // "inner block shadows"
+    console.log(alsoBlock);   // "block"
+  }
+
+  console.log(funcScoped2); // accessible — var!
+  console.log(blockScoped); // "outer block" — unaffected
+  // console.log(alsoBlock); // ❌ ReferenceError
+}
+scopeDemo();</pre>
+            <button class="btn" id="btn-block-scope">Run ▶</button>
+            <div class="output" id="out-block-scope"></div>
+          </div>
+
+          <div class="example-card">
+            <h3>6. IIFE — Immediately Invoked Function Expression</h3>
+            <pre class="code-block">// IIFE creates a private scope.
+// Variables inside don't pollute global scope.
+const result = (function () {
+  const secret = "private value";
+  const count = 42;
+  // 'secret' and 'count' are NOT accessible outside
+  return { count }; // only expose what you want
+})();
+
+console.log(result.count); // 42
+// console.log(result.secret); // undefined
+// console.log(secret); // ❌ ReferenceError</pre>
+            <button class="btn" id="btn-iife">Run ▶</button>
+            <div class="output" id="out-iife"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Scope chain lookup steps -->
+      <section>
+        <h2>Scope Lookup Step-by-Step</h2>
+        <div class="lookup-demo">
+          <input type="text" id="var-lookup" placeholder="Enter variable name (try: city, country, planet, unknown)" />
+          <button class="btn" id="btn-lookup">Trace Lookup ▶</button>
+          <div id="lookup-trace" class="lookup-trace"></div>
+        </div>
+      </section>
+    </main>
+
+    <script src="scope-chain.js"></script>
+  </body>
+</html>
