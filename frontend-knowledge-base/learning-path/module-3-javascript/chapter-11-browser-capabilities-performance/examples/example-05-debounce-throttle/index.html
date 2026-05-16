@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Debounce, Throttle &amp; Passive Listeners</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        padding: 32px 16px 80px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+
+      h1 { font-size: 1.6rem; color: #7dd3fc; text-align: center; }
+      p.subtitle { color: #94a3b8; max-width: 600px; text-align: center; font-size: 0.9rem; }
+
+      .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        width: 100%;
+        max-width: 680px;
+      }
+      .card h2   { color: #7dd3fc; font-size: 1rem; margin-bottom: 4px; }
+      .card .desc { font-size: 0.82rem; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
+
+      input[type="text"], input[type="range"] {
+        width: 100%;
+        padding: 10px 14px;
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        color: #e2e8f0;
+        font-size: 0.9rem;
+        outline: none;
+        margin-bottom: 12px;
+      }
+      input:focus { border-color: #2563eb; }
+      input[type="range"] { padding: 6px 0; cursor: pointer; }
+
+      .counter-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .counter-box {
+        background: #0f172a;
+        border: 1px solid #1e3a5f;
+        border-radius: 10px;
+        padding: 14px;
+        text-align: center;
+      }
+      .counter-box .count { font-size: 2.2rem; font-weight: 700; color: #7dd3fc; }
+      .counter-box .label { font-size: 0.75rem; color: #64748b; margin-top: 4px; }
+
+      .counter-box.raw   .count { color: #fca5a5; }
+      .counter-box.debounced .count { color: #86efac; }
+      .counter-box.throttled .count { color: #fde68a; }
+
+      .timeline {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-family: monospace;
+        font-size: 0.78rem;
+        min-height: 48px;
+        max-height: 100px;
+        overflow-y: auto;
+        color: #94a3b8;
+        margin-bottom: 8px;
+      }
+      .timeline span.dot { color: #7dd3fc; }
+
+      .scroll-box {
+        height: 160px;
+        overflow-y: scroll;
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        margin-bottom: 12px;
+        position: relative;
+      }
+      .scroll-content {
+        height: 1200px;
+        background: linear-gradient(180deg, #1e3a5f 0%, #134e4a 50%, #1e3a5f 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #475569;
+        font-size: 0.85rem;
+      }
+
+      .scroll-stats {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .stat {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 10px;
+        text-align: center;
+      }
+      .stat .val   { font-size: 1.5rem; font-weight: 700; }
+      .stat .lbl   { font-size: 0.7rem; color: #64748b; }
+      .stat.raw    .val { color: #fca5a5; }
+      .stat.db     .val { color: #86efac; }
+      .stat.thr    .val { color: #fde68a; }
+
+      .passive-demo {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .passive-box {
+        flex: 1;
+        min-width: 120px;
+        background: #0f172a;
+        border: 1px solid #1e3a5f;
+        border-radius: 10px;
+        padding: 12px;
+        text-align: center;
+        font-size: 0.8rem;
+        color: #94a3b8;
+      }
+      .passive-box strong { display: block; color: #7dd3fc; font-size: 1rem; margin-bottom: 4px; }
+      .passive-box.green strong { color: #86efac; }
+      .passive-box.red   strong { color: #fca5a5; }
+
+      code {
+        background: #0f172a;
+        border-radius: 4px;
+        padding: 2px 5px;
+        font-family: monospace;
+        font-size: 0.82rem;
+        color: #c4b5fd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Debounce, Throttle &amp; Passive Listeners</h1>
+    <p class="subtitle">
+      Live comparison of raw events vs. debounced and throttled handlers,
+      plus passive event listener benefits for scroll performance.
+    </p>
+
+    <!-- 1. Debounce — Search Input -->
+    <div class="card">
+      <h2>Debounce — Search Input</h2>
+      <p class="desc">
+        Raw: fires on <em>every</em> keystroke.<br>
+        Debounced (300 ms): fires only after the user <strong>stops typing for 300 ms</strong>.<br>
+        Notice how debounce dramatically reduces the number of "API calls" needed.
+      </p>
+
+      <input type="text" id="search-input" placeholder="Type anything here…" />
+
+      <div class="counter-row">
+        <div class="counter-box raw">
+          <div class="count" id="raw-count">0</div>
+          <div class="label">Raw input events</div>
+        </div>
+        <div class="counter-box debounced">
+          <div class="count" id="debounced-count">0</div>
+          <div class="label">Debounced handler calls (300ms)</div>
+        </div>
+      </div>
+
+      <div class="timeline" id="debounce-timeline">Events will appear here…</div>
+    </div>
+
+    <!-- 2. Throttle — Scroll -->
+    <div class="card">
+      <h2>Throttle — Scroll Position Tracker</h2>
+      <p class="desc">
+        Raw: handler runs on every scroll pixel.<br>
+        Throttled (200 ms): runs <strong>at most once per 200 ms</strong> — perfect for visual updates.<br>
+        RAF-throttled: synced to screen refresh rate (~60 fps).
+      </p>
+
+      <div class="scroll-box" id="scroll-area">
+        <div class="scroll-content">↕ Scroll inside this box</div>
+      </div>
+
+      <div class="scroll-stats">
+        <div class="stat raw"><div class="val" id="scroll-raw">0</div><div class="lbl">Raw scroll events</div></div>
+        <div class="stat db"><div class="val" id="scroll-throttled">0</div><div class="lbl">Throttled (200ms)</div></div>
+        <div class="stat thr"><div class="val" id="scroll-raf">0</div><div class="lbl">RAF Throttled</div></div>
+      </div>
+    </div>
+
+    <!-- 3. Passive Listeners -->
+    <div class="card">
+      <h2>Passive Event Listeners</h2>
+      <p class="desc">
+        Adding <code>{ passive: true }</code> to scroll/touch listeners tells the browser
+        you will never call <code>preventDefault()</code>, allowing it to start scrolling
+        immediately without waiting for your handler to finish — eliminating scroll jank.
+      </p>
+      <div class="passive-demo">
+        <div class="passive-box red">
+          <strong>Without passive</strong>
+          Browser waits for handler before scrolling.<br>Even an empty handler adds latency.
+        </div>
+        <div class="passive-box green">
+          <strong>{ passive: true }</strong>
+          Browser scrolls immediately.<br>Handler runs asynchronously in parallel.
+        </div>
+      </div>
+      <p style="margin-top:14px;font-size:0.82rem;color:#94a3b8;">
+        The scroll box above uses a passive listener. Open DevTools → Performance
+        to verify there are no "Forced Reflow" or scroll blocking warnings.
+      </p>
+    </div>
+
+    <!-- 4. debounce() source code reference -->
+    <div class="card">
+      <h2>Implementations Reference</h2>
+      <p class="desc">All utility functions are defined in <code>utils.js</code>.</p>
+      <pre style="background:#0f172a;border-radius:8px;padding:14px;font-family:monospace;font-size:0.78rem;color:#86efac;overflow-x:auto;line-height:1.8;">
+// debounce(fn, delay) — delays execution until events stop
+debounce(fn, 300)
+
+// throttle(fn, interval) — max once per interval
+throttle(fn, 200)
+
+// rafThrottle(fn) — synced to animation frame (~60fps)
+rafThrottle(fn)
+      </pre>
+    </div>
+
+    <script src="utils.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

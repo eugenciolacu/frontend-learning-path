@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Worker — Heavy Computation Demo</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+        padding: 24px;
+      }
+
+      h1 { font-size: 1.6rem; text-align: center; color: #7dd3fc; }
+      p.subtitle { color: #94a3b8; text-align: center; max-width: 520px; font-size: 0.95rem; }
+
+      .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        width: 100%;
+        max-width: 560px;
+      }
+
+      .card h2 { font-size: 1rem; color: #7dd3fc; margin-bottom: 12px; }
+
+      .controls {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+
+      button {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: opacity 0.2s;
+      }
+      button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+      .btn-worker  { background: #2563eb; color: #fff; }
+      .btn-main    { background: #dc2626; color: #fff; }
+      .btn-stop    { background: #475569; color: #fff; }
+
+      .result {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: monospace;
+        font-size: 0.85rem;
+        min-height: 48px;
+        color: #86efac;
+      }
+
+      /* Animated box proves the UI is NOT frozen */
+      .animation-box {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #7c3aed, #2563eb);
+        border-radius: 12px;
+        animation: spin 1.5s linear infinite;
+        flex-shrink: 0;
+      }
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      .demo-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-top: 12px;
+      }
+
+      .status-badge {
+        padding: 4px 10px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        background: #134e4a;
+        color: #6ee7b7;
+      }
+      .status-badge.busy { background: #7f1d1d; color: #fca5a5; }
+    </style>
+  </head>
+  <body>
+    <h1>Web Worker Demo</h1>
+    <p class="subtitle">
+      Compare running a heavy prime-number search <strong>on the main thread</strong>
+      (blocks the UI) vs. <strong>in a Web Worker</strong> (UI stays responsive).
+    </p>
+
+    <!-- UI freeze demonstration -->
+    <div class="card">
+      <h2>UI Responsiveness Test</h2>
+      <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:14px;">
+        This spinning box proves whether the browser's main thread is free.
+        If it stops spinning, the main thread is blocked.
+      </p>
+      <div class="demo-row">
+        <div class="animation-box"></div>
+        <span id="status-badge" class="status-badge">Idle</span>
+      </div>
+    </div>
+
+    <!-- Main thread version -->
+    <div class="card">
+      <h2>❌ Blocking — Main Thread</h2>
+      <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:14px;">
+        Counts primes up to 5,000,000 synchronously. Freezes everything.
+      </p>
+      <div class="controls">
+        <button class="btn-main" id="btn-main">Run on Main Thread</button>
+      </div>
+      <div class="result" id="result-main">Waiting…</div>
+    </div>
+
+    <!-- Worker version -->
+    <div class="card">
+      <h2>✅ Non-Blocking — Web Worker</h2>
+      <p style="color:#94a3b8;font-size:0.85rem;margin-bottom:14px;">
+        Same computation but in a background thread. Animation keeps spinning.
+      </p>
+      <div class="controls">
+        <button class="btn-worker" id="btn-worker">Run in Worker</button>
+        <button class="btn-stop"   id="btn-stop" disabled>Stop Worker</button>
+      </div>
+      <div class="result" id="result-worker">Waiting…</div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

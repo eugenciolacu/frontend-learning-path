@@ -57,14 +57,14 @@ document structure for the "README.md" document ("Example README.md (Module)" pa
 Please read
 "frontend-learning-path\docs\frontend-learning-roadmap.md"
 and find
-"Chapter 10: Design Patterns & Paradigms (Advanced)"
+"Chapter 11: Browser Capabilities & Performance (Advanced)"
 topics.
 I want you prepare a document with detailed and relevant information, with examples formatted as code and explanations, for an IT student and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\chapter-10-design-patterns-paradigms\theory.md"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\chapter-11-browser-capabilities-performance\theory.md"
 document. If you think that is necessary to add extra information or details regarding the topics in order to fully cover the chapter, please add them.
 Please use 
 "frontend-learning-path\docs\repository-structure.md" 
 document structure for the "theory.md" document ("Example theory.md (Chapter)" part of the document).
 Then add relevant examples to the topics into 
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\chapter-10-design-patterns-paradigms\examples" 
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\chapter-11-browser-capabilities-performance\examples" 
 folder. Please create a separate folder for each example.

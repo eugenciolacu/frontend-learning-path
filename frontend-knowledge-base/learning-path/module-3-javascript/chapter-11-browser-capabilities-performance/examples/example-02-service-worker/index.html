@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service Worker — Caching & Offline Demo</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 16px;
+        gap: 28px;
+      }
+
+      h1 { font-size: 1.6rem; color: #7dd3fc; text-align: center; }
+      p.subtitle { color: #94a3b8; text-align: center; max-width: 560px; font-size: 0.9rem; }
+
+      .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        width: 100%;
+        max-width: 600px;
+      }
+      .card h2 { font-size: 1rem; color: #7dd3fc; margin-bottom: 12px; }
+      .card p  { font-size: 0.85rem; color: #94a3b8; margin-bottom: 14px; }
+
+      .status-row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 16px;
+      }
+
+      .badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+      .badge.green  { background: #14532d; color: #86efac; }
+      .badge.yellow { background: #713f12; color: #fde68a; }
+      .badge.red    { background: #7f1d1d; color: #fca5a5; }
+      .badge.blue   { background: #1e3a5f; color: #93c5fd; }
+
+      button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        cursor: pointer;
+        font-weight: 600;
+        background: #2563eb;
+        color: #fff;
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+      button.danger   { background: #dc2626; }
+      button.neutral  { background: #475569; }
+      button:disabled { opacity: 0.4; cursor: not-allowed; }
+
+      #log {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 14px;
+        font-family: monospace;
+        font-size: 0.8rem;
+        min-height: 140px;
+        max-height: 280px;
+        overflow-y: auto;
+        line-height: 1.7;
+      }
+      .log-info    { color: #93c5fd; }
+      .log-success { color: #86efac; }
+      .log-warn    { color: #fde68a; }
+      .log-error   { color: #fca5a5; }
+
+      .strategy-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 8px;
+      }
+      .strategy-card {
+        background: #0f172a;
+        border: 1px solid #1e3a5f;
+        border-radius: 8px;
+        padding: 12px;
+      }
+      .strategy-card strong { display: block; color: #7dd3fc; margin-bottom: 4px; font-size: 0.85rem; }
+      .strategy-card span   { font-size: 0.78rem; color: #94a3b8; }
+    </style>
+  </head>
+  <body>
+    <h1>Service Worker Demo</h1>
+    <p class="subtitle">
+      Demonstrates Service Worker registration, lifecycle events,
+      caching strategies, and offline fallback. Open DevTools → Application → Service Workers
+      and Network tabs to see it in action.
+    </p>
+
+    <!-- Registration & Status -->
+    <div class="card">
+      <h2>Registration & Lifecycle</h2>
+      <p>Register and update the Service Worker. Watch the lifecycle events in the log below.</p>
+
+      <div class="status-row">
+        <span id="sw-status" class="badge yellow">Not Registered</span>
+        <span id="online-status" class="badge green">Online</span>
+      </div>
+
+      <button id="btn-register">Register SW</button>
+      <button id="btn-update"   disabled>Check for Update</button>
+      <button id="btn-unregister" class="danger" disabled>Unregister SW</button>
+    </div>
+
+    <!-- Cache Control -->
+    <div class="card">
+      <h2>Cache Control</h2>
+      <p>Inspect what is in the cache, add resources, or clear everything.</p>
+      <button id="btn-list-cache">List Cached URLs</button>
+      <button id="btn-clear-cache" class="danger">Clear Cache</button>
+      <button id="btn-test-fetch">Fetch Cached Resource</button>
+    </div>
+
+    <!-- Caching Strategies Reference -->
+    <div class="card">
+      <h2>Caching Strategies (Reference)</h2>
+      <div class="strategy-grid">
+        <div class="strategy-card">
+          <strong>Cache First</strong>
+          <span>Serve from cache; fall back to network. Best for static assets.</span>
+        </div>
+        <div class="strategy-card">
+          <strong>Network First</strong>
+          <span>Try network; use cache if offline. Best for dynamic data.</span>
+        </div>
+        <div class="strategy-card">
+          <strong>Stale-While-Revalidate</strong>
+          <span>Serve cache instantly; update in background. Best for avatars/feeds.</span>
+        </div>
+        <div class="strategy-card">
+          <strong>Cache Only</strong>
+          <span>Always from cache. For fully-offline apps or pre-cached bundles.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Event Log -->
+    <div class="card">
+      <h2>Event Log</h2>
+      <div id="log"></div>
+      <button class="neutral" id="btn-clear-log" style="margin-top:10px;">Clear Log</button>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

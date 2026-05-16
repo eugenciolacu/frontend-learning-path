@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Performance APIs — Timing & Observer Demo</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        min-height: 100vh;
+        padding: 32px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+
+      h1 { font-size: 1.6rem; color: #7dd3fc; text-align: center; }
+      p.subtitle { color: #94a3b8; max-width: 600px; text-align: center; font-size: 0.9rem; }
+
+      .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        width: 100%;
+        max-width: 700px;
+      }
+      .card h2 { font-size: 1rem; color: #7dd3fc; margin-bottom: 4px; }
+      .card .desc { font-size: 0.82rem; color: #64748b; margin-bottom: 16px; }
+
+      .metrics-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .metric {
+        background: #0f172a;
+        border: 1px solid #1e3a5f;
+        border-radius: 10px;
+        padding: 14px;
+        text-align: center;
+      }
+      .metric .value { font-size: 1.4rem; font-weight: 700; color: #7dd3fc; }
+      .metric .label { font-size: 0.72rem; color: #64748b; margin-top: 4px; }
+      .metric .unit  { font-size: 0.75rem; color: #475569; }
+
+      .metric.good   .value { color: #86efac; }
+      .metric.warn   .value { color: #fde68a; }
+      .metric.bad    .value { color: #fca5a5; }
+
+      button {
+        padding: 9px 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        cursor: pointer;
+        font-weight: 600;
+        background: #2563eb;
+        color: #fff;
+        margin-right: 8px;
+        margin-bottom: 8px;
+      }
+      button.danger { background: #dc2626; }
+      button.neutral { background: #475569; }
+
+      pre {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 14px;
+        font-family: monospace;
+        font-size: 0.78rem;
+        overflow-x: auto;
+        line-height: 1.8;
+        max-height: 280px;
+        overflow-y: auto;
+        color: #86efac;
+      }
+
+      .observer-log {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 14px;
+        font-family: monospace;
+        font-size: 0.78rem;
+        min-height: 80px;
+        max-height: 220px;
+        overflow-y: auto;
+        line-height: 1.8;
+      }
+      .log-nav      { color: #93c5fd; }
+      .log-resource { color: #86efac; }
+      .log-measure  { color: #fde68a; }
+      .log-longtask { color: #fca5a5; }
+      .log-paint    { color: #c4b5fd; }
+      .log-lcp      { color: #7dd3fc; }
+
+      .progress-bar-wrap {
+        background: #0f172a;
+        border-radius: 6px;
+        height: 8px;
+        overflow: hidden;
+        margin-top: 4px;
+      }
+      .progress-bar {
+        height: 100%;
+        border-radius: 6px;
+        transition: width 0.4s;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Performance APIs Demo</h1>
+    <p class="subtitle">
+      Explore Navigation Timing, Resource Timing, User Timing (marks &amp; measures),
+      and PerformanceObserver — including Core Web Vitals capture.
+    </p>
+
+    <!-- Navigation Timing -->
+    <div class="card">
+      <h2>Navigation Timing</h2>
+      <p class="desc">Key milestones from the navigation lifecycle of this page load.</p>
+      <div class="metrics-grid" id="nav-metrics">
+        <div class="metric"><div class="value" id="m-ttfb">—</div><div class="label">TTFB</div><div class="unit">ms</div></div>
+        <div class="metric"><div class="value" id="m-dns">—</div><div class="label">DNS Lookup</div><div class="unit">ms</div></div>
+        <div class="metric"><div class="value" id="m-tcp">—</div><div class="label">TCP Connect</div><div class="unit">ms</div></div>
+        <div class="metric"><div class="value" id="m-download">—</div><div class="label">Response</div><div class="unit">ms</div></div>
+        <div class="metric"><div class="value" id="m-domparse">—</div><div class="label">DOM Parse</div><div class="unit">ms</div></div>
+        <div class="metric"><div class="value" id="m-total">—</div><div class="label">Total Load</div><div class="unit">ms</div></div>
+      </div>
+      <button id="btn-nav">Read Navigation Timing</button>
+      <pre id="nav-raw" style="display:none;margin-top:12px;"></pre>
+      <button id="btn-nav-raw" class="neutral" style="margin-top:4px;">Show Raw Entry</button>
+    </div>
+
+    <!-- Resource Timing -->
+    <div class="card">
+      <h2>Resource Timing</h2>
+      <p class="desc">Duration and transfer size of every resource loaded by this page.</p>
+      <button id="btn-resources">List Resources</button>
+      <button id="btn-fetch-resource">Fetch External Resource</button>
+      <pre id="resource-output" style="margin-top:12px;">Click "List Resources" to see entries…</pre>
+    </div>
+
+    <!-- User Timing -->
+    <div class="card">
+      <h2>User Timing (Marks &amp; Measures)</h2>
+      <p class="desc">Use <code>performance.mark()</code> and <code>performance.measure()</code> to instrument your own code.</p>
+      <button id="btn-run-measured">Run Measured Operation</button>
+      <button id="btn-clear-marks" class="neutral">Clear Marks</button>
+      <pre id="user-timing-output" style="margin-top:12px;">Click "Run Measured Operation" to start…</pre>
+    </div>
+
+    <!-- PerformanceObserver -->
+    <div class="card">
+      <h2>PerformanceObserver</h2>
+      <p class="desc">
+        Live stream of performance entries. Observing:
+        <code>navigation</code>, <code>resource</code>, <code>measure</code>,
+        <code>largest-contentful-paint</code>, <code>layout-shift</code>.
+      </p>
+      <div class="observer-log" id="observer-log">Waiting for entries…</div>
+      <button class="neutral" id="btn-clear-obs" style="margin-top:10px;">Clear Log</button>
+    </div>
+
+    <!-- Long Task Simulation -->
+    <div class="card">
+      <h2>Long Task Detection</h2>
+      <p class="desc">
+        Simulate a long task (>50 ms) and observe it being reported by
+        the <code>longtask</code> PerformanceObserver entry.
+      </p>
+      <button id="btn-long-task">Simulate 200ms Long Task</button>
+      <div class="observer-log" id="longtask-log" style="margin-top:12px;">Waiting for long tasks…</div>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>

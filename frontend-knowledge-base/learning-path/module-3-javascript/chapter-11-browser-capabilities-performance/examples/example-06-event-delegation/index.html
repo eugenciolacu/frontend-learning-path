@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Delegation — Todo App Demo</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: system-ui, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        min-height: 100vh;
+        padding: 32px 16px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+      }
+
+      h1 { font-size: 1.6rem; color: #7dd3fc; text-align: center; }
+      p.subtitle { color: #94a3b8; max-width: 580px; text-align: center; font-size: 0.9rem; }
+
+      .card {
+        background: #1e293b;
+        border: 1px solid #334155;
+        border-radius: 12px;
+        padding: 24px;
+        width: 100%;
+        max-width: 640px;
+      }
+      .card h2   { color: #7dd3fc; font-size: 1rem; margin-bottom: 4px; }
+      .card .desc { font-size: 0.82rem; color: #64748b; margin-bottom: 16px; line-height: 1.6; }
+
+      /* Comparison section */
+      .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+      .comp-box {
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 10px;
+        padding: 14px;
+      }
+      .comp-box h3 { font-size: 0.85rem; margin-bottom: 8px; }
+      .comp-box.bad  h3 { color: #fca5a5; }
+      .comp-box.good h3 { color: #86efac; }
+      .comp-box ul {
+        list-style: none;
+        font-size: 0.78rem;
+        color: #94a3b8;
+        line-height: 1.8;
+      }
+      .comp-box ul li::before { content: '• '; }
+
+      /* Add-todo form */
+      .add-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      input[type="text"] {
+        flex: 1;
+        padding: 10px 14px;
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        color: #e2e8f0;
+        font-size: 0.9rem;
+        outline: none;
+      }
+      input:focus { border-color: #2563eb; }
+
+      button {
+        padding: 10px 18px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.88rem;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-primary { background: #2563eb; color: #fff; }
+      .btn-neutral { background: #475569; color: #fff; }
+      .btn-danger  { background: #7f1d1d; color: #fca5a5; border: 1px solid #991b1b; }
+
+      /* Filter tabs */
+      .filter-row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 16px;
+        flex-wrap: wrap;
+      }
+      .filter-btn {
+        padding: 6px 14px;
+        border: 1px solid #334155;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        background: transparent;
+        color: #94a3b8;
+        font-weight: 600;
+      }
+      .filter-btn.active {
+        background: #1d4ed8;
+        border-color: #2563eb;
+        color: #fff;
+      }
+
+      /* Todo list */
+      #todo-list {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        min-height: 60px;
+      }
+
+      .todo-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #0f172a;
+        border: 1px solid #1e3a5f;
+        border-radius: 10px;
+        padding: 12px 14px;
+        transition: border-color 0.2s;
+      }
+      .todo-item:hover { border-color: #2563eb; }
+      .todo-item.completed { opacity: 0.5; }
+      .todo-item.completed .todo-text { text-decoration: line-through; color: #475569; }
+
+      .todo-text {
+        flex: 1;
+        font-size: 0.9rem;
+      }
+
+      .todo-priority {
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 12px;
+      }
+      .priority-high   { background: #7f1d1d; color: #fca5a5; }
+      .priority-medium { background: #713f12; color: #fde68a; }
+      .priority-low    { background: #14532d; color: #86efac; }
+
+      .todo-actions { display: flex; gap: 6px; }
+      .action-btn {
+        padding: 5px 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.76rem;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .btn-complete { background: #1d4ed8; color: #fff; }
+      .btn-delete   { background: #991b1b; color: #fff; }
+      .btn-edit     { background: #334155; color: #e2e8f0; }
+
+      /* Stats */
+      .stats-row {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #334155;
+      }
+      .stat-chip {
+        font-size: 0.8rem;
+        color: #94a3b8;
+      }
+      .stat-chip strong { color: #7dd3fc; }
+
+      /* Listener counter */
+      .listener-badge {
+        background: #0f172a;
+        border: 1px solid #334155;
+        border-radius: 8px;
+        padding: 10px 14px;
+        font-size: 0.82rem;
+        margin-top: 14px;
+      }
+      .listener-badge strong { color: #86efac; }
+
+      /* Event log */
+      #event-log {
+        background: #0f172a;
+        border-radius: 8px;
+        padding: 12px;
+        font-family: monospace;
+        font-size: 0.77rem;
+        min-height: 60px;
+        max-height: 200px;
+        overflow-y: auto;
+        line-height: 1.8;
+        color: #86efac;
+      }
+
+      .empty-state { color: #334155; text-align: center; padding: 20px; font-size: 0.85rem; }
+    </style>
+  </head>
+  <body>
+    <h1>Event Delegation Demo</h1>
+    <p class="subtitle">
+      A fully interactive todo app built with a single delegated event listener.
+      No matter how many items are added, only <strong>one</strong> listener handles all clicks.
+    </p>
+
+    <!-- Why delegation -->
+    <div class="card">
+      <h2>Why Event Delegation?</h2>
+      <div class="comparison">
+        <div class="comp-box bad">
+          <h3>❌ Without Delegation</h3>
+          <ul>
+            <li>N listeners for N items</li>
+            <li>Memory grows with list</li>
+            <li>Dynamic items not covered</li>
+            <li>Must re-bind after DOM update</li>
+          </ul>
+        </div>
+        <div class="comp-box good">
+          <h3>✅ With Delegation</h3>
+          <ul>
+            <li>1 listener handles all items</li>
+            <li>Constant memory usage</li>
+            <li>New items work automatically</li>
+            <li>Scales to thousands of items</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Todo App -->
+    <div class="card">
+      <h2>Todo App (Single Listener)</h2>
+      <p class="desc">
+        All button clicks (Complete, Edit, Delete) and filter tab clicks are handled
+        by <strong>one event listener</strong> on the list container, using
+        <code>event.target.closest()</code> to identify the action.
+      </p>
+
+      <!-- Add form -->
+      <div class="add-row">
+        <input type="text" id="todo-input" placeholder="Add a new task…" />
+        <select id="priority-select" style="padding:10px 8px;background:#0f172a;border:1px solid #334155;border-radius:8px;color:#e2e8f0;font-size:0.85rem;outline:none;">
+          <option value="medium">Medium</option>
+          <option value="high">High</option>
+          <option value="low">Low</option>
+        </select>
+        <button class="btn-primary" id="btn-add">Add</button>
+      </div>
+
+      <!-- Filter tabs -->
+      <div class="filter-row" id="filter-row">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="active">Active</button>
+        <button class="filter-btn" data-filter="completed">Completed</button>
+        <button class="filter-btn" data-filter="high">High Priority</button>
+      </div>
+
+      <!-- Delegated list -->
+      <ul id="todo-list">
+        <li class="empty-state">No todos yet — add one above!</li>
+      </ul>
+
+      <!-- Stats -->
+      <div class="stats-row">
+        <span class="stat-chip">Total: <strong id="stat-total">0</strong></span>
+        <span class="stat-chip">Active: <strong id="stat-active">0</strong></span>
+        <span class="stat-chip">Completed: <strong id="stat-completed">0</strong></span>
+        <button class="btn-neutral" id="btn-clear-completed" style="padding:5px 12px;font-size:0.78rem;margin-left:auto;">Clear Completed</button>
+      </div>
+
+      <!-- Listener proof -->
+      <div class="listener-badge">
+        Active event listeners on <code>#todo-list</code>: <strong>1</strong><br>
+        Items rendered: <strong id="items-count">0</strong><br>
+        Total clicks handled by that single listener: <strong id="clicks-count">0</strong>
+      </div>
+    </div>
+
+    <!-- Event log -->
+    <div class="card">
+      <h2>Delegation Event Log</h2>
+      <p class="desc">Every bubbled click event captured by the single parent listener.</p>
+      <div id="event-log">Waiting for events…</div>
+      <button class="btn-neutral" id="btn-clear-log" style="margin-top:10px;">Clear Log</button>
+    </div>
+
+    <script src="main.js"></script>
+  </body>
+</html>
