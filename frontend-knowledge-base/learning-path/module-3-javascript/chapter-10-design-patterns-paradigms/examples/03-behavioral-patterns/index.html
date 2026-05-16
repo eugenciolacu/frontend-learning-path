@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Behavioral Patterns Demo</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    pre { background: #313244; border-radius: 8px; padding: 1rem; overflow-x: auto; line-height: 1.6; min-height: 3rem; }
+    button { background: #89b4fa; color: #1e1e2e; border: none; padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-family: monospace; margin: 0.25rem; }
+    button:hover { background: #cba6f7; }
+    input[type="text"] { background: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 4px; padding: 0.3rem 0.6rem; font-family: monospace; width: 200px; }
+    .section { margin-bottom: 2.5rem; }
+  </style>
+</head>
+<body>
+  <h1>Behavioral Design Patterns</h1>
+  <p>Open the browser DevTools Console to see detailed output.</p>
+
+  <div class="section">
+    <h2>1. Observer — Event System</h2>
+    <button onclick="behavioralDemo.observerDemo.subscribe()">Subscribe Logger</button>
+    <button onclick="behavioralDemo.observerDemo.unsubscribeLogger()">Unsubscribe Logger</button>
+    <button onclick="behavioralDemo.observerDemo.emit()">Emit Event</button>
+    <pre id="observer-output">Click Subscribe, then Emit to see the pattern.</pre>
+  </div>
+
+  <div class="section">
+    <h2>2. Strategy — Sorting</h2>
+    <button onclick="behavioralDemo.strategyDemo.run('bubble')">Bubble Sort</button>
+    <button onclick="behavioralDemo.strategyDemo.run('quick')">Quick Sort</button>
+    <button onclick="behavioralDemo.strategyDemo.run('native')">Native Sort</button>
+    <pre id="strategy-output">Choose a sorting strategy.</pre>
+  </div>
+
+  <div class="section">
+    <h2>3. Command — Text Editor with Undo/Redo</h2>
+    <input type="text" id="insert-text" placeholder="Text to insert..." value="Hello" />
+    <button onclick="behavioralDemo.commandDemo.insert()">Insert</button>
+    <button onclick="behavioralDemo.commandDemo.deleteChars(3)">Delete 3</button>
+    <button onclick="behavioralDemo.commandDemo.undo()">Undo</button>
+    <button onclick="behavioralDemo.commandDemo.redo()">Redo</button>
+    <pre id="command-output">Use Insert/Delete, then Undo/Redo.</pre>
+  </div>
+
+  <div class="section">
+    <h2>4. Iterator — Custom Range</h2>
+    <button onclick="behavioralDemo.iteratorDemo.run()">Run Iterator Demo</button>
+    <pre id="iterator-output">Click to run the iterator.</pre>
+  </div>
+
+  <script src="behavioral-patterns.js"></script>
+</body>
+</html>

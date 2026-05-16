@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reactive Programming Demo (Vanilla JS)</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    pre { background: #313244; border-radius: 8px; padding: 1rem; overflow-x: auto; line-height: 1.6; min-height: 3rem; }
+    button { background: #89b4fa; color: #1e1e2e; border: none; padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-family: monospace; margin: 0.25rem; }
+    button:hover { background: #a6e3a1; }
+    input { background: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 4px; padding: 0.3rem 0.6rem; font-family: monospace; }
+    .section { margin-bottom: 2.5rem; }
+    .note { font-size: 0.85rem; color: #a6adc8; margin-top: 0.5rem; }
+    .stream { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.5rem; }
+    .event-pill { background: #45475a; border-radius: 12px; padding: 0.2rem 0.6rem; font-size: 0.85rem; animation: fadein 0.3s; }
+    @keyframes fadein { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+  </style>
+</head>
+<body>
+  <h1>Reactive Programming — Vanilla JS Observable</h1>
+  <p class="note">
+    This example implements a <strong>mini Observable library from scratch</strong>, 
+    demonstrating core reactive concepts without requiring RxJS. 
+    This helps you understand what RxJS does under the hood.
+  </p>
+
+  <div class="section">
+    <h2>1. Observable Streams — Create, Map, Filter</h2>
+    <button onclick="reactiveDemo.runBasicStream()">Run Stream Demo</button>
+    <pre id="basic-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>2. Subject — Multicast / Event Bus</h2>
+    <button onclick="reactiveDemo.setupSubject()">Setup Subject</button>
+    <button onclick="reactiveDemo.emitEvent()">Emit Event</button>
+    <button onclick="reactiveDemo.unsubscribeOne()">Unsubscribe Observer 1</button>
+    <pre id="subject-output">Click Setup Subject first.</pre>
+    <div id="subject-pills" class="stream"></div>
+  </div>
+
+  <div class="section">
+    <h2>3. Debounce + DistinctUntilChanged — Search Input</h2>
+    <input type="text" id="search-input" placeholder="Type to search..." style="width:280px" />
+    <div id="search-events" class="stream"></div>
+    <pre id="search-output">Start typing in the input above.</pre>
+  </div>
+
+  <div class="section">
+    <h2>4. Operators: map, filter, take, scan</h2>
+    <button onclick="reactiveDemo.runOperators()">Run Operators Demo</button>
+    <pre id="operators-output">Click to run.</pre>
+  </div>
+
+  <script src="reactive-programming.js"></script>
+</body>
+</html>

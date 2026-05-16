@@ -1058,7 +1058,7 @@ const es = new EventSource(`/api/events?token=${token}`);
 ┌───────────────────────────────────────────────────┐
 │ Browser                                           │
 │  ┌──────────────┐   SSE    ┌──────────────────┐   │
-│  │ EventSource  │◄────────│ /api/live-data    │   │
+│  │ EventSource  │◄─────────│ /api/live-data   │   │
 │  └──────┬───────┘          └──────────────────┘   │
 │         │ event                                   │
 │  ┌──────▼───────┐                                 │

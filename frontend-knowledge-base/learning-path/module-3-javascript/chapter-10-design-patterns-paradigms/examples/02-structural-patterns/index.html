@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Structural Patterns Demo</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    pre { background: #313244; border-radius: 8px; padding: 1rem; overflow-x: auto; line-height: 1.6; }
+    button { background: #89b4fa; color: #1e1e2e; border: none; padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-family: monospace; margin: 0.25rem; }
+    button:hover { background: #cba6f7; }
+    .section { margin-bottom: 2rem; }
+  </style>
+</head>
+<body>
+  <h1>Structural Design Patterns</h1>
+  <p>Open the browser DevTools Console to see detailed output.</p>
+
+  <div class="section">
+    <h2>1. Decorator — Coffee Shop</h2>
+    <button onclick="orderCoffee('basic')">Basic Coffee ($2.00)</button>
+    <button onclick="orderCoffee('milk')">+ Milk</button>
+    <button onclick="orderCoffee('syrup-milk')">+ Syrup + Milk</button>
+    <button onclick="orderCoffee('full')">Full Order</button>
+    <pre id="decorator-output">Click a button to order coffee.</pre>
+  </div>
+
+  <div class="section">
+    <h2>2. Adapter — Legacy Payment</h2>
+    <button onclick="runAdapter()">Process Payment (via Adapter)</button>
+    <pre id="adapter-output">Click to simulate payment.</pre>
+  </div>
+
+  <div class="section">
+    <h2>3. Facade — Media Player</h2>
+    <button onclick="playMedia()">Play Movie</button>
+    <pre id="facade-output">Click to play media.</pre>
+  </div>
+
+  <div class="section">
+    <h2>4. Proxy — Validated Inventory</h2>
+    <button onclick="runProxy()">Run Proxy Demo</button>
+    <pre id="proxy-output">Click to run proxy validation.</pre>
+  </div>
+
+  <script src="structural-patterns.js"></script>
+</body>
+</html>

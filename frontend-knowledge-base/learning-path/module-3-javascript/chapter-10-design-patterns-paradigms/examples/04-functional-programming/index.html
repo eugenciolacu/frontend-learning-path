@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Functional Programming Demo</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    h3 { color: #f38ba8; margin-top: 1rem; }
+    pre { background: #313244; border-radius: 8px; padding: 1rem; overflow-x: auto; line-height: 1.6; }
+    button { background: #89b4fa; color: #1e1e2e; border: none; padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-family: monospace; margin: 0.25rem; }
+    button:hover { background: #a6e3a1; }
+    .section { margin-bottom: 2.5rem; }
+    .badge { display: inline-block; padding: 0.1rem 0.5rem; border-radius: 4px; font-size: 0.8rem; }
+    .pure { background: #a6e3a1; color: #1e1e2e; }
+    .impure { background: #f38ba8; color: #1e1e2e; }
+  </style>
+</head>
+<body>
+  <h1>Functional Programming in JavaScript</h1>
+  <p>Open the browser DevTools Console for additional output.</p>
+
+  <div class="section">
+    <h2>1. Pure Functions vs Impure Functions</h2>
+    <button onclick="fpDemo.runPureFunctions()">Run Demo</button>
+    <pre id="pure-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>2. Immutability</h2>
+    <button onclick="fpDemo.runImmutability()">Run Demo</button>
+    <pre id="immutability-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>3. Higher-Order Functions</h2>
+    <button onclick="fpDemo.runHOF()">Run Demo</button>
+    <pre id="hof-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>4. Currying & Partial Application</h2>
+    <button onclick="fpDemo.runCurrying()">Run Demo</button>
+    <pre id="currying-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>5. Function Composition & Pipe</h2>
+    <button onclick="fpDemo.runComposition()">Run Demo</button>
+    <pre id="composition-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>6. Real-World Pipeline — Data Processing</h2>
+    <button onclick="fpDemo.runPipeline()">Run Full Pipeline</button>
+    <pre id="pipeline-output">Click to run the full FP data pipeline.</pre>
+  </div>
+
+  <script src="functional-programming.js"></script>
+</body>
+</html>

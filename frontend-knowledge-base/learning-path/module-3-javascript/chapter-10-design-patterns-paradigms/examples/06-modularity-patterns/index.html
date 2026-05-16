@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modularity Patterns Demo</title>
+  <style>
+    body { font-family: monospace; padding: 2rem; background: #1e1e2e; color: #cdd6f4; }
+    h1 { color: #cba6f7; }
+    h2 { color: #89b4fa; margin-top: 2rem; }
+    h3 { color: #f38ba8; }
+    pre { background: #313244; border-radius: 8px; padding: 1rem; overflow-x: auto; line-height: 1.6; }
+    button { background: #89b4fa; color: #1e1e2e; border: none; padding: 0.4rem 1rem; border-radius: 4px; cursor: pointer; font-family: monospace; margin: 0.25rem; }
+    button:hover { background: #a6e3a1; }
+    .section { margin-bottom: 2.5rem; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid #45475a; padding: 0.4rem 0.8rem; text-align: left; font-size: 0.9rem; }
+    th { background: #313244; color: #cba6f7; }
+    .yes { color: #a6e3a1; }
+    .no  { color: #f38ba8; }
+  </style>
+</head>
+<body>
+  <h1>JavaScript Modularity Patterns</h1>
+  <p>Open the browser DevTools Console to see detailed output from each pattern.</p>
+
+  <div class="section">
+    <h2>1. IIFE — Immediately Invoked Function Expression</h2>
+    <button onclick="iifeDemo.run()">Run IIFE Demo</button>
+    <pre id="iife-output">Click to run.</pre>
+  </div>
+
+  <div class="section">
+    <h2>2. Module Pattern (IIFE + Public/Private API)</h2>
+    <button onclick="counterModule.increment()">Increment</button>
+    <button onclick="counterModule.increment()">Increment</button>
+    <button onclick="counterModule.decrement()">Decrement</button>
+    <button onclick="counterModule.reset()">Reset</button>
+    <pre id="module-output">Use the buttons above to interact with the private counter.</pre>
+  </div>
+
+  <div class="section">
+    <h2>3. ESM — ES Modules (native browser support)</h2>
+    <!-- ESM requires type="module" and a real server (or localhost) -->
+    <!-- This section shows the pattern via output from esm-main.js -->
+    <pre id="esm-output">Loading ESM demo...</pre>
+  </div>
+
+  <div class="section">
+    <h2>4. CommonJS vs ESM — Side-by-Side Comparison</h2>
+    <pre id="comparison-output">See code in cjs-example.js and esm-math.js for CommonJS/ESM syntax.</pre>
+  </div>
+
+  <div class="section">
+    <h2>5. Modularity Pattern Comparison Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th><th>IIFE</th><th>CommonJS</th><th>UMD</th><th>ESM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Environment</td><td>Browser</td><td>Node.js</td><td>Universal</td><td>Browser + Node.js</td></tr>
+        <tr><td>Load style</td><td>Inline/global</td><td>Synchronous</td><td>Adaptive</td><td>Async/static</td></tr>
+        <tr><td>Tree shaking</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+        <tr><td>Static analysis</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+        <tr><td>Strict mode</td><td class="no">Opt-in</td><td class="no">Opt-in</td><td class="no">Opt-in</td><td class="yes">Always</td></tr>
+        <tr><td>Live bindings</td><td class="no">No</td><td class="no">No</td><td class="no">No</td><td class="yes">Yes</td></tr>
+        <tr><td>Dynamic loading</td><td>Via globals</td><td>require()</td><td>Via globals</td><td class="yes">import()</td></tr>
+        <tr><td>Use today?</td><td>Legacy</td><td>Node legacy</td><td>Libraries</td><td class="yes">Preferred</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- IIFE and Module Pattern -->
+  <script src="iife-module-pattern.js"></script>
+
+  <!-- ESM demo (must use type="module") -->
+  <script type="module" src="esm-main.js"></script>
+</body>
+</html>
