@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced async/await Patterns</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Advanced async/await Patterns</h1>
+    <p class="subtitle">Chapter 9 · Advanced Asynchronous Patterns</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>What This Example Demonstrates</h2>
+      <ul>
+        <li>Sequential vs. concurrent execution performance comparison</li>
+        <li>Promise combinators: <code>all</code>, <code>allSettled</code>, <code>race</code>, <code>any</code></li>
+        <li>Concurrency control — limiting parallel operations</li>
+        <li>Error boundaries with <code>safeAwait</code></li>
+        <li>Async iteration with <code>async function*</code> and <code>for await...of</code></li>
+        <li>Retry with exponential back-off</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Sequential vs. Concurrent</h2>
+      <p class="hint">Sequential awaits each task one-by-one. Concurrent fires them all at once.</p>
+      <div class="controls">
+        <button id="btn-sequential">Run Sequential (slow)</button>
+        <button id="btn-concurrent">Run Concurrent (fast)</button>
+      </div>
+      <pre id="out-sequential" class="output">Click to run…</pre>
+    </section>
+
+    <section class="card">
+      <h2>Concurrency Control</h2>
+      <p class="hint">Run 8 tasks with a maximum concurrency of 3 simultaneous operations.</p>
+      <div class="controls">
+        <button id="btn-pool">Run with pool (max 3)</button>
+      </div>
+      <pre id="out-pool" class="output">Click to run…</pre>
+    </section>
+
+    <section class="card">
+      <h2>Error Boundaries &amp; safeAwait</h2>
+      <div class="controls">
+        <button id="btn-safe">Run safeAwait Demo</button>
+      </div>
+      <pre id="out-safe" class="output">Click to run…</pre>
+    </section>
+
+    <section class="card">
+      <h2>Async Generator &amp; for await…of</h2>
+      <p class="hint">Lazy pagination — fetches next page only when the consumer is ready.</p>
+      <div class="controls">
+        <button id="btn-gen">Run Async Generator</button>
+      </div>
+      <pre id="out-gen" class="output">Click to run…</pre>
+    </section>
+
+    <section class="card">
+      <h2>Retry with Exponential Back-off</h2>
+      <div class="controls">
+        <button id="btn-retry">Run Retry Demo</button>
+      </div>
+      <pre id="out-retry" class="output">Click to run…</pre>
+    </section>
+  </main>
+
+  <script src="async-patterns.js"></script>
+</body>
+</html>

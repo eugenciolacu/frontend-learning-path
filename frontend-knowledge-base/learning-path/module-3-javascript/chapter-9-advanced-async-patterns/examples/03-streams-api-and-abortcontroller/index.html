@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Streams API &amp; AbortController</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Streams API &amp; AbortController</h1>
+    <p class="subtitle">Chapter 9 · Advanced Asynchronous Patterns</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>What This Example Demonstrates</h2>
+      <ul>
+        <li>Creating a custom <code>ReadableStream</code> with a push source</li>
+        <li>Piping through a <code>TransformStream</code> (uppercase transformation)</li>
+        <li>Writing to a <code>WritableStream</code></li>
+        <li>Reading a <code>fetch</code> response body as a stream with progress tracking</li>
+        <li>Cancelling operations with <code>AbortController</code></li>
+        <li><code>AbortSignal.timeout()</code> and <code>AbortSignal.any()</code></li>
+        <li>Using <code>AbortSignal</code> in a custom async delay function</li>
+      </ul>
+    </section>
+
+    <!-- ReadableStream Demo -->
+    <section class="card">
+      <h2>1. Custom ReadableStream</h2>
+      <p class="hint">Produces 8 numbers (one every 300ms). Pipe through uppercase transform, write to sink.</p>
+      <div class="controls">
+        <button id="btn-readable">Start Stream</button>
+        <button id="btn-readable-cancel" class="btn-secondary" disabled>Cancel Stream</button>
+      </div>
+      <pre id="out-readable" class="output">Click "Start Stream" to begin…</pre>
+    </section>
+
+    <!-- TransformStream Demo -->
+    <section class="card">
+      <h2>2. TransformStream Pipeline</h2>
+      <p class="hint">Text chunks flow through two transforms: trim whitespace → reverse each word.</p>
+      <div class="controls">
+        <button id="btn-transform">Run Transform Pipeline</button>
+      </div>
+      <pre id="out-transform" class="output">Click to run…</pre>
+    </section>
+
+    <!-- Fetch with progress Demo -->
+    <section class="card">
+      <h2>3. Fetch with Progress Tracking</h2>
+      <p class="hint">
+        Reads the response body as a stream, counting bytes in real-time.
+        Uses a public API endpoint — works best on a slow connection.
+      </p>
+      <div class="controls">
+        <button id="btn-fetch-stream">Fetch with Progress</button>
+        <button id="btn-fetch-cancel" class="btn-secondary" disabled>Cancel Fetch</button>
+      </div>
+      <div class="progress-bar-wrap">
+        <div id="progress-bar" class="progress-bar"></div>
+      </div>
+      <pre id="out-fetch" class="output">Click to start fetch…</pre>
+    </section>
+
+    <!-- AbortController Demo -->
+    <section class="card">
+      <h2>4. AbortController Patterns</h2>
+      <div class="controls">
+        <button id="btn-abort-basic">Manual Abort</button>
+        <button id="btn-abort-timeout">AbortSignal.timeout()</button>
+        <button id="btn-abort-any">AbortSignal.any()</button>
+        <button id="btn-abort-custom">Custom Abortable Delay</button>
+      </div>
+      <pre id="out-abort" class="output">Click a button to demo AbortController…</pre>
+    </section>
+  </main>
+
+  <script src="streams-demo.js"></script>
+</body>
+</html>

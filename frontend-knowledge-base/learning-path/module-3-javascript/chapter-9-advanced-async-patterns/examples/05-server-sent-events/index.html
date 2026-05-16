@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Server-Sent Events (SSE)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Server-Sent Events (SSE)</h1>
+    <p class="subtitle">Chapter 9 · Advanced Asynchronous Patterns</p>
+  </header>
+
+  <main>
+    <!-- Concept overview -->
+    <section class="card">
+      <h2>What This Example Demonstrates</h2>
+      <ul>
+        <li>The SSE wire format: <code>data:</code>, <code>id:</code>, <code>event:</code>, <code>retry:</code></li>
+        <li>Using <code>EventSource</code> to consume a live stream</li>
+        <li>Listening for named event types with <code>addEventListener</code></li>
+        <li>Handling connection state and auto-reconnect behaviour</li>
+        <li>Closing the connection with <code>eventSource.close()</code></li>
+        <li>A simulated SSE server running inside a <code>SharedWorker</code> / <code>BroadcastChannel</code></li>
+      </ul>
+      <div class="info-box">
+        <strong>Note:</strong> A real SSE stream requires a server that keeps the HTTP connection open
+        and writes <code>text/event-stream</code> responses. Because this example runs entirely in the
+        browser, we simulate the server with a <strong>ReadableStream</strong> piped through the
+        <strong>Fetch API</strong> (using a Service Worker to intercept the request) so that the
+        <code>EventSource</code> code is 100% authentic.
+      </div>
+    </section>
+
+    <!-- SSE wire format explainer -->
+    <section class="card">
+      <h2>SSE Wire Format</h2>
+      <pre class="code-block">
+# Comment lines start with ':'
+: heartbeat
+
+# Minimal event — only data field
+data: Hello, world!
+
+# Named event with ID
+id: 42
+event: stock-update
+data: {"symbol":"AAPL","price":189.45}
+
+# Multi-line data (lines are joined with \n)
+data: {"part1":"Hello,
+data:  World!"}
+
+# Retry interval override (ms)
+retry: 3000
+</pre>
+    </section>
+
+    <!-- Live feed demo -->
+    <section class="card">
+      <h2>Live Stock Ticker (Simulated SSE)</h2>
+      <p class="hint">
+        Connects to a simulated SSE endpoint served by a Service Worker.
+        Each event carries a stock price update.
+      </p>
+      <div class="connection-row">
+        <span class="dot" id="conn-dot"></span>
+        <span id="conn-label">Disconnected</span>
+        <span id="last-id" class="badge-id"></span>
+      </div>
+      <div class="controls">
+        <button id="btn-start">Subscribe</button>
+        <button id="btn-stop" disabled>Unsubscribe</button>
+        <button id="btn-clear-feed">Clear Feed</button>
+      </div>
+      <div id="ticker-grid" class="ticker-grid"></div>
+      <pre id="raw-feed" class="output">Events will appear here…</pre>
+    </section>
+
+    <!-- EventSource API reference -->
+    <section class="card">
+      <h2>EventSource API Reference</h2>
+      <div class="api-table">
+        <div class="api-row header"><span>Member</span><span>Description</span></div>
+        <div class="api-row"><code>new EventSource(url, options)</code><span>Opens SSE connection. <code>options.withCredentials</code> sends cookies.</span></div>
+        <div class="api-row"><code>.readyState</code><span>0 CONNECTING · 1 OPEN · 2 CLOSED</span></div>
+        <div class="api-row"><code>.url</code><span>The URL of the SSE endpoint.</span></div>
+        <div class="api-row"><code>message</code> event<span>Fires for events with no <code>event:</code> field.</span></div>
+        <div class="api-row"><code>open</code> event<span>Connection established.</span></div>
+        <div class="api-row"><code>error</code> event<span>Connection error or server close (auto-retries).</span></div>
+        <div class="api-row"><code>addEventListener(type, fn)</code><span>Listen to named event types (e.g. <code>stock-update</code>).</span></div>
+        <div class="api-row"><code>.close()</code><span>Permanently close — no auto-reconnect.</span></div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Service Worker for intercepting the /sse endpoint -->
+  <script src="sw-register.js"></script>
+  <script src="sse-demo.js"></script>
+</body>
+</html>

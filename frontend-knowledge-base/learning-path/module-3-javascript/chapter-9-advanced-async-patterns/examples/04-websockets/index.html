@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebSockets</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>WebSockets</h1>
+    <p class="subtitle">Chapter 9 · Advanced Asynchronous Patterns</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>What This Example Demonstrates</h2>
+      <ul>
+        <li>Opening a WebSocket connection to a public echo server</li>
+        <li>Sending text and JSON messages</li>
+        <li>Receiving messages and displaying them in a chat UI</li>
+        <li>Monitoring <code>readyState</code> transitions</li>
+        <li>Graceful close with close codes</li>
+        <li>Automatic reconnection with exponential back-off</li>
+      </ul>
+    </section>
+
+    <!-- Connection Control -->
+    <section class="card">
+      <h2>Connection</h2>
+      <div class="status-bar">
+        <span class="status-dot" id="status-dot"></span>
+        <span id="status-label">Disconnected</span>
+        <span id="ready-state" class="state-badge">readyState: —</span>
+      </div>
+      <div class="controls">
+        <button id="btn-connect">Connect</button>
+        <button id="btn-disconnect" disabled>Disconnect</button>
+      </div>
+    </section>
+
+    <!-- Message Panel -->
+    <section class="card" id="msg-card">
+      <h2>Messages</h2>
+      <div id="chat-log" class="chat-log" aria-live="polite">
+        <p class="chat-placeholder">Connect to start messaging…</p>
+      </div>
+      <form id="msg-form" class="msg-form" autocomplete="off">
+        <input
+          type="text"
+          id="msg-input"
+          placeholder="Type a message and press Enter…"
+          disabled
+          maxlength="500"
+        />
+        <button type="submit" id="btn-send" disabled>Send</button>
+      </form>
+    </section>
+
+    <!-- ReadyState Explainer -->
+    <section class="card">
+      <h2>WebSocket Ready States</h2>
+      <div class="state-table">
+        <div class="state-row header">
+          <span>Value</span><span>Constant</span><span>Meaning</span>
+        </div>
+        <div class="state-row" data-state="0">
+          <span class="badge connecting">0</span>
+          <span>CONNECTING</span><span>Handshake in progress</span>
+        </div>
+        <div class="state-row" data-state="1">
+          <span class="badge open">1</span>
+          <span>OPEN</span><span>Ready to send and receive</span>
+        </div>
+        <div class="state-row" data-state="2">
+          <span class="badge closing">2</span>
+          <span>CLOSING</span><span>Close handshake in progress</span>
+        </div>
+        <div class="state-row" data-state="3">
+          <span class="badge closed">3</span>
+          <span>CLOSED</span><span>Connection closed or failed</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="websocket-demo.js"></script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WebRTC Basics</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>WebRTC Basics</h1>
+    <p class="subtitle">Chapter 9 · Advanced Asynchronous Patterns</p>
+  </header>
+
+  <main>
+    <!-- Overview -->
+    <section class="card">
+      <h2>What This Example Demonstrates</h2>
+      <ul>
+        <li>Capturing local camera &amp; microphone with <code>getUserMedia()</code></li>
+        <li>Creating an <code>RTCPeerConnection</code> (caller &amp; callee — same page)</li>
+        <li>The Offer/Answer/ICE candidate exchange (signalling simulation)</li>
+        <li><code>RTCDataChannel</code> — peer-to-peer text messaging</li>
+        <li>Adding and receiving media tracks</li>
+        <li>Connection state monitoring via <code>connectionState</code> events</li>
+      </ul>
+      <div class="info-box">
+        <strong>Note:</strong> This demo runs both <em>Caller</em> and <em>Callee</em> in the same
+        browser tab (a "loopback" peer connection). In a real app the signalling messages
+        (offer, answer, ICE candidates) would travel through a WebSocket server between two
+        different users. The WebRTC logic is identical either way.
+      </div>
+    </section>
+
+    <!-- P2P Data Channel Chat -->
+    <section class="card">
+      <h2>1. RTCDataChannel — Peer-to-Peer Text Chat</h2>
+      <p class="hint">Two loopback peers exchange messages directly via a data channel (no server relay).</p>
+      <div class="controls">
+        <button id="btn-data-connect">Create Data Channel</button>
+        <button id="btn-data-disconnect" disabled>Close Connection</button>
+      </div>
+
+      <div class="peers-row">
+        <!-- Caller pane -->
+        <div class="peer-pane" id="pane-caller">
+          <div class="peer-label">Caller (Peer A)</div>
+          <div class="peer-state" id="caller-state">disconnected</div>
+          <div class="chat-log" id="chat-a"></div>
+          <form class="msg-form" id="form-a">
+            <input type="text" id="input-a" placeholder="Send from Peer A…" disabled maxlength="300" />
+            <button type="submit" disabled>Send</button>
+          </form>
+        </div>
+
+        <!-- Connector -->
+        <div class="peer-connector">⇌</div>
+
+        <!-- Callee pane -->
+        <div class="peer-pane" id="pane-callee">
+          <div class="peer-label">Callee (Peer B)</div>
+          <div class="peer-state" id="callee-state">disconnected</div>
+          <div class="chat-log" id="chat-b"></div>
+          <form class="msg-form" id="form-b">
+            <input type="text" id="input-b" placeholder="Send from Peer B…" disabled maxlength="300" />
+            <button type="submit" disabled>Send</button>
+          </form>
+        </div>
+      </div>
+
+      <h3 style="margin-top:1rem; font-size:0.9rem; color:var(--accent-2);">Signalling Log</h3>
+      <pre id="signal-log" class="output">Signalling messages will appear here…</pre>
+    </section>
+
+    <!-- Camera / video -->
+    <section class="card">
+      <h2>2. Local Media — getUserMedia()</h2>
+      <p class="hint">Capture your camera and microphone. The stream is displayed locally (no peer needed).</p>
+      <div class="controls">
+        <button id="btn-cam-start">Start Camera</button>
+        <button id="btn-cam-stop" disabled>Stop Camera</button>
+        <label class="toggle-label">
+          <input type="checkbox" id="chk-audio" checked />
+          Include microphone
+        </label>
+      </div>
+      <div class="video-row">
+        <div class="video-wrap">
+          <video id="local-video" autoplay muted playsinline></video>
+          <span class="video-badge">Local (muted)</span>
+        </div>
+        <div class="video-wrap">
+          <video id="remote-video" autoplay playsinline></video>
+          <span class="video-badge">Remote (loopback)</span>
+        </div>
+      </div>
+      <div class="controls" style="margin-top:0.75rem;">
+        <button id="btn-loopback-start" disabled>Start Video Loopback</button>
+        <button id="btn-loopback-stop" disabled>Stop Loopback</button>
+      </div>
+      <pre id="media-log" class="output" style="margin-top:0.75rem;">Media log…</pre>
+    </section>
+
+    <!-- Concept diagram -->
+    <section class="card">
+      <h2>WebRTC Architecture</h2>
+      <pre class="diagram">
+┌─────────────────────────────────────────────────────┐
+│  Browser A (Caller)         Browser B (Callee)       │
+│  ┌─────────────────┐        ┌─────────────────┐     │
+│  │RTCPeerConnection│        │RTCPeerConnection│     │
+│  └────────┬────────┘        └────────┬────────┘     │
+│           │  Offer SDP               │               │
+│           │─────────────────────────►│               │
+│           │              Answer SDP  │               │
+│           │◄─────────────────────────│               │
+│           │  ICE Candidates (both)   │               │
+│           │◄────────────────────────►│               │
+│           │                          │               │
+│  ┌────────▼──────────────────────────▼────────┐     │
+│  │         DTLS/SRTP  P2P Connection           │     │
+│  │   ┌──────────────────────────────────┐     │     │
+│  │   │  MediaStream (audio/video)       │     │     │
+│  │   │  RTCDataChannel (binary/text)    │     │     │
+│  │   └──────────────────────────────────┘     │     │
+│  └────────────────────────────────────────────┘     │
+│                                                      │
+│  ┌──────────────────────────────────────────────┐   │
+│  │  Signalling Server (WebSocket / HTTP)         │   │
+│  │  Only used for SDP & ICE — not for media!    │   │
+│  └──────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────┘
+      </pre>
+    </section>
+  </main>
+
+  <script src="webrtc-demo.js"></script>
+</body>
+</html>

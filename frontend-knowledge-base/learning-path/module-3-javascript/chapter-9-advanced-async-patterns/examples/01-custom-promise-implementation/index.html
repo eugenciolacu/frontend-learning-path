@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Promise Implementation</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Custom Promise Implementation</h1>
+    <p class="subtitle">Chapter 9 · Advanced Asynchronous Patterns</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>What This Example Demonstrates</h2>
+      <ul>
+        <li>A minimal Promises/A+ compliant <code>MyPromise</code> class</li>
+        <li>State transitions: <strong>Pending → Fulfilled / Rejected</strong></li>
+        <li>Microtask scheduling with <code>queueMicrotask</code></li>
+        <li><code>.then()</code>, <code>.catch()</code>, <code>.finally()</code> chaining</li>
+        <li>Static helpers: <code>resolve</code>, <code>reject</code>, <code>all</code>, <code>race</code></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Interactive Demo</h2>
+      <div class="controls">
+        <button id="btn-basic">Basic Resolve/Reject</button>
+        <button id="btn-chain">Promise Chain</button>
+        <button id="btn-microtask">Microtask Order</button>
+        <button id="btn-all">Promise.all</button>
+        <button id="btn-race">Promise.race</button>
+      </div>
+      <pre id="output" class="output">Click a button to run a demo…</pre>
+    </section>
+  </main>
+
+  <script src="my-promise.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>
