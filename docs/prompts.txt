@@ -68,3 +68,21 @@ document structure for the "theory.md" document ("Example theory.md (Chapter)" p
 Then add relevant examples to the topics into 
 "frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\chapter-11-browser-capabilities-performance\examples" 
 folder. Please create a separate folder for each example.
+
+
+
+Please read
+"frontend-learning-path\docs\frontend-learning-roadmap.md"
+and find all chapters from the module
+"Module 3: JavaScript"
+then find all
+"theory.md" and "examples"
+from
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript"
+folder and subfolders.
+Based on this information create a mini-project
+"Data dashboard with public API"
+and store it in
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\mini-projects\data-dashboard-with-public-API"
+folder.
+This miniproject should be based on knowledge from module only.

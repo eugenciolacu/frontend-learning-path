@@ -1,0 +1,498 @@
+/*
+ * style.css — World Data Dashboard
+ *
+ * Sections:
+ *  1. CSS Variables (custom properties)
+ *  2. Reset & Base
+ *  3. Utility classes
+ *  4. Loading overlay & spinner
+ *  5. App shell
+ *  6. Site header
+ *  7. Error banner
+ *  8. Stats grid
+ *  9. Controls bar
+ * 10. Results count
+ * 11. Cards grid & country card
+ * 12. Detail modal
+ * 13. Responsive adjustments
+ */
+
+/* ─── 1. CSS Variables ───────────────────────────────────────────────────── */
+:root {
+  --clr-bg:           #0f1117;
+  --clr-surface:      #1a1d27;
+  --clr-surface-2:    #22263a;
+  --clr-border:       #2e3348;
+  --clr-accent:       #3b82f6;
+  --clr-accent-hover: #2563eb;
+  --clr-text:         #e2e8f0;
+  --clr-text-muted:   #94a3b8;
+  --clr-error-bg:     #2d0f0f;
+  --clr-error-text:   #f87171;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-card:  0 2px 8px  rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.55);
+
+  --transition: 180ms ease;
+}
+
+/* ─── 2. Reset & Base ────────────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  min-height: 100vh;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+a {
+  color: var(--clr-accent);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+/* Reset definition list defaults */
+dl, dt, dd { margin: 0; padding: 0; }
+
+img { display: block; max-width: 100%; }
+
+button { font-family: inherit; }
+
+/* ─── 3. Utility classes ─────────────────────────────────────────────────── */
+.hidden { display: none !important; }
+
+/* Screen-reader-only — visually hidden but accessible to assistive technology */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ─── 4. Loading overlay & spinner ──────────────────────────────────────── */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--clr-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 9999;
+  color: var(--clr-text-muted);
+  font-size: 0.95rem;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid var(--clr-border);
+  border-top-color: var(--clr-accent);
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── 5. App shell ───────────────────────────────────────────────────────── */
+.app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1.25rem 5rem;
+}
+
+/* ─── 6. Site header ─────────────────────────────────────────────────────── */
+.site-header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--clr-border);
+  margin-bottom: 2rem;
+}
+
+.site-title {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.title-icon { font-size: 1.2em; }
+
+.site-subtitle {
+  color: var(--clr-text-muted);
+  font-size: 0.88rem;
+  margin-top: 0.5rem;
+}
+
+/* ─── 7. Error banner ────────────────────────────────────────────────────── */
+.error-banner {
+  background: var(--clr-error-bg);
+  color: var(--clr-error-text);
+  border: 1px solid var(--clr-error-text);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ─── 8. Stats grid ──────────────────────────────────────────────────────── */
+.stats-section { margin-bottom: 1.75rem; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stat-value {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--clr-accent);
+  line-height: 1.2;
+  /* Prevent very long country names from overflowing */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--clr-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+/* ─── 9. Controls bar ────────────────────────────────────────────────────── */
+.controls-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex: 1 1 160px;
+  min-width: 140px;
+}
+
+.control-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--clr-text-muted);
+}
+
+.control-input,
+.control-select {
+  background: var(--clr-bg);
+  color: var(--clr-text);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-family: inherit;
+  width: 100%;
+  transition: border-color var(--transition);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.control-input:focus,
+.control-select:focus {
+  outline: none;
+  border-color: var(--clr-accent);
+}
+
+.control-input::placeholder { color: var(--clr-text-muted); }
+
+/* Re-add a custom arrow for the selects */
+.control-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+}
+
+.control-select option { background: var(--clr-surface-2, #22263a); }
+
+/* Clear-filters ghost button */
+.btn-ghost {
+  align-self: flex-end;
+  background: transparent;
+  color: var(--clr-text-muted);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1.1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.btn-ghost:hover {
+  color: var(--clr-text);
+  border-color: var(--clr-text-muted);
+}
+
+/* ─── 10. Results count ──────────────────────────────────────────────────── */
+.results-count {
+  font-size: 0.82rem;
+  color: var(--clr-text-muted);
+  margin-bottom: 1rem;
+}
+
+/* ─── 11. Cards grid & country card ─────────────────────────────────────── */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.no-results {
+  color: var(--clr-text-muted);
+  font-size: 0.95rem;
+  padding: 3rem;
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+/* Country card */
+.country-card {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform    var(--transition),
+    box-shadow   var(--transition),
+    border-color var(--transition);
+  /* role=button needs a list-item reset */
+  list-style: none;
+}
+
+.country-card:hover,
+.country-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--clr-accent);
+  outline: none;
+}
+
+.card-flag {
+  width: 100%;
+  height: 138px;
+  object-fit: cover;
+  background: var(--clr-surface-2, #22263a);
+  border-bottom: 1px solid var(--clr-border);
+  display: block;
+}
+
+.card-body {
+  padding: 1rem 1.1rem 1.3rem;
+}
+
+.card-name {
+  font-size: 0.98rem;
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Definition list used for card metadata rows */
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.32rem;
+}
+
+.detail-row {
+  display: flex;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+}
+
+.detail-row dt {
+  color: var(--clr-text-muted);
+  font-weight: 500;
+  min-width: 70px;
+  flex-shrink: 0;
+}
+
+.detail-row dd {
+  color: var(--clr-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ─── 12. Detail modal ───────────────────────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  animation: fade-in 160ms ease forwards;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-panel {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 1.75rem;
+  position: relative;
+  animation: slide-up 200ms ease forwards;
+}
+
+@keyframes slide-up {
+  from { transform: translateY(18px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: 1px solid var(--clr-border);
+  color: var(--clr-text-muted);
+  border-radius: var(--radius-sm);
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.modal-close:hover,
+.modal-close:focus-visible {
+  color: var(--clr-text);
+  border-color: var(--clr-text-muted);
+  outline: none;
+}
+
+/* Header inside modal: flag + name side by side */
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  /* Leave room for the close button */
+  padding-right: 2.5rem;
+}
+
+.modal-flag {
+  width: 96px;
+  height: 62px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--clr-border);
+  flex-shrink: 0;
+}
+
+.modal-country-name {
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.modal-official-name {
+  font-size: 0.8rem;
+  color: var(--clr-text-muted);
+  margin-top: 0.3rem;
+  line-height: 1.4;
+}
+
+.modal-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.modal-details .detail-row {
+  font-size: 0.88rem;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--clr-border);
+}
+
+.modal-details .detail-row:last-child { border-bottom: none; }
+.modal-details .detail-row dt { min-width: 100px; }
+.modal-details .detail-row dd { white-space: normal; }
+
+/* ─── 13. Responsive adjustments ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .controls-bar {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .control-group { flex: 1 1 100%; min-width: 0; }
+
+  .btn-ghost { width: 100%; text-align: center; }
+
+  .cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .card-flag { height: 110px; }
+
+  .modal-header { flex-direction: column; gap: 0.75rem; }
+  .modal-flag   { width: 100%; height: auto; aspect-ratio: 3 / 2; }
+}

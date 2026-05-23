@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>World Data Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!--
+      Loading overlay — visible on page load, hidden by render.js after
+      the initial fetch completes (success or error).
+    -->
+    <div id="loading-overlay" class="loading-overlay" aria-live="polite" aria-label="Loading data">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Fetching countries…</p>
+    </div>
+
+    <!-- ── App shell ─────────────────────────────────────────────────────── -->
+    <div class="app">
+
+      <!-- Header -->
+      <header class="site-header">
+        <h1 class="site-title">
+          <span class="title-icon" aria-hidden="true">🌍</span>
+          World Data Dashboard
+        </h1>
+        <p class="site-subtitle">
+          Live data from the
+          <a href="https://restcountries.com/" target="_blank" rel="noopener noreferrer">
+            REST Countries API
+          </a>
+          &mdash; Chapter 5: Fetch &amp; async/await in action
+        </p>
+      </header>
+
+      <main class="main-content">
+
+        <!-- Error banner — hidden until an error occurs -->
+        <div id="error-banner" class="error-banner hidden" role="alert"></div>
+
+        <!-- ── Stats row ──────────────────────────────────────────────── -->
+        <!--
+          Populated by render.js → renderStats().
+          Demonstrates Chapter 3: reduce() for aggregate computation.
+        -->
+        <section class="stats-section" aria-labelledby="stats-heading">
+          <h2 id="stats-heading" class="visually-hidden">Dashboard Statistics</h2>
+          <div id="stats-grid" class="stats-grid">
+            <!-- Stat cards injected here -->
+          </div>
+        </section>
+
+        <!-- ── Filter & sort controls ─────────────────────────────────── -->
+        <!--
+          Chapter 4: addEventListener on input/change events.
+          Chapter 2: for...of loop populates the region <select>.
+        -->
+        <section class="controls-bar" aria-label="Filter and sort controls">
+          <div class="control-group">
+            <label for="search" class="control-label">Search</label>
+            <input
+              type="text"
+              id="search"
+              class="control-input"
+              placeholder="Country name…"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </div>
+
+          <div class="control-group">
+            <label for="region-filter" class="control-label">Region</label>
+            <select id="region-filter" class="control-select">
+              <option value="">All regions</option>
+              <!-- Options populated by render.js → populateRegionFilter() -->
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="sort-by" class="control-label">Sort by</label>
+            <select id="sort-by" class="control-select">
+              <option value="name">Name (A → Z)</option>
+              <option value="population">Population (highest first)</option>
+              <option value="area">Area (largest first)</option>
+            </select>
+          </div>
+
+          <button id="clear-filters" class="btn-ghost" type="button">
+            Clear filters
+          </button>
+        </section>
+
+        <!-- Results count — updated by renderCards() -->
+        <p id="results-count" class="results-count" aria-live="polite"></p>
+
+        <!-- ── Card grid ──────────────────────────────────────────────── -->
+        <!--
+          Chapter 4: event delegation — one listener on this container
+          handles click events for all cards inside it.
+        -->
+        <div
+          id="cards-grid"
+          class="cards-grid"
+          role="list"
+          aria-label="Country cards"
+        >
+          <!-- Country cards injected by render.js → renderCards() -->
+        </div>
+
+      </main>
+    </div><!-- /.app -->
+
+    <!-- ── Detail modal ───────────────────────────────────────────────────── -->
+    <!--
+      Chapter 4: opened/closed via classList, aria-hidden toggled for
+      accessibility. Backdrop click and Escape key close it.
+    -->
+    <div
+      id="detail-modal"
+      class="modal-overlay hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+      aria-labelledby="modal-country-name"
+    >
+      <div class="modal-panel">
+        <button id="modal-close" class="modal-close" aria-label="Close detail panel">
+          &#x2715;
+        </button>
+        <div id="modal-body">
+          <!-- Country detail injected by render.js → openModal() -->
+        </div>
+      </div>
+    </div>
+
+    <!--
+      Chapter 6: type="module" enables ES Module import/export.
+      The browser will load js/main.js which imports from api.js,
+      utils.js, and render.js — no bundler needed.
+    -->
+    <script type="module" src="js/main.js"></script>
+
+  </body>
+</html>
