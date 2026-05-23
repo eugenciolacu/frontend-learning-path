@@ -83,6 +83,6 @@ folder and subfolders.
 Based on this information create a mini-project
 "Data dashboard with public API"
 and store it in
-"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\mini-projects\data-dashboard-with-public-API"
+"frontend-learning-path\frontend-knowledge-base\learning-path\module-3-javascript\mini-projects\implement-a-custom-promise-class-from-scratch"
 folder.
 This miniproject should be based on knowledge from module only.

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Promise Class from Scratch — Module 3</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+
+    <!-- ── Header ──────────────────────────────────────────────────────── -->
+    <header class="site-header">
+      <h1>
+        <span aria-hidden="true">⚙️</span>
+        Implement a Custom Promise Class from Scratch
+      </h1>
+      <p class="subtitle">
+        A Promises/A+ compliant <code>MyPromise</code> built with vanilla JavaScript
+        &mdash; Mini-Project &middot; Module 3, Chapter 9: Advanced Asynchronous Patterns
+      </p>
+    </header>
+
+    <main class="main-content">
+
+      <!-- ── Tab navigation ────────────────────────────────────────────── -->
+      <nav class="tab-bar" role="tablist" aria-label="Project sections">
+        <button class="tab active" data-tab="demos"
+                role="tab" aria-selected="true"  aria-controls="panel-demos">
+          Live Demos
+        </button>
+        <button class="tab" data-tab="tests"
+                role="tab" aria-selected="false" aria-controls="panel-tests">
+          Test Suite
+        </button>
+      </nav>
+
+      <!-- ════════════════════════════════════════════════════════════════
+           DEMOS PANEL
+           ════════════════════════════════════════════════════════════════ -->
+      <section class="panel active" id="panel-demos" data-panel="demos"
+               aria-labelledby="tab-demos">
+
+        <!-- State machine diagram -->
+        <div class="info-card">
+          <h2 class="card-title">The Promise State Machine</h2>
+
+          <div class="state-diagram" aria-label="Promise state machine diagram">
+            <div class="state pending">PENDING</div>
+
+            <div class="transitions">
+              <div class="transition-row">
+                <code class="transition-label">resolve(value)</code>
+                <span class="arrow" aria-hidden="true">──────►</span>
+                <div class="state fulfilled">FULFILLED</div>
+              </div>
+              <div class="transition-row">
+                <code class="transition-label">reject(reason)</code>
+                <span class="arrow" aria-hidden="true">──────►</span>
+                <div class="state rejected">REJECTED</div>
+              </div>
+            </div>
+          </div>
+
+          <p class="card-note">
+            Once a promise <strong>settles</strong> (fulfilled or rejected) its state is
+            <strong>irreversible</strong>. Subsequent calls to
+            <code>resolve()</code> or <code>reject()</code> are silently ignored.
+            <code>queueMicrotask</code> ensures <code>.then()</code> callbacks
+            always run <em>after</em> the current synchronous code.
+          </p>
+        </div>
+
+        <!-- Demo button grid -->
+        <!--
+          Chapter 4: each button has an id; event listeners are attached in main.js.
+          Chapter 6: <script type="module"> at the bottom loads the module graph.
+        -->
+        <div class="demo-grid" role="group" aria-label="Demo buttons">
+
+          <button class="demo-btn" id="btn-basic">
+            <span class="btn-number" aria-hidden="true">①</span>
+            <span class="btn-label">Basic Resolve / Reject</span>
+            <span class="btn-chapters">Ch. 5 &amp; 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-chain">
+            <span class="btn-number" aria-hidden="true">②</span>
+            <span class="btn-label">Promise Chaining</span>
+            <span class="btn-chapters">Ch. 5 &amp; 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-microtask">
+            <span class="btn-number" aria-hidden="true">③</span>
+            <span class="btn-label">Microtask Ordering</span>
+            <span class="btn-chapters">Ch. 7 &amp; 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-errors">
+            <span class="btn-number" aria-hidden="true">④</span>
+            <span class="btn-label">Error Handling</span>
+            <span class="btn-chapters">Ch. 5 &amp; 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-all">
+            <span class="btn-number" aria-hidden="true">⑤</span>
+            <span class="btn-label">Promise.all</span>
+            <span class="btn-chapters">Ch. 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-race">
+            <span class="btn-number" aria-hidden="true">⑥</span>
+            <span class="btn-label">Promise.race</span>
+            <span class="btn-chapters">Ch. 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-settled">
+            <span class="btn-number" aria-hidden="true">⑦</span>
+            <span class="btn-label">allSettled &amp; any</span>
+            <span class="btn-chapters">Ch. 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-retry">
+            <span class="btn-number" aria-hidden="true">⑧</span>
+            <span class="btn-label">Retry Pattern</span>
+            <span class="btn-chapters">Ch. 2, 8 &amp; 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-async">
+            <span class="btn-number" aria-hidden="true">⑨</span>
+            <span class="btn-label">Async / Await Interop</span>
+            <span class="btn-chapters">Ch. 5 &amp; 9</span>
+          </button>
+
+          <button class="demo-btn" id="btn-generator">
+            <span class="btn-number" aria-hidden="true">⑩</span>
+            <span class="btn-label">Generator + Promise</span>
+            <span class="btn-chapters">Ch. 8 &amp; 9</span>
+          </button>
+
+        </div><!-- /.demo-grid -->
+
+        <!-- Output console -->
+        <div class="console-wrapper">
+          <div class="console-bar">
+            <span>Console Output</span>
+            <button class="clear-btn" id="btn-clear" aria-label="Clear console output">
+              Clear
+            </button>
+          </div>
+          <div id="demo-output"
+               class="console-output"
+               role="log"
+               aria-live="polite"
+               aria-label="Demo console output">
+            <div class="log-line log-info">← Click a demo button above to see output here.</div>
+          </div>
+        </div>
+
+      </section><!-- /#panel-demos -->
+
+      <!-- ════════════════════════════════════════════════════════════════
+           TEST SUITE PANEL
+           ════════════════════════════════════════════════════════════════ -->
+      <section class="panel" id="panel-tests" data-panel="tests"
+               aria-labelledby="tab-tests">
+
+        <div class="test-header-card">
+          <h2>Automated Test Suite</h2>
+          <p>
+            A minimal async test framework built with closures,
+            <code>for...of</code> loops, and <code>async/await</code>
+            — verifying all aspects of <code>MyPromise</code> across 5 suites
+            and 25 test cases. Tests auto-run on page load.
+          </p>
+          <button class="run-btn" id="btn-run-tests">Run All Tests Again</button>
+        </div>
+
+        <div id="test-results"
+             class="test-results"
+             role="log"
+             aria-live="polite"
+             aria-label="Test results">
+          <div class="log-line log-info">Running tests…</div>
+        </div>
+
+      </section><!-- /#panel-tests -->
+
+    </main>
+
+    <!-- Chapter 6: ES Module entry point -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
