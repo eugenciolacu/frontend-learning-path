@@ -1,0 +1,16 @@
+{
+  "name": "example-02-tsconfig-setup",
+  "version": "1.0.0",
+  "description": "Demonstrates how to set up a TypeScript project from scratch, the role of `tsconfig.json`, and how different compiler options affect the output.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
